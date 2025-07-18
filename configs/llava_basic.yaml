@@ -7,5 +7,5 @@ output_prefix: "basic_prompt"
 fps: 2.0
 num_frames: 16
 max_new_tokens: 16
-prompt: "/home/kirill/DeviantBehaviorResearch/prompts/zero_shot.txt"
+prompt: "/home/kirill/DeviantBehaviorResearch/prompts/basic.txt"
 continue_from: null          # use an int index or leave null
