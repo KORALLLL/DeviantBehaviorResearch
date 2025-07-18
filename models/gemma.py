@@ -5,11 +5,10 @@ from loguru import logger
 from transformers import AutoProcessor, Gemma3ForConditionalGeneration
 from PIL import Image
 import cv2
-from IPython.display import Markdown, HTML
-from base64 import b64encode
-import requests
-import torch
+import torch, os, tempfile
+from pathlib import Path
 
+token = os.getenv("HF_TOKEN=")
 
 def extract_frames(video_path, num_frames):
     """
@@ -45,12 +44,12 @@ def extract_frames(video_path, num_frames):
 class GemmaAdapter(VLMBackend):
     def __init__(self, model_id: str, cache_dir: str):
         self.model = Gemma3ForConditionalGeneration.from_pretrained(
-            model_id, device_map="auto", torch_dtype=torch.bfloat16, cache_dir=cache_dir
+            model_id, device_map="auto", torch_dtype=torch.bfloat16, cache_dir=cache_dir, token=token
         ).eval()
 
         logger.success("model loaded")
 
-        self.processor = AutoProcessor.from_pretrained(model_id)
+        self.processor = AutoProcessor.from_pretrained(model_id, cache_dir=cache_dir)
         logger.success("processor inititalised")
 
     def encode_query(self, video_path: str, prompt: str, num_frames: int = 8, **kwargs):
@@ -65,11 +64,12 @@ class GemmaAdapter(VLMBackend):
                 "content": [{"type": "text", "text": prompt}]
             }
         ]
+        temp_dir = tempfile.TemporaryDirectory()
         for frame_data in video_frames:
             img, timestamp = frame_data
             messages[1]["content"].append({"type": "text", "text": f"Frame at {timestamp} seconds:"})
-            img.save(f"/content/frames/frame_{timestamp}.png")
-            messages[1]["content"].append({"type": "image", "url": f"/content/frames/frame_{timestamp}.png"})
+            img.save(f"{Path(temp_dir.name)}/frame_{timestamp}.png")
+            messages[1]["content"].append({"type": "image", "url": f"{Path(temp_dir.name)}/frame_{timestamp}.png"})
 
         inputs = self.processor.apply_chat_template(
             messages, add_generation_prompt=True, tokenize=True,
