@@ -1,11 +1,11 @@
 import torch, pathlib
 from tqdm import tqdm
 from loguru import logger
-from models import GemmaAdapter as Model
+from models import VideoLlavaAdapter as Model
 
 
-MODEL = "gemma-3-4b-it"
-MODEL_ID = f"google/{MODEL}"
+MODEL = "Video-LLaVA-7B-hf"
+MODEL_ID = f"LanguageBind/{MODEL}"
 CACHE_DIR = ".cache/"
 DATASET_PATH = "/mnt/datasets/ucf_crime"
 META_PATH = "/home/kirill/DeviantBehaviorResearch/Anomaly_Test.txt"

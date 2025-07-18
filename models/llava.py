@@ -2,8 +2,7 @@ from .base import VLMBackend
 
 from loguru import logger
 
-from PIL import Image
-import requests
+import torch
 import numpy as np
 import av
 from huggingface_hub import hf_hub_download
@@ -34,7 +33,7 @@ def read_video_pyav(container, indices):
 
 class VideoLlavaAdapter(VLMBackend):
     def __init__(self, model_id: str, cache_dir: str):
-        self.model = VideoLlavaForConditionalGeneration.from_pretrained(model_id, device_map="auto", cache_dir=cache_dir).eval()
+        self.model = VideoLlavaForConditionalGeneration.from_pretrained(model_id, device_map="auto",torch_dtype=torch.bfloat16, cache_dir=cache_dir).eval()
         logger.success("model loaded")
 
         self.processor = VideoLlavaProcessor.from_pretrained(model_id, cache_dir=cache_dir)
@@ -53,7 +52,7 @@ class VideoLlavaAdapter(VLMBackend):
         
 
     def generate(self, inputs, max_new_tokens: int) -> str:
-        generate_ids = self.model.generate(**inputs, max_length=max_new_tokens)
+        generate_ids = self.model.generate(**inputs, max_new_tokens=max_new_tokens)
         # return self.processor.batch_decode(generate_ids, skip_special_tokens=True)[0]
         return self.processor.batch_decode(
             generate_ids[:, inputs.input_ids.shape[-1]:],
