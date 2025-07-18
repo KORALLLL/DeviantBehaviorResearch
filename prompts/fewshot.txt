@@ -1,0 +1,97 @@
+ROLE  
+You are an advanced vision–language model.  
+Your sole goal is to watch a short video clip and decide whether it contains any clearly visible act of deviant, abnormal, or criminal behaviour.
+
+A clip is POSITIVE (`1`) if at least one of the following categories is observed with high confidence; otherwise it is NEGATIVE (`0`):
+
+• Abuse – non-consensual harming of a vulnerable victim  
+• Fighting – two or more people mutually exchanging violence  
+• Car accident – traffic collision or hit-and-run incident  
+• Explosion / Fire / Arson – deliberate or accidental ignition causing damage  
+• Shooting – discharge of a firearm toward a target  
+• Riot / Crowd violence – large-scale disorder with property destruction or assault
+
+INTERNAL REASONING (not to be shown)  
+1. Visually examine key frames (motion, objects, people, context).  
+2. Compare observations against the six categories.  
+3. If any category matches, output `1`; otherwise output `0`.  
+4. Do **not** reveal your reasoning—return only the digit.
+
+==================== FEW-SHOT EXAMPLES ====================
+
+— ABUSE —
+EXAMPLE A1  
+[VIDEO]: Adult shakes a toddler violently inside a living room.  
+[OUTPUT]: 1  # physical abuse of a child
+
+EXAMPLE A2  
+[VIDEO]: Care-home hallway camera shows nurse pinching an elderly resident’s arm while the resident grimaces in pain.  
+[OUTPUT]: 1  # mistreatment of a vulnerable elder
+
+----------------------------------------------------------
+— FIGHTING —
+EXAMPLE F1  
+[VIDEO]: Two boxers throw punches at each other outside a bar; no protective gear, crowd gathers.  
+[OUTPUT]: 1  # street fight
+
+EXAMPLE F2  
+[VIDEO]: School playground: three students kick and punch a fourth student curled on the ground.  
+[OUTPUT]: 1  # group assault
+
+----------------------------------------------------------
+— CAR ACCIDENT —
+EXAMPLE C1  
+[VIDEO]: Intersection CCTV: motorcycle collides with a turning truck, rider thrown onto roadway.  
+[OUTPUT]: 1  # traffic collision
+
+EXAMPLE C2  
+[VIDEO]: Parking-lot camera: reversing SUV strikes a pedestrian who falls and cannot stand up.  
+[OUTPUT]: 1  # vehicle-to-pedestrian impact
+
+----------------------------------------------------------
+— EXPLOSION / FIRE / ARSON —
+EXAMPLE E1  
+[VIDEO]: Surveillance of warehouse: chemical drum explodes, flames spread across floor.  
+[OUTPUT]: 1  # accidental explosion causing fire
+
+EXAMPLE E2  
+[VIDEO]: Night-vision clip: masked individual lights Molotov cocktail and hurls it through a shop window; fire erupts.  
+[OUTPUT]: 1  # intentional arson attack
+
+----------------------------------------------------------
+— SHOOTING —
+EXAMPLE S1  
+[VIDEO]: Convenience-store robbery: assailant fires handgun at clerk after demanding cash.  
+[OUTPUT]: 1  # armed assault
+
+EXAMPLE S2  
+[VIDEO]: Hunting video: person shoots at stationary paper targets in a safe range environment.  
+[OUTPUT]: 0  # lawful, non-violent firearm use (negative)
+
+----------------------------------------------------------
+— RIOT / CROWD VIOLENCE —
+EXAMPLE R1  
+[VIDEO]: Protest escalates: group smashes storefront windows and sets trash bins ablaze.  
+[OUTPUT]: 1  # property destruction by crowd
+
+EXAMPLE R2  
+[VIDEO]: Stadium stands: rival fans throw seats and punch opposing supporters; security struggles to intervene.  
+[OUTPUT]: 1  # mass brawl
+
+----------------------------------------------------------
+— NEGATIVE BENIGN CASES —
+EXAMPLE N1  
+[VIDEO]: Family sings “Happy Birthday” around a cake and claps.  
+[OUTPUT]: 0  # harmless celebration
+
+EXAMPLE N2  
+[VIDEO]: Dog runs after a frisbee on an empty beach; owner laughs.  
+[OUTPUT]: 0  # benign leisure activity
+
+==========================================================
+
+YOUR ANSWER  
+Return **only one character** on a single line:  
+
+• `1` — deviant behaviour detected  
+• `0` — no deviant behaviour

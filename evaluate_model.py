@@ -1,23 +1,7 @@
-import torch, pathlib
+import torch, pathlib, yaml, argparse
 from tqdm import tqdm
 from loguru import logger
-from models import VideoLlavaAdapter as Model
 
-
-MODEL = "Video-LLaVA-7B-hf"
-MODEL_ID = f"LanguageBind/{MODEL}"
-CACHE_DIR = ".cache/"
-DATASET_PATH = "/mnt/datasets/ucf_crime"
-META_PATH = "/home/kirill/DeviantBehaviorResearch/Anomaly_Test.txt"
-OUTPUT_RESULTS = f"{MODEL}_basic_prompt.txt"
-FPS = 2.0
-NUM_FRAMES = 16
-MAX_NEW_TOKENS = 16
-PROMPT = ("Return `1` if the video shows any deviant, abnormal or criminal "
-          "behaviour; return `0` if it does not. Respond with only that single "
-          "digit and nothing else.")
-
-CONTINUE_FROM=None
 
 
 class VideoDS(torch.utils.data.Dataset):
@@ -35,6 +19,44 @@ class VideoDS(torch.utils.data.Dataset):
 
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument("config")
+    args = parser.parse_args()
+
+
+    with open(args.config, 'r') as f: cfg = yaml.safe_load(f)
+
+    MODEL = cfg['model']
+    MODEL_ID = f"{cfg['model_space']}/{MODEL}"
+    CACHE_DIR = cfg['cache_dir']
+    DATASET_PATH = cfg['dataset_path']
+    META_PATH = cfg['meta_path']
+    OUTPUT_RESULTS = f"{MODEL}_{cfg['output_prefix']}.txt"
+    FPS = cfg['fps']
+    NUM_FRAMES = cfg['num_frames']
+    MAX_NEW_TOKENS = cfg['max_new_tokens']
+
+    with open(cfg['prompt'], 'r') as file: PROMPT = file.read().strip()
+    logger.info(str(cfg))
+    logger.info(f"Prompt: {PROMPT}")
+
+    CONTINUE_FROM=cfg['continue_from']
+
+    if cfg['model_space']=="LanguageBind":
+        from models import VideoLlavaAdapter as Model
+        logger.info("llava imported")
+    elif cfg['model_space']=="google":
+        from models import GemmaAdapter as Model
+        logger.info("gemma imported")
+    elif cfg['model_space']=="Qwen":
+        from models import Qwen25Adapter as Model
+        logger.info("qwen imported")
+    elif cfg["model_space"]=="OpenGVLab":
+        from models import InternVL3Adapter as Model
+        logger.info("intervl imported")
+    else: raise NotImplementedError
+
+
     backend = Model(model_id=MODEL_ID, cache_dir=CACHE_DIR)
     ds = VideoDS(pathlib.Path(DATASET_PATH), META_PATH)
     logger.success("dataset initialised")
@@ -45,7 +67,7 @@ if __name__ == "__main__":
 
     with torch.inference_mode():
         for idx in tqdm(range(len(ds)), total=len(ds)):
-            # try:
+            try:
                 sample = ds[idx]
                 if CONTINUE_FROM:
                     if idx<CONTINUE_FROM: continue
@@ -56,7 +78,5 @@ if __name__ == "__main__":
                 with open(OUTPUT_RESULTS, "a") as f_out:
                     f_out.write(line)
                 logger.info(line.strip())
-            # except:
-            #     logger.error(sample['path'])
-
-            # break
+            except:
+                logger.error(sample['path'])
