@@ -20,7 +20,7 @@ class Qwen25Adapter(VLMBackend):
         self.process_vision_info = process_vision_info
         logger.success("processor inititalised")
 
-    def encode_query(self, video_path: str, prompt: str, fps=1.0):
+    def encode_query(self, video_path: str, prompt: str, fps=1.0, **kwargs):
         messages = [{
             "role": "user",
             "content": [

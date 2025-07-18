@@ -1,22 +1,23 @@
 import torch, pathlib
 from tqdm import tqdm
 from loguru import logger
-from models import Qwen25Adapter as Model
+from models import GemmaAdapter as Model
 
 
-MODEL = "Qwen2.5-VL-7B-Instruct"
-MODEL_ID = f"Qwen/{MODEL}"
+MODEL = "gemma-3-4b-it"
+MODEL_ID = f"google/{MODEL}"
 CACHE_DIR = ".cache/"
 DATASET_PATH = "/mnt/datasets/ucf_crime"
 META_PATH = "/home/kirill/DeviantBehaviorResearch/Anomaly_Test.txt"
 OUTPUT_RESULTS = f"{MODEL}_basic_prompt.txt"
 FPS = 2.0
-MAX_NEW_TOKENS = 32
+NUM_FRAMES = 16
+MAX_NEW_TOKENS = 16
 PROMPT = ("Return `1` if the video shows any deviant, abnormal or criminal "
           "behaviour; return `0` if it does not. Respond with only that single "
           "digit and nothing else.")
 
-CONTINUE_FROM=5
+CONTINUE_FROM=None
 
 
 class VideoDS(torch.utils.data.Dataset):
@@ -44,16 +45,18 @@ if __name__ == "__main__":
 
     with torch.inference_mode():
         for idx in tqdm(range(len(ds)), total=len(ds)):
-            try:
+            # try:
                 sample = ds[idx]
                 if CONTINUE_FROM:
                     if idx<CONTINUE_FROM: continue
-                inputs = backend.encode_query(sample["path"], PROMPT, fps=FPS)
+                inputs = backend.encode_query(sample["path"], PROMPT, fps=FPS, num_frames=NUM_FRAMES)
                 reply  = backend.generate(inputs, max_new_tokens=MAX_NEW_TOKENS)
 
                 line = f"{sample['path']}\t{reply}\n"
                 with open(OUTPUT_RESULTS, "a") as f_out:
                     f_out.write(line)
                 logger.info(line.strip())
-            except:
-                logger.error(sample['path'])
+            # except:
+            #     logger.error(sample['path'])
+
+            # break
