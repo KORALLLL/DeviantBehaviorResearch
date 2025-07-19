@@ -1,7 +1,7 @@
-# python evaluate_model.py configs/gemma_basic.yaml
-# python evaluate_model.py configs/intern_basic.yaml
-# python evaluate_model.py configs/llava_basic.yaml
-# python evaluate_model.py configs/qwen_basic.yaml
+python evaluate_model.py configs/gemma_basic.yaml
+python evaluate_model.py configs/intern_basic.yaml
+python evaluate_model.py configs/llava_basic.yaml
+python evaluate_model.py configs/qwen_basic.yaml
 
 python evaluate_model.py configs/gemma_zeroshot.yaml
 python evaluate_model.py configs/intern_zeroshot.yaml

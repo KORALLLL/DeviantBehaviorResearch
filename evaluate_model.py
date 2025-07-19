@@ -67,7 +67,7 @@ if __name__ == "__main__":
 
     with torch.inference_mode():
         for idx in tqdm(range(len(ds)), total=len(ds)):
-            try:
+            # try:
                 sample = ds[idx]
                 if CONTINUE_FROM:
                     if idx<CONTINUE_FROM: continue
@@ -78,5 +78,5 @@ if __name__ == "__main__":
                 with open(OUTPUT_RESULTS, "a") as f_out:
                     f_out.write(line)
                 logger.info(line.strip())
-            except:
-                logger.error(sample['path'])
+            # except:
+            #     logger.error(sample['path'])
