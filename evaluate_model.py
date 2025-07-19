@@ -98,3 +98,5 @@ if __name__ == "__main__":
 
     m, hw = mean_ci_halfwidth(results)
     logger.info(f"{m:.4f} ±{hw:.4f}")
+    with open(OUTPUT_RESULTS, "w") as f_out:
+        f_out.write(f"time:\n\n\n\n{m:.4f} ±{hw:.4f}\n\n\n\n")
