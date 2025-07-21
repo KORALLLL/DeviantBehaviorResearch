@@ -1,0 +1,12 @@
+model: "gemma-3-4b-it"
+model_space: "google"
+cache_dir: ".cache/"
+dataset_path: "/mnt/drive-2/projects/sport/ufc-crime/data"
+meta_path: "/home/kondrashov/smiles/configs/Anomaly_Train.txt"
+eval_meta_path: "/home/kondrashov/smiles/configs/Anomaly_Test.txt"
+output_prefix: "basic"
+fps: 0.5
+num_frames: 1
+max_new_tokens: 16
+prompt: "/home/kondrashov/smiles/DeviantBehaviorResearch/prompts/basic.txt"
+continue_from: null          # use an int index or leave null

@@ -1,0 +1,32 @@
+[project]
+name = "smiles"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "KirillPal",email = "kirpall@ya.ru"}
+]
+readme = "README.md"
+requires-python = ">=3.10,<4.0"
+dependencies = [
+    "transformers (>=4.53.2,<5.0.0)",
+    "torch (>=2.7.1,<3.0.0)",
+    "loguru (>=0.7.3,<0.8.0)",
+    "decord (>=0.6.0,<0.7.0)",
+    "torchvision (>=0.22.1,<0.23.0)",
+    "opencv-python (>=4.12.0.88,<5.0.0.0)",
+    "av (>=15.0.0,<16.0.0)",
+    "accelerate (>=1.9.0,<2.0.0)",
+    "scikit-learn (>=1.7.1,<2.0.0)",
+    "protobuf (>=6.31.1,<7.0.0)",
+    "sentencepiece (>=0.2.0,<0.3.0)",
+    "peft (>=0.16.0,<0.17.0)",
+    "bitsandbytes (>=0.46.1,<0.47.0)",
+    "trl (>=0.19.1,<0.20.0)",
+    "datasets (>=4.0.0,<5.0.0)",
+    "flash-attn (>=2.8.1,<3.0.0)"
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
