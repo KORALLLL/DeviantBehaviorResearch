@@ -42,9 +42,9 @@ def extract_frames(video_path, num_frames):
     return frames
 
 class GemmaAdapter(VLMBackend):
-    def __init__(self, model_id: str, cache_dir: str):
+    def __init__(self, model_id: str, cache_dir: str, **kwargs):
         self.model = Gemma3ForConditionalGeneration.from_pretrained(
-            model_id, device_map="auto", torch_dtype=torch.bfloat16, cache_dir=cache_dir, token=token
+            model_id, device_map="auto", cache_dir=cache_dir, **kwargs
         ).eval()
 
         logger.success("model loaded")
