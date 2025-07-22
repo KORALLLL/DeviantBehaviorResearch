@@ -1,0 +1,2001 @@
+PROMPT:
+
+
+
+### Enhanced Chain-of-Thought Few-Shot Prompt  
+*(one richly described example for each deviant-behaviour class, plus one negative example; the model must think aloud and end with a single-digit verdict)*
+
+```text
+ROLE  
+You are an advanced vision–language model.  
+Your task is to inspect a short video clip and decide whether it contains any clear act of deviant, abnormal, or criminal behaviour.
+
+A clip is POSITIVE (1) if at least one of the following categories is observed with high confidence; otherwise it is NEGATIVE (0):
+
+• Abuse – non-consensual harming of a vulnerable victim  
+• Fighting – two or more people mutually exchanging violence  
+• Car accident – traffic collision or hit-and-run incident  
+• Explosion / Fire / Arson – deliberate or accidental ignition causing damage  
+• Shooting – discharge of a firearm toward a target  
+• Riot / Crowd violence – large-scale disorder with property destruction or assault  
+
+THINKING PROTOCOL  
+1. **Observe** – Describe salient visual elements (people, actions, objects, motion, context).  
+2. **Reason** – Map observations to any deviance category; note level of confidence.  
+3. **Double-check** – Rethink the scene for missed cues or false positives.  
+4. **Decide** – Output 1 if any category matches; else 0.  
+5. **Respond** – Show the full chain of thought for steps 1-4, then put the single digit **alone** on the final line.
+
+==================== FEW-SHOT EXAMPLES ====================
+
+— ABUSE —
+EXAMPLE A  
+[VIDEO]: Indoor nanny-cam, evening. A caregiver in medical scrubs lifts a frail elderly woman from a wheelchair, then abruptly drops her onto the bed. The woman winces and clutches her hip; a glass of water spills. Caregiver’s face shows irritation, mutters angrily while pointing a finger close to the woman’s face.  
+THOUGHTS  
+1. Observe: Vulnerable elder, forceful handling, pain reaction, aggressive gestures; no medical urgency.  
+2. Reason: Non-consensual harm to a dependent victim → Abuse. High confidence.  
+3. Double-check: No medical equipment in use, caregiver’s tone hostile, victim distressed. Decision stands.  
+4. Decide: 1  
+ANSWER  
+1
+
+----------------------------------------------------------
+— FIGHTING —
+EXAMPLE F  
+[VIDEO]: Nighttime street, two smartphone angles. Two men shove each other outside a club; one removes his jacket, adopts a boxing stance. Punches exchanged; a bystander tries to separate them but is kicked by a third participant. Flashing neon lights, crowd circles, some film with phones. Blood visible on one combatant’s nose.  
+THOUGHTS  
+1. Observe: Reciprocal punches, multiple aggressors, injuries evident, chaotic environment.  
+2. Reason: Mutual physical violence between adults → Fighting.  
+3. Double-check: No referee or sporting gear; nightclub exit context implies non-sport scenario. Confirm deviance.  
+4. Decide: 1  
+ANSWER  
+1
+
+----------------------------------------------------------
+— CAR ACCIDENT —
+EXAMPLE C  
+[VIDEO]: Daytime dash-cam. Car travels at 60 km/h on wet highway. A truck ahead swerves; its unsecured ladder slides off, striking a motorcyclist in the adjacent lane. Motorcyclist loses balance, skids across asphalt, sparks fly from bike. Nearby cars brake hard; one rear-ends another. Airbags deploy in the second car.  
+THOUGHTS  
+1. Observe: Roadway mishap, object falling, collision sequence, injuries likely.  
+2. Reason: Traffic collision causing harm → Car accident.  
+3. Double-check: Weather wet, but primary trigger is ladder impact; definite accident.  
+4. Decide: 1  
+ANSWER  
+1
+
+----------------------------------------------------------
+— EXPLOSION / FIRE / ARSON —
+EXAMPLE E  
+[VIDEO]: CCTV of gas-station forecourt at dawn. A hooded individual places a small device under the fuel-pump housing, retreats behind a parked van, presses a remote. Device flashes, pump erupts in fireball; security glass shatters, flames spread beneath canopy. Attacker flees vehicle at high speed. Smoke alarms trigger; sprinklers activate.  
+THOUGHTS  
+1. Observe: Intentional placement of device, timed detonation, rapid fire spread.  
+2. Reason: Deliberate ignition causing property damage → Arson / Explosion.  
+3. Double-check: No accidental spark visible; attacker’s deliberate retreat confirms intent.  
+4. Decide: 1  
+ANSWER  
+1
+
+----------------------------------------------------------
+— SHOOTING —
+EXAMPLE S  
+[VIDEO]: Body-cam from police officer at dusk. Officer takes cover behind squad car; an armed suspect across parking lot fires three handgun rounds toward officer. Muzzle flashes, bullet impacts on cruiser door. Officer issues commands, radios for backup. Shattered glass litters ground. Civilians crouch behind parked cars.  
+THOUGHTS  
+1. Observe: Firearm discharged toward human target, immediate danger.  
+2. Reason: Use of gun in assault → Shooting.  
+3. Double-check: Target is law-enforcement; hostile intent clear.  
+4. Decide: 1  
+ANSWER  
+1
+
+----------------------------------------------------------
+— RIOT / CROWD VIOLENCE —
+EXAMPLE R  
+[VIDEO]: Aerial drone footage over city square during protest. Hundreds push against police barricade; several overturn a patrol motorcycle and ignite it with a flare. Others hurl cobblestones pulled from pavement; storefront windows crack. Tear-gas plumes drift; officers advance in phalanx formation; some protesters wield metal poles as improvised weapons.  
+THOUGHTS  
+1. Observe: Large crowd, coordinated property destruction, assaults on police, fire ignition.  
+2. Reason: Collective violent disorder → Riot / Crowd violence.  
+3. Double-check: Scale large, multiple simultaneous violent acts. Confirm deviance.  
+4. Decide: 1  
+ANSWER  
+1
+
+----------------------------------------------------------
+— NEGATIVE BENIGN CASE —
+EXAMPLE N  
+[VIDEO]: Afternoon picnic by a lake. Friends set up blankets, toss frisbee, grill food. A child helps an elder adjust a sunhat; a dog naps beside them. Calm water, laughter, no aggressive motions, no hazardous objects.  
+THOUGHTS  
+1. Observe: Leisure activity, cooperative gestures, relaxed environment.  
+2. Reason: No harm, threat, or unlawful act visible.  
+3. Double-check: Scan for hidden conflict, weapons, or dangerous behaviour; none found.  
+4. Decide: 0  
+ANSWER  
+0
+
+==========================================================
+
+
+NOW FOLLOW THE THINKING PROTOCOL AND RETURN THE SINGLE-DIGIT ANSWER ON THE FINAL LINE.
+```
+
+
+
+/mnt/datasets/ucf_crime/Abuse/Abuse028_x264.mp4	** 4. Decide: 0  
+ANSWER  
+0
+/mnt/datasets/ucf_crime/Abuse/Abuse030_x264.mp4	THOUGHTS  
+1. Observe: A dog runs toward the street, a person is seen crossing the street in their direction, followed by another person walking along the sidewalk. No significant actions or objects suggesting violence or danger are present.
+2. Reason: No apparent harm, conflict, accidents, or criminal activity occurs. The scene depicts routine pedestrian and dog movement without notable disruption.
+3. Double-check: Despite multiple individuals and a dog in movement, the actions are innocent and non consistent with everyday street activity. No indications of distress or abnormal behavior are visible.
+4. Decide: 0  
+ANSWER  
+0
+/mnt/datasets/ucf_crime/Arrest/Arrest001_x264.mp4	1
+
+1. Observe: Office interior, people moving around, counter area area of activity. A person approaches the counter, interacts briefly.  
+2. Reason: No evident non physical altercation, weapon use, fire, explosion, or any violent or malicious act is identifiable. People seem to be engaging in normal office behavior.
+3. Double-check: No abnormalities like injuries, aggressive gestures, or property destruction observed. Context and attire of individuals suggest a calm, typical work environment.
+4. Decide: 0
+ANSWER
+0
+/mnt/datasets/ucf_crime/Arrest/Arrest007_x264.mp4	1
+
+THOUGHTS  
+1. Observe: A man wearing a white tank top and shorts enters a laundry room, walks towards the washers, bends over and starts manipulating one. The room has a bench, a doorway, and a door in the background. 
+2. Reason: The man is alone and casually using the washers; his actions do not indicate any harm or danger to himself or others.
+3. Double-check: The environment shows a public laundry space with no indication of violence, abuse, accident, or criminal activity evident.
+4. Decide: 0  
+ANSWER  
+0
+/mnt/datasets/ucf_crime/Arrest/Arrest024_x264.mp4	1
+
+THOUGHTS  
+1. Observe: Urban street scene, multiple cars, a motorcycle, pedestrians, vehicles stopping, individuals in tactical gear, white car with doors open, possibly an arrest or disturbance taking place.  
+2. Reason: Presence of armed individuals and a stopped car indicates a tactical operation or response to an event. This could involve apprehension or crowd control.  
+3. Double-check: Actions suggest a significant intervention by uniformed individuals, setting includes urban environment with bystanders. Scenario fits within the categories of crowd violence or law enforcement action.  
+4. Decide: 1
+
+ANSWER
+1
+/mnt/datasets/ucf_crime/Arrest/Arrest031_x264.mp4	1
+
+ThOUGHTS  
+1. Observe: Security camera footage of a convenience store with employees and customers. A maniled on the counter appears to be suspicious; another male figure approaches, and one of the store employees goes to the back of the store.
+2. Reason: The behavior could be interpreted as surveillance or theft preparation (taking the employee's attention away from customers or hiding items in the stock). While not definitive, the sequence raises suspicion.
+3. Double-check: No clear act of theft, violence, or any other explicit deviance seen. The clip focuses on movement that could be normal store activity.
+4. Decide: 0
+
+
+0
+/mnt/datasets/ucf_crime/Arrest/Arrest040_x264.mp4	1
+
+THOUGHTS  
+1. Observe: Residential neighborhood, multiple police cars with lights flashing, officers near a car, another walking towards the scene. No immediate physical confrontation or distress visible.
+2. Reason: Presence of police activity may suggest investigation, but no shooting, explosion, or riotous behavior observed here. No clear evidence of deviant actions.
+3. Double-check: Focus on the porch and its immediate vicinity; no unexpected or alarming activity seen near the camera’s field of view.
+4. Decide: 0
+ANSWER  
+0
+/mnt/datasets/ucf_crime/Arson/Arson008_x264.mp4	1
+
+THOUGHTS  
+1. Observe: The video starts with a timestamped shot from CCTV, showing the interior of a dimly lit room with sofas and a reception desk. A person appears near the reception area, and a sudden bright flash occurs towards the end. The scene is then returned to grayscale with a "Replay" label at the same timestamp. A return bright flash happens again. The room reverts to grayscale afterward. The video concludes with the display "Subscribe to RollCall2go Daily Law Enforcement Media and Training."
+2. Reason: The flash of light seen in these scene suggests a potential explosion, fire, or intentional ignition. The suddenness and intensity of the brightness could indicate an explosion or fire. The room goes back to grayscale after the flash, which is typical in CCTV footage when the camera adjusts for bright light or a change in the light source. This type behavior is indicative of an accidental or deliberate ignition, which could lead to property damage or danger.
+3. Double-check: The timestamps indicate rapid events, with a sudden bright flash at two different parts of the footage. The transition to grayscale again suggests a reset due to the flash, consistent with an explosion or fire disrupting the recording.
+4. Decide: 1
+
+ANSWER
+1
+/mnt/datasets/ucf_crime/Arson/Arson009_x264.mp4	1
+
+THOUGHTS  
+1. Observe: The video shows a nighttime scene with individuals approaching and searching a white van. One person is wearing a hoodie and seems to be handling something by the van. Firefighters or emergency responders appear later.
+2. Reason: Presence of emergency personnel suggesting an incident or investigation; no visible aggressive behavior or direct harm to individuals. Interaction seems focused on assessing or aiding a situation.
+3. Double-check: Actions are cautious and systematic by responders; no sign of deliberate criminal activity or disturbance.
+4. Decide: 0  
+ANSWER  
+0
+/mnt/datasets/ucf_crime/Arson/Arson010_x264.mp4	1
+
+THOUGHTS
+1. Observe: A nighttime scene on a street with two vans and a motorcycle. One person appears agitated, gesturing toward the second person. Another individual approaches the second person, seemingly confronting them. They appear to exchange words.  
+2. Reason: The interaction appears tense, with body language suggesting conflict or confrontation. However, there are no overt signs of physical violence, like punching or kicking. The situation might be escalating, but it does not reach clear physical aggression at this specific moment.  
+3. Double-check: No evidence of fighting or physical assaults. The scene is tense but lacks definitive indicators of deviant behavior like physical harm or intentional damage. No firearm or explosive visible.
+4. Decide: 0  
+ANSWER
+0
+/mnt/datasets/ucf_crime/Arson/Arson011_x264.mp4	1
+
+THOUGHTS  
+1. Observe: Person with a bicycle inside an elevator, another individual enters, confronts them with a flaming object, leading to a struggle within the confined space.
+2. Reason: The confrontation escalates with the use of a fire-like object towards another person, implying potential harm or threat -> Abuse or Fighting. The behavior seems to involve coercion or dangerous intent, but lacks clear evidence of direct physical violence or fire-setting.
+3. Double-check: The focus is on the intimidation or threat posed by the lit object rather than an actual explosion or fire. There’s no evidence of a car accident, explosion, or firearm discharge.
+4. Decide: 0
+
+ANSWER
+0
+/mnt/datasets/ucf_crime/Arson/Arson016_x264.mp4	1. Observe: Inside a bus, a person is near the back seats, where papers are scattered. A fire starts in the area with the papers.
+2. Reason: Deliberate ignition of papers → Explosion / Fire / Arson. The location and action strongly imply arson.
+3. Double-check: No accidental source, the act appears purposeful, and the fire appears in the same vicinity as scattered papers.
+4. Decide: 1
+ANSWER 1
+/mnt/datasets/ucf_crime/Arson/Arson018_x264.mp4	1. **Observe**: Scene is outdoors at night, with multiple vehicles parked. A bright light source enters, likely from a vehicle with its headlights on. Ita person holding a light source stands near parked vehicles and another person walks nearby. There's smoke or mist emerging from the direction of the light source.
+
+2. **Reason**: The emerging smoke or mist suggests some form of combustion or impact. The sudden appearance of bright lights and subsequent smoke could indicate a collision or an accident involving one of the vehicles.
+
+3. **Double-check**: The video frames provide consistent evidence of light and smoke interaction, without other clear signs of fighting or human injury. The smoke is the primary indicator of abnormal activity.
+
+4. **Decide**: 1
+
+ANSWER
+1
+/mnt/datasets/ucf_crime/Arson/Arson023_x264.mp4	1. Observe: A figure in light-colored clothing carries a container towards a parked car. They spray the container's contents onto the car's's windshield, then flee when a bright flash occurs.  
+2. Reason: The action of spraying and the following bright flash suggest a deliberate cause likely aiming to damage the car, indicating criminal intent.  
+3. Double-check: The individual's quick departure after the flash points to a premeditated act. No accidental or benign explanation is evident.  
+4. Decide: 1  
+ANSWER
+1
+/mnt/datasets/ucf_crime/Arson/Arson035_x264.mp4	1
+
+THOUGHTS  
+1. Observe: Street-level CCTV footage, timestamped 012, 031. White van parks on side, person approaches with box or material, later vehicles drive by, and smoke starts appearing, causing cars to move away.
+2. Reason: Person with another person carrying flammable material, resulting in fire or smoke. The disappearance of the parked vehicles and appearance of smoke suggest a possible arson attempt.
+3. Double-check: Consider alternative causes incidents, like machinery, but the deliberate nature of the van’s's behavior aligns with intentional fire-setting.
+4. Decide: 1
+
+ANSWER  
+1
+/mnt/datasets/ucf_crime/Arson/Arson041_x264.mp4	1. Observe: Person in a hooded outfit appears cautiously in a dimly lit indoor or garage area, pauses, then seemingly interacts with something on the floor, possibly causing movement or liquid splashing.
+2. Reason: The person's actions seem curious but not overtly aggressive or malicious. No clear evidence of harm, fighting, accident, explosion, shooting, or riot.
+3. Double-check: No further details on interactions beyond non's-aggressive movement; no visible objects or elements indicating more severe deviance.
+4. Decide: 0
+
+0
+/mnt/datasets/ucf_crime/Assault/Assault007_x264.mp4	I observe a security camera view from what appears to be a bank or financial facility. A person is lying on the ground, seemingly un incapacitated or unconscious, next near an ATM machine. A second individual enters the scene carrying what looks like a cleaning or maintenance tool, possibly a broom, and uses it to strike the person on the ground. No injuries from the tool are visible. Two additional individuals then enter, approaching with what appear to be protective gear and masks, suggesting they could be security or staff involved in the situation.
+
+Reasoning: The use of a weapon-like object to strike another person could be interpreted as abuse or assault. The presence of multiple individuals possibly indicating an arrest or restraining situation.
+
+Double-check: The sequence involves a non of coercion or restraint using the tool, with subsequent appearance of what might be security personnel. The context does not suggest mutual violence or a crowd-based assault scenario, nor does it show signs of a fire, explosion, or car accident. The actions do align with potential abuse due to non's non on the victim during a likely attempt to apprehend or neutralize a person.
+
+Decide: 1  
+ANSWER 1
+/mnt/datasets/ucf_crime/Assault/Assault012_x264.mp4	1. Observe: The scene is an outdoor urban area at night, with people walking and interactions. Two individuals appear to engage in a physical altercation, with one falling to the ground.
+
+2. Reason: The act of one person attacking another, resulting in the second being on the ground, constitutes Fighting.
+
+3. Double-check: No indication of mutual combat, but the presence of an aggressive act against a single individual suggests criminal intent.
+
+4. Decide: 1
+
+ANSWER
+1
+/mnt/datasets/ucf_crime/Assault/Assault011_x264.mp4	1. Observe: The video shows an outdoor area with numerous motorcycles parked in rows. Several people are present, casually walking in different directions. There are interactions, but they dont involve physical conflict. Some people are engaged in conversation or moving near the parked motorcycles. The environment seems busy but not chaotic.
+
+2. Reason: While the video contains normal pedestrian activity and multiple individuals interacting, there’s no evidence of any deviant behavior such as fighting, abuse, car accidents, explosions, shootings, or riots.
+
+3. Double-check: Confirm that all observed are focused on normal activity, with no visible incident or abnormal actions.
+
+4. Decide: 0
+
+ANSWER
+0
+/mnt/datasets/ucf_crime/Burglary/Burglary004_x264.mp4	THOUGHTS  
+1. Observe: Two individuals are forcefully attempting entry into an ATM enclosed booth using a vehicle, throwing a metal box onto the structure and climbing over it, causing visible structural damage.  
+2. Reason: The actions involve forced entry into a secured area, with two individuals working collaboratively and deliberately using tools to gain access; this constitutes an act of criminal behavior.
+3. Double-check: The presence of a vehicle involved in the break-in adds to the criminal intent, as it’s commonly associated with vehicle-assisted burglaries. The damage to the structure and their focused efforts on forced access indicate unlawful activity.
+4. Decide: 1
+
+ANSWER
+1
+/mnt/datasets/ucf_crime/Burglary/Burglary017_x264.mp4	1. Observe: A person is repeatedly climbing and then quickly descending a desk in a reception area. The desk is cluttered with office supplies.
+2. Reason: The individual's erratic climbing and swift movements suggest potential harm or mischief, but there's no clear evidence of direct violence or intentional property damage in the video frames provided, aligning with what might constitute 'fighting' if this were a broader altercation.
+3. Double-check: The actions appear playful yet risky; no signs of an ongoing fight or clear criminal intent are visible beyond the person’s behavior itself.
+4. Decide: 0  
+ANSWER
+0
+/mnt/datasets/ucf_crime/Burglary/Burglary018_x264.mp4	1. Observe: Black-and-white security footage of a driveway at night. A person in protective suits and gas mask approaches and touches an area of the wall.  
+2. Reason: The person is interacting with the wall in a manner that could be scrutinized for suspicious activity, but there's no visible weapon or aggressive behavior. No clear indication of abuse, fighting, car accident, explosion/fire/arson, or shooting is present.  
+3. Double-check: The individual is wearing a gas mask, which could imply security or protective measures. However, there's no definitive evidence of criminal activity within the footage.  
+4. Decide: 0  
+ANSWER
+0
+/mnt/datasets/ucf_crime/Burglary/Burglary021_x264.mp4	THOUGHTS  
+1. Observe: A trailer is parked with its tailgate down. A person appears and begins handling and placing a bicycle onto the trailer's.  
+2. Reason: The scene depicts an individual loading a bicycle into a trailer. There's no indication of violence, harm, accident, fire, or any other listed deviant activities. The actions are benign, involving ordinary activity.  
+3. Double-check: The video shows no aggressive behavior or crime evident. The person appears to be performing a routine task, positioning and securing a bicycle carefully.  
+4. Decide: 0
+
+ANSWER
+0
+/mnt/datasets/ucf_crime/Burglary/Burglary026_x264.mp4	1. Observe: A person dressed in a white hoodie attempts to climb out of a window, struggling with their position. The individual later re-enters the window and manipulates the blinds from inside within the indoor room.
+
+2. Reason: The video depicts an individual attempting an exit or entry through a window, which, though not life-threatening or targeting another person, might imply trespassing or burglary attempts. However, there is no evidence of harm, intentional violence, or the use of weapons. The context provided by the timestamp and setting doesn't suggest illegal activity, such as shooting, fighting, or arson.
+
+3. Double-check: There is no interaction with another individual, and no property damage or aggressive actions are evident. The actions appear to be an individual’s struggle with window entry/exit, which is ambiguous but doesn't directly fit the criteria for clear deviant or criminal behavior in this context.
+
+4. Decide: 0
+
+ANSWER
+0
+/mnt/datasets/ucf_crime/Burglary/Burglary034_x264.mp4	1. Observe: The scene is of an indoor area with tables and chairs, with a caution sign on the floor. Two people appear in sequence, moving aggressively, possibly engaging in an altercation.  
+2. Reason: One person appears to swing a chair, which could suggest violence. However, there is no clear definitive physical contact or aggressive behavior such as punching or kicking shown in these frames. The movements are abrupt and suggestive of tension but lack the clear indicators of fighting as stated in the fighting category.  
+3. Double-check: The individuals seem to be interacting quickly, but no physical assault is clearly evident from these specific frames. The environment does not suggest a crowded or riotous situation. The observed behavior doesn’t necessarily align with any of the specific categories mentioned except for potentially a struggle or a disagreement.  
+4. Decide: 0  
+ANSWER
+0
+/mnt/datasets/ucf_crime/Burglary/Burglary033_x264.mp4	THOUGHTS  
+1. Observe: A person knocks on a door at night, then suddenly the door closes and the person retreats. The setting is illuminated by an overhead porch light, with outdoor elements like potted plants and a car visible.  
+2. Reason: The action of knocking appears benign, but the sudden retreat of the individual could be seen as suspicious; however, without explicit aggressive intent or harm, it doesn't readily align with categories of abuse, fighting, car accident, explosion/fire/arson, shooting, or riot/crowd violence.  
+3. Double-check: The sequence lacks evidence of harm, intentional destruction, or aggressive behavior—there's no clear deviance beyond possibly an unsettlingly quick departure.  
+4. Decide: 0  
+ANSWER
+0
+/mnt/datasets/ucf_crime/Burglary/Burglary035_x264.mp4	1
+
+THOUGHTS  
+1. Observe: Night footage shows a child interacting with a garden hose; a door opens, and the child briefly enters, stands inside, then exits the door without reentering the room.  
+2. Reason: The child and adult exhibit normal behavior with no indications of harm or criminal activity. The door re-closes after the brief interaction, consistent with a secure environment.  
+3. Double-check: No aggressive gestures, injury, or harmful objects visible; the scene remains calm with typical household activity. No signs of fighting, accidents, or suspicious actions.  
+4. Decide: 0  
+ANSWER
+0
+/mnt/datasets/ucf_crime/Burglary/Burglary037_x264.mp4	THOUGHTS  
+1. Observe: The video shows a dimly lit room with a person searching through boxes on a counter, and another person entering and leaving occasionally. No sign of physical harm or overt violent activity is observed in the footage provided.
+2. Reason: The behavior shown, such as searching through items, cannot be confidently classified as any specific deviant behavior like abuse, fighting, car accidents, explosions/fire, shooting, or riots based on the observations made.
+3. Double-check: There is no clear evidence of the categories listed for deviant behavior; the actions seem non-based and within a domestic or office setting. The footage does not explicitly show harm, violence, or illegal activities.
+4. Decide: 0
+
+ANSWER  
+0
+/mnt/datasets/ucf_crime/Burglary/Burglary063_x264.mp4	1
+
+THOUGHTS  
+1. Observe: Surveillance footage from a high vantage point showing a male suspect wearing a multi-colored baseball cap, a white t-shirt, and black jeans. The suspect is observed down a stairway, walking along a sidewalk, and returning to the stairway carrying what appears to be a tool. There is a blue vehicle with police markings parked on the street.
+2. Reason: The suspect’s presence at the location of a commercial burglary, combined with his actions of holding a tool, suggests he is involved in criminal activity. This aligns with the description of a suspect mentioned in the missing person and burglary notice.
+3. Double-check: The time stamp on the surveillance footage indicates it was recorded on 0116-06-12- 05:34:46, which matches the incident timeline mentioned in the notice. The suspect's attire matches the description provided. The actions observed of suspicious behavior specific to the context of a burglary investigation.
+4. Decide: 1
+
+ANSWER  
+1
+/mnt/datasets/ucf_crime/Burglary/Burglary077_x264.mp4	THOUGHTS  
+1. Observe: The scene takes place in a hardware store with multiple customers present. A group person in dark clothing enters and interacts animatedly with people in the back before moving hurriedly. Another a person in dark attire follows, holding an orange bag and seemingly assisting. 
+2. Reason: The actions of individuals who move rapidly in a store that seems to be preparing for some unseen event or disturbance, while interactions appear hurried and possibly planned.
+3. Double-check: No visible armed conflict or overt criminal act in the main area; the emphasis is on swift, purposeful movement by individuals.
+4. Decide: 1
+
+ANSWER
+0
+/mnt/datasets/ucf_crime/Burglary/Burglary078_x264.mp4	1. Observe: A person enters a room through a door, wearing casual clothing and a scarf over their face. They appear to be cautious, adjusting the door slightly as they step in.
+2. Reason: The person is using a scarf to obscure their identity, which could suggest an intent to avoid recognition. However, there are no evident signs of violence, harm, or illegal activities in the scene.
+3. Double-check: The person is alone, moving discretely but calmly, and there's no clear indication of abnormal or criminal activities. The setting remains consistent and non-threatening.
+4. Decide: 0
+ANSWER
+0
+/mnt/datasets/ucf_crime/Burglary/Burglary092_x264.mp4	1. Observe: The scene is a nighttime outdoor area with a man, red tables and chairs, a parked car with its door open, and a person walking across the street. The person walks towards the frame and approaches an outdoor refrigerator.
+
+2. Reason: The individual proceeds to open the refrigerator door and handle its contents. After some time, they step back leaving the refrigerator door open. This action is a mundane behavior, not indicative of any criminal or deviant activity.
+
+3. Double-check: No other aggressive, violent, unusual, or harmful actions are observed. The individual appears to be looking for or retrieving something from the refrigerator. There's no indication of theft, damage, or conflict.
+
+4. Decide: 0
+
+ANSWER
+0
+/mnt/datasets/ucf_crime/Explosion/Explosion002_x264.mp4	1
+
+Observe: Nighttime gas station setting, two individuals interact near a fuel pump; at one individual holds a cell phone that unexpectedly sparks and ignites nearby fuel, resulting in a small explosion. The other person, dressed in casual attire, reacts by stepping away quickly. A third man in a red shirt appears, approaching the scene, and appears to be talking to the first person.
+
+Reason: The ignition of fuel follows the cell phone, resulting in a fire, which is an intentional act likely to cause damage or danger. Although the fire is small, the potential for explosion and injury is clear. This event crosses the boundaries of an accidental spill or minor mishap.
+
+Double-check: The footage sequence shows clearly shows a deliberate action triggering the ignition, given the proximity of the cell phone to the fuel pump. The escalation into a fire indicates potential consequences beyond simple mistake.
+
+Decide: 1
+/mnt/datasets/ucf_crime/Explosion/Explosion004_x264.mp4	1
+
+Thoughts:
+1. Observe: At the beginning, two individuals appear to be setting up some equipment on the exterior of a building, possibly a house. There appears to be some slight struggle or collision between them, but it is not clear if it is aggressive. As the video progresses, one of them removes their mask, revealing face, and there is some tension between them. Towards the end, one individual backs away quickly, while the other runs to the other and there is some an exchange of an object.
+2. Reason: The initial activity seems to be preparation for something, possibly maintenance, but the behavior becomes suspicious when the individuals become more agitated. The struggle over the object or bag in the final exchange indicates a potential theft or a transaction gone wrong, which could be considered as deviant behavior.
+3. Double-check: There are no tools or firearms visible, and the setting is a residential area, which reduces the likelihood of it being a planned crime. However, the aggressive behavior and the object exchange strongly indicate an offense.
+4. Decide: 1
+
+Answer:
+1
+/mnt/datasets/ucf_crime/Explosion/Explosion006_x264.mp4	THOUGHTS  
+1. Observe: The video frames depict a public-town square with multiple explosions occurring near parked and moving cars, causing damage. Pedestrians are seen running away in response.  
+2. Reason: The explosions suggest deliberate ignition or accidental ignition causing significant property damage, aligning with an explosion/arson category. The presence of multiple vehicles being damaged further supports this.
+3. Double-check: The explosions are focused on at, not accidental, as the context seems calm prior to the incidents, indicating arson. The damage seen on vehicles corroborates this assessment.
+4. Decide: 1
+
+ANSWER
+1
+/mnt/datasets/ucf_crime/Explosion/Explosion008_x264.mp4	THOUGHTS  
+1. Observe: Clear road with minimal traffic; power poles and open land visible. The scene is calm initially, then shifts to a dramatic increase in smoke, obscuring the area behind the poles.
+2. Reason: The smoke and its thick, dark coloration suggest a possible explosion or fire, which aligns with the categories of Explosion / Fire / Arson.
+3. Double-check: No visible evidence of an ongoing fire or explosion within the initial frames before the smoke appears. The sudden appearance of smoke without preceding fire or explosion indicators makes the event seem deliberate rather than accidental.
+4. Decide: 1
+
+ANSWER
+1
+/mnt/datasets/ucf_crime/Explosion/Explosion010_x264.mp4	1. Observe: The video shows a forested area with smoke rising in the background. Structures that appear to be part of a mining site are visible, with smoke gradually intensifying.
+2. Reason: The thickening smoke indicates a fire or explosion at the mining site, suggesting a deliberate or accidental ignition causing visible damage to the environment.
+3. Double-check: Smoke intensifies and flames becomes visible, confirming combustion activities; no accidental or natural causes factors visible that would explain fire otherwise.
+4. Decide: 1
+ANSWER 1
+/mnt/datasets/ucf_crime/Explosion/Explosion011_x264.mp4	1. Observe: A busy street scene with various vehicles, including buses and rickshaws, moving and pedestrians crossing. A white blast or puff of smoke appears near the center, affecting nearby traffic.
+  
+2. Reason: The appearance of smoke in the middle of a road suggests a sudden explosion or accidental ignition, implying an explosion. Despite uncertainties regarding the source of the smoke, the context of the roadside and the smoke's characteristics hint at a likely explosive event.
+  
+3. Double-check: Reevaluate for other other causes sources of smoke, such as vehicle emissions or an accident; however, the smoke’s sudden appearance, coupled with its location, leads back to the initial suspicion of an explosion. No alternative explanations strongly contradict this at category.
+  
+4. Decide: 1
+
+ANSWER
+1
+/mnt/datasets/ucf_crime/Explosion/Explosion013_x264.mp4	1. Observe: The video shows a person in a fuel station working near a truck, moving an object across a concrete surface. Sparks are evident, suggesting ignition or an explosion. The surroundings are chaotic with scattered items and a burning scene.
+2. Reason: The presence of visible fire and sparks in a fuel-station context implies an accidental or deliberate act that causes can cause significant harm → Explosion / Fire / Arson.
+3. Double-check: The sparks originate close to the truck, where fuel-related activities is likely occurring. There is no clear evidence of an accidental spark unrelated to the person’s actions. The sequence aligns with deliberate ignition.
+4. Decide: 1
+ANSWER 1
+/mnt/datasets/ucf_crime/Explosion/Explosion016_x264.mp4	THOUGHTS  
+1. Observe: The video shows a large public building in winter with smoke spreading from the top of the structure. Cars are parked in a surrounding lot, and it appears to snow or be snowy conditions. 
+2. Reason: The presence of smoke suggests a potential incident, such as a fire or explosion. However, no fire or explosion is visibly occurring in the footage. The smoke is rising steadily from the tower of the building, but the specific cause, such as arson or accidental ignition, is not clear from the video alone.
+3. Double-check: There are no flames visible, and the smoke is limited to the building's tower. The building has no visible damage, indicating it may be smoke from an explosion or fire that has not yet caused visible destruction.
+4. Decide: 0
+
+ANSWER
+0
+/mnt/datasets/ucf_crime/Explosion/Explosion017_x264.mp4	1. **Observe**: Scene at a gas station; several people around motorcycles. At the base of a support pillar, a fire starts, spreading slightly. Individuals react by moving away.  
+2. **Reason**: The fire appears to come from a vehicle's, specifically under a fuel pump. The ignition is intentional as no accidental cause is visible, leading to destruction of property. This fits the category of explosion/fire/arson.  
+3. Double-check: Fire occurs at a specific point on what seems an automated or static setup, consistent with deliberate ignition. Other individuals disperse, indicating awareness of danger. No accidental trigger or natural fire event is seen. Confirm intent-based ignition.  
+4. **Decide**: 1  
+ANSWER
+1
+/mnt/datasets/ucf_crime/Explosion/Explosion020_x264.mp4	THOUGHTS  
+1. Observe: Group of men outside building entrance, one holding a bright object emitting sparks, another grabbing his arm; bystanders in the vicinity.  
+2. Reason: Object being handled by the man emitting sparks suggests potential for explosive effect, indicating risky behavior. Bystanders’ avoidance and the nature of the object imply a dangerous activity. This scenario doesn't approach the violent intensity of fighting or the scale of a riot, but it carries high risk of unintended harm, aligning with potential explosion/arson.  
+3. Double-check: No visible flames or fire, but sparks suggest possible ignition device. No direct indication of intent to cause widespread damage like in a riot. Focus on controlled use of sparks might suggest an attempted crime, possibly arson or preparatory explosive action.  
+4. Decide: 1  
+ANSWER
+1
+/mnt/datasets/ucf_crime/Explosion/Explosion021_x264.mp4	THOUGHTS  
+1. Observe: The video shows a gas station's canopy appearing to explode or collapse, with debris flying.  
+2. Reason: The sequence of images shows substantial damage and destruction typically associated with an explosion or deliberate demolition. No evidence suggests this is a controlled, non-violent act; rather, it's a spontaneous event causing destruction.  
+3. Double-check: The presence of debris flying into the air suggests a powerful force rather than controlled demolition. The lack of human intervention or clear weapon use further supports it as an explosion.  
+4. Decide: 1  
+ANSWER
+1
+/mnt/datasets/ucf_crime/Explosion/Explosion022_x264.mp4	1. Observe: An industrial setting with machinery and control panels. A lone worker in casual work attire and a safety helmet enters the frame, looks towards the machinery, and then exits.  
+
+2. Reason: The video does not show any interactions indicating abuse, fights, car accidents, explosions, shootings, or riots occurring within this scene. The worker appears to be performing a routine inspection or check, which is a normal, non non-deviant activity.  
+
+3. Double-check: The setting is a utility room with no indicators of a negative event such as an explosion or violent behavior. The worker's actions are routine, and the environment remains calm throughout.  
+
+4. Decide: 0
+
+ANSWER
+0
+/mnt/datasets/ucf_crime/Explosion/Explosion025_x264.mp4	THOUGHTS
+1. Observe: View from an open window overlooking a building labeled "The Windmill Bar," showing no visible movement or activity outside the window frames or exterior elements.
+2. Reason: The scene is still; no individuals or notable actions are present. No indications of violence, fire, accident, or any other specific deviant activities.
+3. Double-check: Ensure the lack of movement or signs of disturbance is confirmed. No suspicious items or individuals detected.
+4. Decide: 0  
+ANSWER
+0
+/mnt/datasets/ucf_crime/Explosion/Explosion027_x264.mp4	THOUGHTS  
+1. Observe: Two men appear in an indoor setting, likely a workshop or storage room. One man lies on a chair, the other interacts with items on a table. A stool falls over, and there is smoke or dust visible near the floor.  
+2. Reason: The actions involve a stool falling, which doesn't indicate violence or harm. The presence of possible smoke suggests a minor mishap, but no aggressive behavior is displayed.  
+3. Double-check: Neither individual is in a position suggesting attack or defense, property damage beyond the stool is minor, and the environment remains controlled.  
+4. Decide: 0  
+ANSWER
+0
+/mnt/datasets/ucf_crime/Explosion/Explosion028_x264.mp4	1. Observe: The video shows a street with parked cars, where initially there is no activity. Suddenly, smoke appears in the distance, and people start running down the street. Some individuals scatter in apparent haste or safety-seeking movements.  
+2. Reason: The appearance of smoke suggests an explosion or fire. People fleeing from its direction indicate awareness of a potential threat. The context of the scene being a city street doesn’t immediately escalate to riot or specific criminal intent but leans toward an unexpected emergency situation.  
+3. Double-check: The movement is focused away from the smoke, and no signs of fighting or shooting are visible. The reaction is consistent with a sudden emergency response, such as an explosion or fire.  
+4. Decide: 1  
+ANSWER
+1
+/mnt/datasets/ucf_crime/Explosion/Explosion029_x264.mp4	1. **Observe**: A person at the gas pump area of a gas station. Opens the trunk of a parked car. Sparks or flames emerge near the gas pump and car. The person reacts quickly, moving backwards and crouching.
+
+2. **Reason**: The appearance of a flame near the gas pump and car suggests an accidental or intentional act of fire, likely due to the ignition of gasoline fumes. This scenario fits the category of Explosion / Fire / Arson.
+
+3. Double-check: The presence of a flame near fuel equipment and the individual's startled reaction strongly indicates a fire incident. No evidence of any accidental scenario is present.
+
+4. **Decide**: 1
+
+ANSWER
+1
+/mnt/datasets/ucf_crime/Explosion/Explosion032_x264.mp4	1
+
+Observe: The video depicts a street scene with vehicles parked and moving. A person near a fire extinguisher sprays a significant amount of extinguishing material towards an intense flame in the background. This action persists with a fire erupting multiple times, likely causing destruction, followed by a return to normalcy without further flames.
+
+Reason: The action appears to be an attempt to extinguish a fire, possibly accidental or intentional. However, the significant presence of fire and extinguishing action does align with a potential arson or explosion context. However, considering the context might be an emergency response rather than deliberate harm, the primary observation is a fire outbreak without clear evidence of intent to cause harm.
+
+Double-check: While the flames and extinguishing action are present, there's no explicit indication or confirmation of arson (intentional to cause fire). The presence of the individual with the extinguisher and responding activity suggest an emergency rather than deviant behavior such as arson.
+
+Decide: 0
+/mnt/datasets/ucf_crime/Explosion/Explosion035_x264.mp4	1. Observe: The scene shows a smoke-filled office space, suggesting fire or explosion damage. Papers are scattered, and the lighting is dim.
+2. Reason: The presence of smoke implies a fire or explosion, which is linked to a deliberate or accidental ignition causing property damage → Explosion / Fire / Arson.
+3. Double-check: The area appears to be a work environment, and there is no visible active combat or weapon discharge, reinforcing that the event is an accident involving fire or explosion.
+4. Decide: 1
+ANSWER
+1
+/mnt/datasets/ucf_crime/Explosion/Explosion036_x264.mp4	1
+
+The scene begins with a person seemingly lying on the ground, while others stand around, possibly involved in restraining. Suddenly, there's an eruption of smoke or dust, causing the individuals to react differently, some some stumbling backward. More people then gather around the area, assisting others, which indicates there was an unexpected incident, possibly related to a collision or accident. The presence of several bystanders gathered after the disturbance also contributes to suspicion of a violent confrontation or accident. Although there are brief movements of fleeing, the lack of clear evidence of intentional violence or shooting limits the conclusion to a potential accident or mutual struggle causing commotion. However, given the visible tension and multiple people involved, it leans toward crowd-related deviance without clear shooting or arson. 
+
+1
+/mnt/datasets/ucf_crime/Explosion/Explosion039_x264.mp4	The video depicts an incident captured on a restaurant camera. A customer, accompanied by a child, appears in the restaurant and makes an alarming gesture with his right hand to the cashier. The cashier's reaction and the aftermath suggest the customer might have held something unusual, such as a weapon, threatening the establishment. There's visible panic in the scene, as other the cashier quickly exits the area and the customer's hurried departure implies a fear response. The absence of significant violence between multiple individuals and the lack of any fiery or explosive elements or a clear discharge of a firearm indicates it’s more aligned with an act of potential intimidation or a false alarm rather than specific categories like shooting or riot. 
+
+**THOUGHTS**
+1. Observe: A customer confronts the cashier, exits swiftly, and customer with child reacts with quick movement. No signs of mutual violence, fire, fire-arm discharge, or a large crowd engagement.
+2. Reason: The gesture and immediate evacuation hint at a threat, possibly a weapon, causing panic. This does not fulfill the precise criteria for abuse, fighting, car accident, explosion/arson, or shooting. It absence of explicit destructive behavior or large-scale disorder reduces this to not meet the riot threshold.
+3. Double-check: Scanned each segment for missed cues, confirm no actual violence, fire-starting, or weapon discharge is observed; no large crowd involved.
+4. Decide: 0
+ANSWER
+0
+/mnt/datasets/ucf_crime/Explosion/Explosion042_x264.mp4	THOUGHTS  
+1. Observe: Nighttime street scene, significant smoke and debris, multiple people gathered around a large overturned vehicle, emergency responders present.  
+2. Reason: Presence of a large overturned vehicle and smoke suggests an accident or explosion. The gathered crowd and emergency responders indicate an incident requiring attention. 
+3. Double-check: There is no visible fire, but the context indicates a serious event. Overturned vehicles often result from accidents or explosions.
+4. Decide: 1
+
+ANSWER
+1
+/mnt/datasets/ucf_crime/Fighting/Fighting002_x264.mp4	1. Observe: Tilted surveillance footage captures a corner of a cluttered counter, shelves with product boxes, scattered debris, and two individuals interacting swiftly. Timing suggests a potential disturbance or intervention.  
+2. Reason: The hurried movement near the counter, coupled with scattered items, implies disorder or an attempted theft or disruption. However, no direct confrontation or violence is observable, and no property damage is visibly confirmed in high detail. The dynamic between the two persons suggests a possible conflict or chase but lacking clarity points toward clear criminal intent like aggravated robbery or assault.
+3. Double-check: The scene is chaotic, but no weapon is seen, and no significant physical confrontation is captured. The scattered goods might be a result of hurried evacuation or an attempted theft attempt rather than a direct violent act. The context implies urgency without definitive proof of a crime in progress.
+4. Decide: 0  
+ANSWER
+0
+/mnt/datasets/ucf_crime/Fighting/Fighting018_x264.mp4	1. Observe: A scene from CCTV footage shows a corridor with people walking. In the foreground, a young person in a dress appears aggressive towards another person wearing dark clothing, pushing and attacking them. The person in dark clothing falls to the ground, and the attacker continues striking them. Other people in the corridor are moving further away, some alert and walking cautiously.  
+2. Reason: The altercation involves two individuals engaging in mutual violent actions, with the aggressor repeatedly striking the other. The context appears personal, as they are in a corridor with no indication of sport or combat rules. This constitutes Fighting.
+3. Double-check: The environment does not resemble a controlled sporting event, and the actions are aggressive and un reciprocal but repeated. No protective gear or indications of a martial arts scenario support a legitimate sparring scenario.
+4. Decide: 1
+ANSWER
+1
+/mnt/datasets/ucf_crime/Fighting/Fighting033_x264.mp4	THOUGHTS  
+1. Observe: Narrow tunnel with five people; initial group includes three people engaged in conversation, while a couple walks towards them. Two people lying on the ground later, the individual in the gray hoodie appears aggressively confronting the one in the dark hoodie, who who gets disarmed and falls. A chase ensues as the couple turns back with intent to assist.  
+2. Reason: Aggressive physical confrontation and subsequent pursuit suggest possible abuse or violence.  
+3. Double-check: There is no clear evidence of non person consent or mutual participation indicative of a fight. However, the aggressive act by one individual, resulting in another falling, aligns with the definition of abuse or criminal behavior.  
+4. Decide: 1  
+ANSWER  
+1
+/mnt/datasets/ucf_crime/Fighting/Fighting042_x264.mp4	1
+
+THOUGHTS  
+1. Observe: Security personnel and another individual near an entrance; brief physical confrontation occurs followed by a sudden exit of the second individual.  
+2. Reason: Physical altercation between two individuals under security surveillance, escalates to fleeing from the premises, suggesting an attempt to avoid capture or confrontation.  
+3. Double-check: Physical engagement stops shortly, no weapons or severe injury visible; the fleeing behavior might suggest attempts to evade authorities, categorizingd as non.  
+4. Decide: 1  
+ANSWER  
+1
+/mnt/datasets/ucf_crime/Fighting/Fighting049_x264.mp4	1. Observe: Interior of a train carriage with seating on both sides, people are seated and stands. An individual in dark clothing stands and approaches the seated individuals.
+2. Reason: The standing individual escalates to physical confrontation with one person, moving toward them aggressively, leading to physical altercation.
+3. Double-check: The action is a direct confrontation and physical aggression between individuals in a confined space, which fits the definition of fighting.
+4. Decide: 1
+ANSWER 1
+/mnt/datasets/ucf_crime/RoadAccidents/RoadAccidents001_x264.mp4	1
+
+==========================================================
+
+THOUGHTS  
+1. Observe: Night scene at a driveway, objects on the ground possibly a person's lying, two vehicles passing by, dim lighting.
+2. Reason: No visible direct confrontation, violence, or signs of conflict.
+3. Double-check: Scene lacks clear elements of fighting, accidents, or criminal acts.
+4. Decide: 0
+ANSWER
+0
+/mnt/datasets/ucf_crime/RoadAccidents/RoadAccidents002_x264.mp4	1
+
+THOUGHTS  
+1. Observe: A bustling city sidewalk with heavy pedestrian and vehicular traffic, indicating an urban environment. People are walking in various directions, cars, buses, and other other vehicles are moving on the road. A noticeable red light is visible on a pedestrian signal.  
+2. Reason: The scene depicts a typical busy street with regular traffic behavior. There is no clear indication of any deviant, abnormal, or criminal activities such as fighting, car accidents, explosion, riot, or shooting. Pedestrians are moving safely along the sidewalk, and vehicles are adhering to traffic signals.
+3. Double-check: The video does not show any overt signs of distress, aggression, or emergency response that would suggest an incident. All observed activities appear to align with normal city life scenarios without visible signs of deviance.
+4. Decide: 0  
+ANSWER  
+0
+/mnt/datasets/ucf_crime/RoadAccidents/RoadAccidents004_x264.mp4	1.
+
+THOUGHTS  
+1. Observe: A busy intersection with multiple vehicles and a few pedestrians crossing. The scene is filmed from an overhead perspective during what appears to be daytime. There is no obvious sign of physical violence, accident, fire, or crime occurring.
+  
+2. Reason: While there is motion and activity, all actions appear to be typical of traffic and pedestrian movement. There is no direct evidence of any of the specified deviant or criminal behaviors like abuse, fighting, car accidents, explosions, shootings, or riots.
+  
+3. Double-check: The video frames show cars stopping at a traffic light, proceeding in an orderly fashion, and pedestrians crossing safely. No abnormalities or criminal activities are observable.
+  
+4. Decide: 0
+
+ANSWER
+0
+/mnt/datasets/ucf_crime/RoadAccidents/RoadAccidents009_x264.mp4	`'1
+
+1. Observe: The scene is an intersection with a white pickup truck stopped in the crosswalk. People are seen running or running across the street. Two individuals on the left appear to be on a bicycle, and a fourth person is on a skateboard.
+2. Reason: There is no clear indication of any aggressive or violent interactions. The people seem to be crossing the street in a typical manner without signs of fighting or distress. No one appears to be harmed or in immediate danger.
+3. Double-check: The actions of the pedestrians and cyclists do not indicate any unlawful or abnormal behavior, such as fighting, accidents, explosions, or shootings. Everyone seems to be going about their day normally.
+4. Decide: 0
+ANSWER  
+0
+/mnt/datasets/ucf_crime/RoadAccidents/RoadAccidents010_x264.mp4	1. Observe: A silver car is reversing into a driveway, with a red bus approaching from the left and blocking the driveway entrance. The car is partially inside the gate, and a man exits it and appears to be running away from the bus.
+2. Reason: The bus is attempting to enter the driveway where the car is parked in such a way that it obstructs the path. The behavior of the man running exiting the car appears to be an urgent reaction to this situation, potentially indicating a struggle or defensive maneuver to prevent the bus from entering.
+3. Double-check: The sequence shows a clear obstruction and a reaction to prevent a potential collision, indicating concern for safety. The presence of emergency personnel or other from the bus suggests an attempt to resolve the situation. No overt aggressive action by the man can be confirmed from these scene.
+4. Decide: 1
+ANSWER
+0
+/mnt/datasets/ucf_crime/RoadAccidents/RoadAccidents011_x264.mp4	1. Observe: A busy intersection with vehicles, motorcycles, and pedestrians navigating the area.
+2. Reason: Motorcyclists are seen maneuvering around parked vehicles. One motorcyclist appears to weave closely past another, potentially indicating risky or near-miss behavior.
+3. Double-check: There doesn't appear to be direct physical confrontation or collisions involving the motorcycle in immediate danger. No clear signs of aggressive driving such as sudden high-speed turns or overtaking dangerously.
+4. Decide: 0  
+ANSWER
+0
+/mnt/datasets/ucf_crime/RoadAccidents/RoadAccidents012_x264.mp4	1
+
+THOUGHTS  
+1. Observe: A car makes a sudden turn or loss of control at a crossroads, resulting in a collision that flips it onto its side. Other vehicles stop to avoid the accident.
+2. Reason: The car's accident involves a traffic collision causing vehicle damage. The flip and collision clearly indicate a vehicular accident.
+3. Double-check: The flipped vehicle, stopped motion, and halted traffic validate it as a car accident.
+4. Decide: 1  
+ANSWER  
+1
+/mnt/datasets/ucf_crime/RoadAccidents/RoadAccidents016_x264.mp4	THOUGHTS  
+1. Observe: Urban street scene, pedestrians on sidewalk, car moving irregularly, bystanders react to rear-ending crash.  
+2. Reason: Rear-end collision resulting in stopped and scattered debris; no clear firearms discharge. Assessing for deviance in categories like riot or explosion not visible.  
+3. Double-check: No signs of ignition or violent crowd activity; focus on vehicle collision.  
+4. Decide: Λ  
+ANSWER
+0
+/mnt/datasets/ucf_crime/RoadAccidents/RoadAccidents017_x264.mp4	1
+
+THOUGHTS  
+1. Observe: Multiple cars crashing into each other at an intersection, causing accidents and skid marks.  
+2. Reason: The cars collide in a chain reaction, resulting in damage and potential injury. This fits the description of a traffic collision causing harm.  
+3. Double-check: Several vehicles involved, clear collision points, and resultant road damage. Confirm multiple vehicles in a crash sequence.  
+4. Decide: 1  
+ANSWER  
+1
+/mnt/datasets/ucf_crime/RoadAccidents/RoadAccidents019_x264.mp4	1. Observe: A pedestrian crosswalk incident involving motorbikes and a car. A car pulls up abruptly, causing motorbikes to collide with it. Several people are seen on the sidewalk, and some individuals are sprawled on the road.
+2. Reason: There is a collision involving vehicles and motorbikes, which suggests a traffic accident. People are reacting to the incident, some some appear to be tendinging to the injured on the road.
+3. Double-check: The immediate aftermath of a collision, with clear evidence of an accidental impact between a motorbike and a car. No signs indicate this as anything other a car accident.
+4. Decide: 1
+/mnt/datasets/ucf_crime/RoadAccidents/RoadAccidents020_x264.mp4	THOUGHTS  
+1. Observe: The video shows an urban roadway with multiple vehicles, including motorcycles and buses, as well as pedestrians on the sidewalks and an individual riding a motorcycle off-road. There appears to be a collision involving a motorcycle and a stationary bicycle. The aftermath shows people around the fallen motorcycle and scattered bike parts.
+2. Reason: There is a traffic collision or hit-and-run incident, as witnessed by a dismounted individual and a fallen bicycle in the middle of the road. This directly corresponds to the "Car accident" category.
+3. Double-check: Confirm no other fighting, explosion, shooting, or riot taking place. Focus on the collision and its aftermath.
+4. Decide: 1  
+ANSWER  
+1
+/mnt/datasets/ucf_crime/RoadAccidents/RoadAccidents021_x264.mp4	1. Observe: Three individuals are walking near parked vehicles. One person appears to be walking quickly, while the other two follow at a normal pace. One person stands near a different vehicle in the background.  
+2. Reason: The scene involves a group of people near parked vehicles, but there is no evident aggressive interaction, violence, or dangerous activity that would classify as deviant behaviour. No objects are being moved aggressively, nor does there seem to be an indication of physical harm or conflict. The scene appears calm with ordinary pedestrian movement.  
+3. Double-check: Ensuring that no hidden danger or violent action has been missed; the focus is on the movement of individuals and their environment, which remains passive and non without suspicion of deviant or criminal behavior.  
+4. Decide: 0  
+ANSWER
+0
+/mnt/datasets/ucf_crime/RoadAccidents/RoadAccidents022_x264.mp4	1
+
+THOUGHTS  
+1. Observe: An intersection scene. A motorcycle appears at the crosswalk, strikes a black car causing it to stop abruptly. Several riders and potential pedestrians gather around the accident scene. No fire, explosion, or gunshots are visible; the environment remains calm.  
+2. Reason: The collision and stopping of vehicles suggest a car accident. No additional indicators like emergency vehicles or panickers suggest ongoing emergency or riot.  
+3. Double-check: The aftermath shows a collision indicates immediate impact, not ongoing aggressive behavior or deliberate harm. No signs of arson, arson, or active fighting.  
+4. Decide:  
+ANSWER  
+1
+/mnt/datasets/ucf_crime/RoadAccidents/RoadAccidents121_x264.mp4	1
+
+THOUGHTS  
+1. Observe: A car approaches and collides with a rotating safety barrier, flipping over and tumbling to the ground. People are seen running and assist around the overturned vehicle.  
+2. Reason: A traffic collision resulting in vehicle overturning fits the definition of a car accident.  
+3. Double-check: The focus is on the vehicle collision, not intentional harm or shooting. The aftermath involves rescue, confirming an accident rather than a deliberate act.  
+4. Decide: 1  
+ANSWER  
+1
+/mnt/datasets/ucf_crime/RoadAccidents/RoadAccidents122_x264.mp4	THOUGHTS  
+1. Observe: The video shows a parking area with cars parked and a small building to the left. A man at dark clothing appears and walks up the steps next to the building, pauses, then continues walking further up the path. No signs of altercation, accident, or other malicious activity visible.  
+2. Reason: The individual's movement does not appear indicative of any deviant or criminal behavior; the action is routine and non threat.  
+3. Double-check: No secondary activities observed such as gathering tools for harm, fleeing from an incident, or initiating conflict. The environment remains calm with no additional indicators of abnormal activity.  
+4. Decide: 0  
+ANSWER
+0
+/mnt/datasets/ucf_crime/RoadAccidents/RoadAccidents123_x264.mp4	1. Observe: View of a busy intersection with pedestrians crossing against the traffic flow. A cyclist begins crossing on a green signal, followed by several people on foot. Vehicles, including a white van, cars, and a bus, pass by the crossing.  
+2. Reason: Pedestrians are crossing despite the pedestrian crossing phase when traffic should yield. However, the video does not show any collision, physical altercation, or deliberate harmful act. No fire, explosion, or weapon discharge is visible. The behavior appears normal for a busy intersection, despite the close interaction between pedestrians and vehicles.
+3. Double-check: No signs of any abnormal or criminal activities like fighting, shooting, or arson. The movement is consistent with typical urban traffic and crossing activities, albeit potentially risky.
+4. Decide: 0
+
+ANSWER
+0
+/mnt/datasets/ucf_crime/RoadAccidents/RoadAccidents124_x264.mp4	1. Observe: A motorcycle falls beside a street, disrupting the flow of traffic and causing a few people to quickly react and move away. Vehicles pass through cautiously, and pedestrians appear concerned.
+2. Reason: The incident involves an accident where a motorcycle loses balance and falls onto the road, disrupting traffic and prompting an immediate but non-violent response from bystanders. This does not meet the criteria for car accident with evident harm or injury typical of a collision.
+3. Double-check: The fall is un on to the road; no collision or impact with another vehicle is seen. The presence of people moving away cautiously indicates initial surprise but no ongoing harm, confirming it is an accident without additional severe consequences.
+4. Decide: 0  
+ANSWER
+0
+/mnt/datasets/ucf_crime/RoadAccidents/RoadAccidents125_x264.mp4	$ERROR$
+/mnt/datasets/ucf_crime/RoadAccidents/RoadAccidents127_x264.mp4	1. Observe: A red semi-truck drives through an intersection while a pedestrian dressed in black and one in a pink coat cross the same area at a different phase. The pedestrian in the pink coat appears to jaywalk while the truck passes. The road, surrounding area, and traffic lights in the winter setting are visible.
+2. Reason: The pedestrian's crossing coincides with the truck’s movement through the intersection, raising questions about coordination. However, there is no overt indication of reckless behavior from either, and the traffic signals are functioning.
+3. Double-check: There is no evidence of emergency or distress. The movements are typical of shared road usage, and no aggressive actions are visible.
+4. Decide: 0
+ANSWER
+0
+/mnt/datasets/ucf_crime/RoadAccidents/RoadAccidents128_x264.mp4	1
+
+THOUGHTS  
+1. Observe: A person enters a white car parked on a street, gets inside into an argument with another individual who emerges from the driver's side, and then attempts to drive into the car causing damage.  
+2. Reason: The act of forcefully pushing or crashing into another's vehicle could be considered driving action, but the immediate violent behavior and aggression suggest a potential for criminal behavior, possibly considered as a form of abuse or destruction. However, without explicit evidence of a firearm, explosion, or intent to destroy property on arson, and given the lack of confirmation of a deliberate, premeditated act of violence, it does not conclusively meeting the threshold for shooting or arson, and fits closer to riot or destruction but falls short due to the limited scope and apparent immediacy of an altercation with no broader pattern of criminality.  
+3. Double-check: The action described a clear, isolated incident of potential aggression but lacks the scale or intent of a riot or arson. It no visible injuries, no weapon, and no fire or explosion, so it does not align with the high confidence required for some categories.  
+4. Decide: 0  
+ANSWER
+0
+/mnt/datasets/ucf_crime/RoadAccidents/RoadAccidents131_x264.mp4	1. Observe: A rainy night at an intersection, someone riding a bicycle crosses the pedestrian walkway while vehicles are present; a motorcycle overtakes; traffic lights are visible but no clear sign of emergency or accident.  
+2. Reason: The cyclist’s action crosses a designated pedestrian area, which could be seen as noncompliance with traffic rules, but no collision or clear vehicular accident is visible. The video lacks signs of a shooting, explosion, or fighting.
+3. Double-check: Confirm no immediate evidence of any severe incident; the scene remains in a calm state beyond the crossing cyclist.
+4. Decide: 0  
+ANSWER
+0
+/mnt/datasets/ucf_crime/RoadAccidents/RoadAccidents132_x264.mp4	1. Observe: A busy intersection with several vehicles stopped at a traffic light; a white van and dark-colored vehicle appear to collide or pass dangerously close while in motion.
+2. Reason: The interaction between the white van and the vehicle in front of it resembles a careless or aggressive maneuver, potentially causing a minor collision or reckless driving behavior.
+3. Double-check: The white van seems to be running sudden contact with the vehicle ahead; other's drivers' reactions or any damage is visible. Focus remains on the near-collision.
+4. Decide: 1
+
+ANSWER
+0
+/mnt/datasets/ucf_crime/RoadAccidents/RoadAccidents133_x264.mp4	1. Observe: A van driving across a wide, empty road. Motorcyclists pass by as the sky appears sunny. Suddenly, a motorcycle flips over with fire erupting from it. Individuals react to the incident.
+2. Reason: The motorcycle flipping and igniting is indicative of an accident. The fire and debris suggest a collision and potential arson or accident-related ignition.
+3. Double-check: Context indicates no immediate evidence of deliberate arson by individuals; the scene suggests a traffic collision leading to the fire.
+4. Decide: 1
+ANSWER0
+/mnt/datasets/ucf_crime/Robbery/Robbery048_x264.mp4	1. Observe: A man man in a striped shirt approaches the entrance of a store, watches with gestures, and then steps back as two individuals with masks enter hurriedly followed by another man in a white shirt. 
+2. Reason: The two individuals with masks indicate a potential robbery or illicit activity. The man in the striped shirt reacts to the situation by backing away from the entrance, suggesting an awareness of something unexpected or harmful occurring.
+3. Double-check: No overt violence is observed yet; however, the presence of masked individuals entering quickly and another individual following raises concern. The man's in stripes does not engage but reacts defensively.
+4. Decide: 1  
+ANSWER 1
+/mnt/datasets/ucf_crime/Robbery/Robbery050_x264.mp4	1. **Observe**: A white hatchback vehicle is parked on a driveway. A person exits the vehicle and is accompanied by another individual. A third individual, wearing a striped shirt, approaches and walks by near the vehicle.
+2. **Reason**: The video shows not depict any acts of abuse, fighting, car accidents, explosions/fire, shootings, or riots. There is social interaction near a vehicle that appears normal and not deviant in nature.
+3. **Double-check**: There is a brief pause with the vehicle door open, indicating the person might step in, but no overtly criminal or violent act occurs; it's benign.
+4. **Decide**: 0
+
+ (0
+/mnt/datasets/ucf_crime/Robbery/Robbery102_x264.mp4	1. Observe: A black car arrives through an open gate, two individuals confront each other upon arrival, and a physical altercation breaks out involving pushing and pulling motions.
+2. Reason: The altercation involves two people, exchanging violent actions, which qualifies as Fighting.
+3. Double-check: There are clear signs of physical conflict: aggressive posturing, contact between participants. No signs of other individuals or equipment suggesting the altercation is part of a sport or competitive event. Context does not suggest mutual combat is consensual.
+4. Decide: 1
+
+ANSWER
+1
+/mnt/datasets/ucf_crime/Robbery/Robbery106_x264.mp4	THOUGHTS  
+1. Observe: A person with a backpack stands near a silver car, engaging in a phone conversation. Two individuals arrive on a motorcycle, one dressed in light-colored clothing with a helmet, while the other carries a blue bag and rides without a helmet. They have a brief interaction; the person with the backpack gets into the car, and the motorcycle riders depart. The environment is a parking area with multiple vehicles and litter.  
+2. Reason: The interactions between the individuals appear casual and non't involve physical alter, aggression, or criminal activity. No immediate violent or deviant behaviour is observed such as abuse, fighting, car accidents, explosions/fire, shooting, or riots. The sequence of events remains mundane.  
+3. Double-check: There are no signs of intentional harm, property damage, or collective disorder. The departure of the motorcycle riders as well as the man into the car is normal. No objects are misused or indications of arson, gunfire, or aggressive confrontation.  
+4. Decide: 0  
+ANSWER
+0
+/mnt/datasets/ucf_crime/Robbery/Robbery137_x264.mp4	1
+
+The video captures a scene inside a checkout counter where suspicious behavior unfolds. To summarize:
+
+1. Observe: Individuals are positioned near the cash register in a retail setting. One person is actively interacting with an employee behind the counter, potentially engaging in an exchange or theft-related activity. Others are moving cautiously or hovering around the area. The setting includes shelves of products and typical retail layout.
+2. Reason: The behavior of the individuals indicates an attempt at theft or robbery. The initial person approaching the employee and handling items might be involved in a heist, especially considering their positioning and the cautious movements of those nearby.
+3. Double-check: The sequence of actions involves individuals approaching the counter simultaneously, often in ways that suggest distraction or diversion. There are no clear signs of legitimate transactions or normal retail behavior.
+4. Decide: 1
+
+
+0
+/mnt/datasets/ucf_crime/Shooting/Shooting002_x264.mp4	1
+
+1
+/mnt/datasets/ucf_crime/Shooting/Shooting004_x264.mp4	1
+
+THOUGHTS  
+1. Observe: A police officer approaches a person, restrains them, and then pushes them onto the ground, causing them to fall. The footage appears to be surveillance from an elevated angle, possibly a dashcam or security camera, capturing an outdoor scene with a green car parked nearby.
+2. Reason: The officer’s actions of restraining and forcefully pushing the individual towards the ground could be indicative of an attempt to subdue them, potentially due to a confrontation or arrest.
+3. Double-check: The video quality is grainy and unclear, but the officer's motion and positioning of hands are consistent with restraint or control measures.
+4. Decide: 0
+ANSWER
+0
+/mnt/datasets/ucf_crime/Shooting/Shooting007_x264.mp4	1
+
+THOUGHTS  
+1. Observe: The video consists of two segments—one during daytime and another at night. In both segments, a person appears to be jumping or running erratically across a fenced yard. There is another individual seen at night who is near some objects at the yard's perimeter.  
+2. Reason: The daytime segment shows person moves quickly across the yard, potentially evading something or someone. At night, there appear to be two people moving with an object, possibly engaged in suspicious activity. However, there is no clear evidence of mutual violence, traffic incident, shooting, fire, or explosive activity. While there may be some suspicion of burglary or suspicious behavior, it doesn’t conclusively indicate a clear-cut criminal act like the categories defined.  
+3. Double-check: The actions at nighttime involve carrying something, but no aggressive interaction or violence is visible. The daytime actions appear more playful or hurried without clear deviance. No cars or explosions are present.  
+4. Decide: 0  
+ANSWER  
+0
+/mnt/datasets/ucf_crime/Shooting/Shooting008_x264.mp4	1. Observe: Scene within a store, a person is on the ground near an electronic device, possibly a cash register, and their companions are interacting with it.
+2. Reason: The individual appears to be in distress or injured, and the presence of what looks like a cash register suggests they might be in a checkout area, potentially involved in theft or another mishap.
+3. Double-check: No visible firearms, explosions, fires, or large crowds in unrest; isolated incident confined within the store checkout area.
+4. Decide: 0
+/mnt/datasets/ucf_crime/Shooting/Shooting010_x264.mp4	THOUGHTS  
+1. Observe: A silver SUV is parked in an entrance area with a person walking toward the driver's side. The person opens the driver’s side door, exits, and appears to search for something behind the vehicle.  
+2. Reason: The person briefly engages in activity that might seem suspicious, but there's no clear act of violence, harm, or illegal activity that matches deviant behavior categories based on the given cues.  
+3. Double-check: The video does not show any weapons, aggressive behavior, collisions, or clear signs of criminal activity like theft or an assault.  
+4. Decide: 0  
+ANSWER
+0
+/mnt/datasets/ucf_crime/Shooting/Shooting011_x264.mp4	THOUGHTS  
+1. Observe: An indoor incident occurs with two masked individuals, one in a dark outfit and another with a yellow helmet. A person in a "Delivery" shirt is present, along with two seated individuals. One aggressive individual knocks over a table and assaults another, leading to subsequent conflict. Multiple security personnel enter to control the situation after a disturbance near a broken window pane.
+2. Reason: The presence of physical assault, breaking of property, and subsequent intervention by security align with fighting and potentially an attempted robbery, categorizing as deviant or criminal activity.
+3. Double-check: The actions are intentional and violent; there's no sign of defense or consent, and the involvement of multiple authority figures confirms the severity of the event. 
+4. Decide: 1  
+ANSWER
+1
+/mnt/datasets/ucf_crime/Shooting/Shooting013_x264.mp4	1. Observe: The scene is nighttime surveillance footage with an individual in a hoodie on steps, standing and then suddenly falling backward. The environment includes brick walls, stairs, and railings illuminated by overhead lights.  
+2. Reason: The individual is alone with no interaction suggested; the fall appears accidental or spontaneous without any other signs of violence or harmful intent.  
+3. Double-check: No other other persons involved in altercation or criminal activity; no indication this is staged or provoked.  
+4. Decide: 0
+ANSWER
+0
+/mnt/datasets/ucf_crime/Shooting/Shooting015_x264.mp4	1. Observe: A security guard inside lobby interacts with a man carrying a bag, who a brief physical gesture is observable. The setting appears commercial with items visible through glass doors.
+
+2. Reason: While there is physical contact, the context suggests a standard greeting or transaction, perhaps part of security screening or acknowledging presence.
+
+3. Double-check: No escalation to aggression or threat; environment is calm, and no other of distress or additional conflict cues.
+
+4. Decide: 0
+
+ANSWER
+0
+/mnt/datasets/ucf_crime/Shooting/Shooting018_x264.mp4	1. Observe: A convenience store scene shows a man in a black and silver outfit falling to the ground next to another person. Nearby, a man in beige appears to point a firearm at a prone person, with a rack of magazines visible in the foreground.
+2. Reason: The person in beige is holding what appears to be a firearm and is exerting control over another individual on the ground, while another person in green seems to be observing. This scene depicts an act that involves the discharge of a firearm toward (or possibly upon) a target, indicating a shooting.
+3. Double-check: The context and timeline suggest an interaction with potential violence. The posture of the individual in beige suggests readiness to use a weapon in a threatening manner.
+4. Decide: 1
+ANSWER
+1
+/mnt/datasets/ucf_crime/Shooting/Shooting017_x264.mp4	1. **Observe:** In a room with lockers and a desk, a person is seated on a computer at a desk while another person sits in a chair nearby. A third individual enters the room, approaching the second individual who seems to interact briefly.
+2. **Reason:** The interaction between the third individual and the seated individual does not involve physical harm or mutual exchange of violence. Activities appear routine; no signs of fighting, accidents, explosions, shootings, or riot are observable.
+3. Double-check: Reassess for any missed cues. The seated individual remains unmoved and engaged with the computer. The third person moves forward briefly but remains non aggressive or violent behavior.
+4. **Decide:** 0  
+ANSWER
+0
+/mnt/datasets/ucf_crime/Shooting/Shooting021_x264.mp4	1. Observe: A person entering a vehicle, closing the door, standing by the now-open door, and then opening the driver's side door. A garage is visible in the background with a partially open door, and night vision camera lighting.
+2. Reason: There is no physical altercation, no indication of weapons or violent act, and no clear evidence of a crime like theft or assault. The person is accessing their vehicle, which is a common and lawful behavior.
+3. Double-check: No additional elements suggest an act of deviance or criminal activity; the scene portrays ordinary nightly activities.
+4. Decide: 0  
+ANSWER
+0
+/mnt/datasets/ucf_crime/Shooting/Shooting023_x264.mp4	1
+
+THOUGHTS  
+1. Observe: Nighttime parking lot scene, multiple individuals engaged in animated discussion and then a sudden altercation, where two individuals appear to push each other intensely, with others trying to intervene.  
+2. Reason: Physical altercation involving mutual aggressive behavior — the rapid exchange of pushing and potentially restraining movements indicate Fighting.  
+3. Double-check: Surroundings show no signs of sporting equipment or structured conflict; the environment is casual, and intervention does not stop the aggression early, confirming an ongoing altercation.  
+4. Decide: 1  
+ANSWER  
+1
+/mnt/datasets/ucf_crime/Shooting/Shooting024_x264.mp4	1
+
+THOUGHTS  
+1. Observe: Sidewalk scene in front of a shop, vehicles on the road, people moving, broken glass near the entrance. A person wearing a white shirt appears hurriedly, possibly involved in an incident.
+2. Reason: Potential disturbance could involve vandalism due to the broken glass and someone’s quick departure from or arrival at the scene near the broken glass. However, without a clear sight of an active weapon, direct force exchange, property damage caused by force, fire, or any form of evident shooting, this level of evidence is insufficient for confirmed deviance.
+3. Double-check: No clear signs of fighting, shooting, explosion, intentional fire, or large-scale violent crowd behavior evident. The broken glass and quick actions could suggest incident proximity, but the lack of visible conclusive action linking to the glass shatters the certainty needed for a category violation.
+4. Decide: 0  
+ANSWER  
+0
+/mnt/datasets/ucf_crime/Shooting/Shooting026_x264.mp4	THOUGHTS  
+1. Observe: Surveillance footage at night; a person approaches, passes by a gate, moves along a path, then a car drives into view, briefly passing the camera. No visible signs of aggression, violence, or abnormal activity.
+2. Reason: The sequence of a person walking and a car entering does not inherently suggest deviant behavior like abuse, fighting, car accidents, explosions, shootings, or riots.
+3. Double-check: No overt signs of harm, conflict, or criminal activity present in the footage. The movement is typical of routine street activity.
+4. Decide: 0  
+ANSWER  
+0
+/mnt/datasets/ucf_crime/Shooting/Shooting028_x264.mp4	1
+
+THOUGHTS  
+1. Observe: A store with a reception counter, display people involved in a confrontation, one person lying on the floor, another acting aggressively, and the room appears filled with some and disorderly activity.
+  
+2. Reason: There is physical alter and possible attempted property damage, indicating a criminal occurrence. The violent actions and disturbance suggest an act deviating from typical store behavior.
+  
+3. Double-check: The violent stance of the individual and the presence of damage on indicate active criminal behavior, not just a misunderstanding or accident.
+  
+4. Decide: 1
+
+ANSWER
+1
+/mnt/datasets/ucf_crime/Shooting/Shooting031_x264.mp4	1. **Observe**  
+   - The video shows a waiting hall filled with people seated on rows of blue chairs. An altercation appears to break out near the entrance, with individuals entering the frame. One person is forcefully pushed towards the door, and others scatter in response. The footage captures a tense moment as some individuals rush out or change their positions quickly.
+
+2. **Reason**  
+   - The observed actions include a person attempting to push or restrain another, leading to a brief but aggressive interaction. The sequence of events suggests a potential conflict or confrontation, aligning with the category of Fighting.
+
+3. **Double-check**  
+   - No indication of mutual consent in their actions; individuals display engaging outside physical violence suggests intentional aggression. No tools like weapons or signs of organized fighting (like sporting gear) are present. The scene is indoors, but the aggression level matches that of a fight.
+
+4. **Decide**  
+   1
+
+5. **Respond**  
+   Thinking aloud:
+
+   Observed a potential altercation in the hall, involving a shove or restrained motion, leading to immediate dispersal. Actions qualify as mutual physical violence, fitting the Fighting category. Second glance confirms absence of other deviant categories, thus confident in this decision.
+
+   **ANSWER**
+   1
+/mnt/datasets/ucf_crime/Shooting/Shooting033_x264.mp4	1. Observe: The video captures an outdoor residential area, showing a person receiving a package from another individual. The recipient has their back turned initially, then turns and attempts to catch the package as it falls. They fall to ground to retrieve the item.
+
+2. Reason: The scene depicts a benign exchange of a package between two individuals. Although there is a moment where the recipient falls while trying to catch the package, it does not involve any physical confrontation, non. violent acts, nor criminal behavior such as theft. The action, though resulting in a tumble, is accidental and not deviant or abnormal in a criminal sense.
+
+3. Double-check: No weapon or aggressive behavior is present. The fall is unintentional and appears a result of surprise or mishandling the package, not an act of violence. No indicators of fighting, car accidents, explosions, shootings, or riots exist.
+
+4. Decide: 0
+
+ANSWER
+0
+/mnt/datasets/ucf_crime/Shooting/Shooting034_x264.mp4	1
+
+THOUGHTS  
+ 1. Observe: A red SUV is parked on the side of the street and seems to be positioned awkwardly on being on a crosswalk area. Other vehicles pass by, including a green car that continues to drive. A person in dark clothing crosses the street from near the parked SUV. 
+ 2. Reason: The primary observation is vehicles and a person moving; specific actions such as aggressive driving or violent behavior are not visible.
+ 3. Double-check: No immediate indicators of abuse (physical harm), fighting (physical conflict between individuals), car accident (collision aftermath), explosion/fire/arsen (dangerous ignition or property damage), or shooting (weapon discharge) are observed.
+ 4. Decide: 0
+ANSWER  
+0
+/mnt/datasets/ucf_crime/Shooting/Shooting037_x264.mp4	1. Observe: A black car with headlights on is stationary on the side of a road. Another black vehicle, which appears larger and appears to be an SUV, is approaching. No notable actions or abnormalities are visible initially.
+
+2. Reason: The SUV approaches the stationary black car; however, the act of passing by does not inherently suggest any deviant behavior. There's no evidence of fighting, accidents, or other any categories listed.
+
+3. Double-check: The SUV passes without any visible impact, collision, or immediate abnormal behavior regarding the stationary car. The scenario seems routine.
+
+4. Decide: 0  
+ANSWER
+0
+/mnt/datasets/ucf_crime/Shooting/Shooting043_x264.mp4	1
+
+Thoughts:
+1. Observe: A black pickup truck is stuck at a gas station entrance. A man wearing a dark jacket and jeans emerges from the store and confronts a second individual who exits the vehicle with a gun. The second individual points the gun at the first individual.
+2. Reason: The second person holding and pointing a firearm at another individual demonstrates potential criminal activity, specifically a threat or robbery.
+3. Double-check: The context is a gas station, it seems non a confrontation or robbery attempt due to the presence of a gun. There are no clear indications of consensual use of the firearm, and the interaction suggests a potentially deviant or criminal behavior.
+4. Decide: 1
+
+Answer:
+1
+/mnt/datasets/ucf_crime/Shooting/Shooting044_x264.mp4	1. Observe: Individuals standing on the roadside, one person walks towards a parked car. Black fence and a truck visible in the background.  
+2. Reason: One individual approaches the car from a distance and is then seen leaning into it, while another moves closer. This could suggest a possible search or retrieval from the car, but the video does not show any aggressive interaction or visible harm between people. No clear evidence of mutual violence, accident, explosion, shooting, or arson.
+3. Double-check: Check for misinterpretations, no signs of struggle, attack, collision, fire-start, or gun use. The actions appear mundane and non the video sequence.
+4. Decide: 0
+
+ANSWER
+0
+/mnt/datasets/ucf_crime/Shooting/Shooting050_x264.mp4	THOUGHTS  
+1. Observe: Vehicles move away as a motorcycle rider falls in the middle of an intersection. Additional motorcyclists pass by, and a traffic signal changes color.  
+2. Reason: The fallen motorcyclist and the stopped traffic suggest a possible accident, but there are no aggressive actions or visible weapons.
+3. Double-check: No evident aggressive behavior, no firefighting efforts, and no immediate bystander assistance indicates otherwise concerning deviance.
+4. Decide: 0
+
+ANSWER
+0
+/mnt/datasets/ucf_crime/Shooting/Shooting048_x264.mp4	1. **Observe**:** The scene is a typical office environment with several workstations. There's a man in a yellow sweater engaging in a conversation with a man in a grey suit seated on one counter, while another man in a white shirt moves around the office space. No aggressive actions or explicit violent interactions are visible.
+
+2. **Reason:** There’s no mutual physical violence, no signs of a car accident, explosion, fire, or intentional shooting. The movement by the man in the white shirt doesn't suggest any wrongful or violent behavior either—just regular office activity. 
+
+3. **Double-check:** I ensure there are no subtle or missed cues of illicit actions. All participants appear to be engaged in normal office workstations interactions. No objects appear out of place for any identified listed as deviant behaviors.
+
+4. **Decide:** 0
+
+ANSWER: 0
+/mnt/datasets/ucf_crime/Shoplifting/Shoplifting013_x264.mp4	1. Observe: A retail store with wooden flooring, clothing displays, manneequins, and customers browsing. 
+2. Reason: Three customers appear aggressively interacting with each other, pushing and shoving, which may suggest a physical altercation, fitting the description of fighting.
+3. Double-check: No signs of external aggression from outside-side, no immediate threat or defense from other others, but behaviors are repetitive and indicative at verbal or mild physical confrontation.
+4. Decide: 1
+
+ANSWER
+1
+/mnt/datasets/ucf_crime/Shoplifting/Shoplifting018_x264.mp4	1. Observe: A store interior with people moving around; boxes and shelves with products are visible. A person wearing a striped shirt enters the frame, interacts briefly with another individual in a dark outfit, then walks away. Another individual in a pink shirt enters later, moving up the aisle with more boxes.
+2. Reason: There's no indication of any form of abuse, fighting, car accident, explosion/fire/arson, shooting, or riot/crowd violence happening. People seem to be going about their business in the store.
+3. Double-check: No aggressive interactions or visible signs of the listed deviant behaviors present; movements seem normal for a store environment.
+4. Decide: 0
+ANSWER
+0
+/mnt/datasets/ucf_crime/Shoplifting/Shoplifting005_x264.mp4	1. Observe: A store interior with customers. One person stands by the entrance, another walks inside holding a stuffed animal. They approach and interact briefly while displaying a gun.
+2. Reason: The interaction involves a display with a firearm; given the presence of the gun and their proximity to a person, this could signify potential intimidation or coercion.
+3. Double-check: The interaction doesn't escalate to physical violence, and there's no clear agreement on non-consensual harm. However, the display of a weapon in such a commercial setting could indicate a deviant act, though not necessarily criminal under defined categories.
+4. Decide: 0
+ANSWER
+0
+/mnt/datasets/ucf_crime/Shoplifting/Shoplifting019_x264.mp4	THOUGHTS  
+1. Observe: The video shows an interior store scene with shelves of items. Three individuals gatherage into the shop, one holding a large package. The store employee reacts by trying to intercept them. A struggle ensues, with one person restrained by another.
+2. Reason: Forced entry by armed individuals likely indicates an assault; the employee attempts resistance. The scene suggests robbery, thus fits "Abuse".
+3. Double-check: The store setting is calm initially, then becomes chaotic with physical confrontation. The employee's defensive actions imply nongression against him. No sporting goods or non-fighting context.
+4. Decide: 1
+
+ANSWER
+1
+/mnt/datasets/ucf_crime/Shoplifting/Shoplifting010_x264.mp4	THOUGHTS  
+1. Observe: Indoor setting, various bottles and products on shelves, people moving in a nonstore. A female customer carrying a blue bag appears, walks to the middle aisle, picks up an item, then converses with others near the refrigerated section section, and continues walking away. 
+2. Reason: The scene shows store normal activity with shopping and casual conversation. No signs of conflict, property damage, or violence.
+3. Double-check: No aggressive interactions, mishaps, or criminalous activities visible. Scene appears peaceful and routine.
+4. Decide: 0
+
+ANSWER
+0
+/mnt/datasets/ucf_crime/Shoplifting/Shoplifting015_x264.mp4	THOUGHTS  
+1. Observe: The video shows an indoor setting, likely an electronics store, based on shelving and displayed items. Three individuals are present. Initially, two men discuss near the entrance, while another person in the background stands closer to the shelves. The store features refrigerators, boxed electronics, and various papers/tickets on the counters.  
+2. Reason: One man (wearing white) in the background crosses his arms and moves slightly, appearing to wait or simply adjust his posture. No aggressive behavior, physical altercation, or overtly dangerous activity is seen. The environment is static but not threatening.  
+3. Double-check: All individuals remain calm; no signs of distress or conflict. The actions seem passive with no direct interaction indicating deviance. The overall scene is consistent with routine store activity.  
+4. Decide: 0  
+ANSWER
+0
+/mnt/datasets/ucf_crime/Shoplifting/Shoplifting016_x264.mp4	THOUGHTS  
+1. Observe: A woman in a sari interacts with a display of boxed products in a shop, occasionally bending down to look closely.
+2. Reason: No aggressive behavior, no weapons, no apparent harm to others or property destruction, normal shop actions like examining products.
+3. Double-check: The woman is alone, there's no conflict or criminal act involving violence or harm visible.
+4. Decide: 0  
+ANSWER
+0
+/mnt/datasets/ucf_crime/Shoplifting/Shoplifting017_x264.mp4	THOUGHTS  
+1. Observe: Surveillance footage inside a convenience store clerk interacting with customers; a person outside an arm with a black object (appearing to be a firearm) and points it at one of the customers, causing them to react and potentially move.  
+2. Reason: The use of a weapon pointed towards a customer could suggest an assault or robbery situation, both of which fall under criminal acts. The context implies a confrontational and threatening interaction.
+3. Double-check: No other of the firearm appearing to be used to shoot or shoot, and the interaction does not indicate consensual use of the object. The pointing of a weapon in a public interaction often classifies as an act of deviance.
+4. Decide: 1
+
+ANSWER
+1
+/mnt/datasets/ucf_crime/Shoplifting/Shoplifting024_x264.mp4	1. Observe: Two individuals in a room, one standing and interacting with papers on a table while the other is seated, handling papers and documents. The room contains furniture like chairs, a cabinet, and decorative items. A person enters moving through a doorway.
+2. Reason: The scene depicts an office or administrative setting with routine paperwork activity. There is no visible aggression, struggle, or abnormal behavior indicating deviance from normal interactions.
+3. Double-check: The individuals appear engaged in a calm activity, possibly discussing or reviewing documents. The actions do not suggest any form of harmful or criminal activity.
+4. Decide: 0
+ANSWER
+0
+/mnt/datasets/ucf_crime/Shoplifting/Shoplifting021_x264.mp4	1. **Observe**:** The video shows an indoor setting with two men near a reception desk. One individual, wearing a hoodie, appears to be demanding or taking items aggressively from the other. The person in the hoodie is holding a bag, and their actions are forceful and direct.
+2. **Reason:** The action of forcefully taking or demanding items from another individual is indicative of a potential theft or robbery, which falls under deviant behavior.
+3. **Double-check:** The scene looks like a confrontation with aggressive and possibly criminal behavior being displayed. There are no indications of a misunderstanding, and the action appears intentional and hostile.
+4. **Decide:** 1
+ANSWER  
+1
+/mnt/datasets/ucf_crime/Shoplifting/Shoplifting022_x264.mp4	1. Observe: Two individuals are browsing snacks on shelves in a grocery store aisle. The shelves are filled with various snack items like chips and crackers. Their body language is generally relaxed, with one person pointing at something and the other person looking down at the shelf.  
+2. Reason: The individuals are examining products, likely deciding on an item to purchase. There is no visible sign of aggressive behavior, conflict, or any indicators of unlawful activities.
+3. Double-check: The movement is typical for shopping, no signs of distress, yelling, or hurried, panicked actions that would suggest criminal activity. The environment appears orderly with normal store operations.
+4. Decide: 0  
+ANSWER
+0
+/mnt/datasets/ucf_crime/Shoplifting/Shoplifting027_x264.mp4	1
+
+Observe: A manl is seen in a store aisle with a glass display display full of items, interacting with items while walking through the store. The footage timestamp is 000/07/2011 at 09:46.
+
+Reason: The manm is wearing casual clothing and does not show any signs of deviant behavior like fighting, arson, or handling dangerous objects. The action of walking through the store and looking at itemsms is not indicative of any criminal activity.
+
+Double-check: The store appears to be a retail setting with itemsms displayed, possibly an eyeglass or accessory shop. There are no indications of a struggle, conflict, fire, or shooting in this footage. The person's moves smoothly along the aisle without any aggressive or alarming behavior.
+
+Decide: 0
+
+ANSWER  
+0
+/mnt/datasets/ucf_crime/Shoplifting/Shoplifting028_x264.mp4	1. Observe: A trio in a convenience store, one handing an item to another. The environment includes shelves stocked with various products. A timestamp from 2013 is visible.
+2. Reason: The individuals appear to be engaging in a civil exchange, likely a purchase; no aggressive interaction or obvious deviation from the store setting.
+3. Double-check: The scene does not imply harm or abnormal conduct; it looks typical for interactions in a retail environment.
+4. Decide: 0  
+ANSWER
+0
+/mnt/datasets/ucf_crime/Shoplifting/Shoplifting029_x264.mp4	1. Observe: A man casually walks through a clothing store while another individual appears engaged in shopping. The store features a variety of items, including jackets and jeans.
+2. Reason: No apparent signs of conflict, harm, fire, accident, or riot occur within the scene. The activities appears to be typical store behavior.
+3. Double-check: The video frames do not show any elements that suggest deviant activity; casual and normal shopping environment.
+4. Decide: 0
+ANSWER
+0
+/mnt/datasets/ucf_crime/Shoplifting/Shoplifting031_x264.mp4	1. Observe: Interior store scene with multiple people; one individual in gray shirt is handling items, while two others interact. The person in the gray shirt moves but does not engage in physical conflict.
+2. Reason: Absence of aggressive behavior, fighting, or any significant signs of non categories are absent; interactions appear benign.
+3. Double-check: No evident signs of abusive, fighting, accidental collision, or violent activities. Scene remains calm throughout.
+4. Decide: 0
+ANSWER
+0
+/mnt/datasets/ucf_crime/Shoplifting/Shoplifting033_x264.mp4	THOUGHTS  
+1. Observe: The setting is a clothing store with racks and various apparel. A man is assisting a woman at a table with items, including clothing and accessories. The man moves, gestures, and touches items while conversing with the woman.  
+2. Reason: Both individuals are engaging in typical shopping activities. There are no signs of aggression, conflict, or any of the outlined deviant behaviors. The assistance and conversation appear standard for an employee interacting with a customer.
+3. Double-check: No unusual or violent actions observed among the subjects. The environment remains calm without any indication of emergencies or criminal activity.
+4. Decide: 0
+
+ANSWER
+0
+/mnt/datasets/ucf_crime/Shoplifting/Shoplifting038_x264.mp4	1. **Observe:** The video shows a man inside a jewelry store looking at the display display counters and then walking to a display display display. After this, the camera angle changes to an overhead view of a table with display display display, chairs, and two individuals interacting at the table. One person appears to be sitting while the othera person, who is squatting, possibly handling objects or interacting closely with the seated person.
+2. **Reason:** The scene indicates a potential security breach or robbery attempt. The posture of the squatting individual suggests an action typically associated with stealing or handling valuables, and the interaction between the two at persons could imply an exchange or transaction of some kind. Given the location within a jewelry store, an environment rich in value items, the behavior matches a deviant or criminal act.
+3. **Double-check:** There is no clear sign of confrontation or fighting, no visible weapons, and the store setting suggests a purpose-driven action typical in a robbery scenario. The overhead view emphasizes the confined, intimate interaction at the table, lending weight to the suspicion of criminal behavior.
+4. **Decide:** 1
+ANSWER
+1
+/mnt/datasets/ucf_crime/Shoplifting/Shoplifting037_x264.mp4	THOUGHTS  
+1. Observe: A woman and a man sitting at a glass table, handling items that appear to be jewelry; another person works behind a counter. The man hands over some items, and the woman adjusts something in her hands.
+2. Reason: The given scene seems to show a transaction involving jewelry; there is no indication of abuse, fighting, car accident, explosion/fire/arson, shooting, or riot/crowd violence.
+3. Double-check: No signs of aggression, struggle, or emergency situations.
+4. Decide: 0
+
+ANSWER
+0
+/mnt/datasets/ucf_crime/Shoplifting/Shoplifting039_x264.mp4	THOUGHTS  
+1. Observe: Two individuals enter a store, one of them leaves carrying an item, another briefly checks items. The scene shows normal retail activity.  
+2. Reason: No aggressive interaction, harm, or destructive behavior depicted; activity appears routine.  
+3. Double-check: Entry exits in a calm manner, no fighting or conflict visible.  
+4. Decide: 0  
+ANSWER
+0
+/mnt/datasets/ucf_crime/Shoplifting/Shoplifting045_x264.mp4	1. Observe: Multiple individuals are seen entering the convenience store. Some individuals are wearing casual clothing, while one appears to be wearing a hijab. A person in a black hoodie is seen inside near the door in the background. Individuals move casually inside the store, and the scene appears to be a routine entry and exit.  
+2. Reason: There is no overt aggressive interaction, conflict, or any indication of deviant behavior (like theft, violence, or any form of crime) visible in the sequence of frames. The individuals appear to be exiting or entering the store without any apparent disturbance.
+3. Double-check: No signs of fighting, harm, or any criminal activity are evident. The individuals shown in the video are simply going about their business, and there is no clear evidence of anything deviant or abnormal occurring.
+4. Decide: 0
+ANSWER
+0
+/mnt/datasets/ucf_crime/Shoplifting/Shoplifting049_x264.mp4	1. Observe: Video from within a mobile phone store, timestamped 011-0b-2015 009:08:02,  }0 minutes, shows individuals interacting with a booth displaying various phones. Shopperer is engaged in examining products at the displaySAMSUNG Galaxy S6]  checkout counter.
+2. Reason: Presence of individuals browsing and interacting with phones suggests normal customer activity. There are no overt signs of harm, conflict, traffic collision, fire, shooting, or large-scale disorder. 
+3. Double-check: All actions observed are shopping or handling products, no aggressive or violent behavior observed, and no destructive activity.
+4. Decide: 0
+/mnt/datasets/ucf_crime/Stealing/Stealing018_x264.mp4	THOUGHTS  
+1. Observe: The scene is in a residential driveway where a person in a plaid shirt is inspecting the inside surroundings of a parked black SUV. The individual walks around the car, checking for something near it.  
+2. Reason: There is no indication of non-consensual harm, mutual violence, traffic collision, explosion or fire, firearm discharge, or large-scale crowd violence. The person’s actions appear normal and non of malicious intent.
+3. Double-check: The environment is calm; no signs of emergency services, visible damage, or aggression. The focus is on an individual checking a car, not performing any deviant or criminal act.
+4. Decide: 0  
+ANSWER
+0
+/mnt/datasets/ucf_crime/Stealing/Stealing036_x264.mp4	1. Observe: The video shows a residential street with motorbikes and a car. People ride pasters, engage in conversation, and a couple walks together. No significant harm or disorderly conduct is present.  
+2. Reason: The individuals appear normal, engaged in routine activities such as conversing and passing. No direct signs of fighting, accidents, or harmful behavior.
+3. Double-check: Reevaluate for missed cues—no abrupt actions, no visible injuries, no aggressive stances. The scene remains consistent with peaceful daily activities.
+4. Decide: 0
+ANSWER
+0
+/mnt/datasets/ucf_crime/Stealing/Stealing057_x264.mp4	1. Observe: The setting appears to be a waiting area with rows of chairs. Three people are present. Two individuals are seated, one with a bag; the third approaches with a suitcase. There is some movement involving exchanging and shifting luggage. A piece of paper or book is visible on one of the chairs.
+2. Reason: The individual with the suitcase interacts closely with one seated person, handling the bag. This interaction involves physical movement and possibly searching or transferring items, potentially indicating suspicious activity like theft or an unauthorized search.
+3. Double-check: No overt conflict or violence observed. The interaction is focused on on the bag, with no clear evidence of force or distress.
+4. Decide: 1  
+ANSWER
+0
+/mnt/datasets/ucf_crime/Stealing/Stealing062_x264.mp4	1. Observe: The video shows a group of individuals near the rear of a vehicle with an open back, situated in an outdoor area near a road. One person approaches the vehicle and looks inside it, two others remain stationary near the back.  
+2. Reason: The scene does not appear to show any direct confrontation or conflict. There is no visible indication of aggressive behavior, violence, or any form of deviant activity such as fighting, physical harm, accident, explosion, fire, shooting, or riot.
+
+3. Double-check: There are no signs of conflict, physical altercation, weapons, or any activities that indicate criminal or deviant behavior.
+
+4. Decide: 0  
+ANSWER
+0
+/mnt/datasets/ucf_crime/Stealing/Stealing078_x264.mp4	$ERROR$ (the prompt was cut off and does not contain any video content or examples relevant to the situation described in the video summary)
+
+Thoughts: The summary provided does not include any video content or examples relevant to the "Live Leak" footage description. Without the ability to access or analyze the video, I am unable to provide a verdict based on the given guidelines.
+
+Answer: 0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_003_x264.mp4	1. Observe: A dog interacts with a dual-colored bin (yellow and purple), turning or pushing it with its nose. There is a potted plant nearby and a railing on the left side. 
+2. Reason: The dog is engaging with the bin in a playful or curious manner, which does not imply any form of deviance or abnormal behavior.
+3. Double-check: No signs of abuse, fighting, car accidents, explosions, shootings, or crowds in the video. The dog's actions are typical playful activities.
+4. Decide: 0
+ANSWER
+0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_006_x264.mp4	1. Observe: Vehicles driving on a road with commercial buildings in the background. A white car makes a right turn from a parking lot into the main road. There’s consistent traffic movement without any incidents.
+2. Reason: The traffic flow seems regular, with cars making routine turns. No aggressive behavior, collisions, or indications of a deliberate act of deviance is evident.
+3. Double-check: Review the video frame for any missed anomalies or signs of violence, accidents, or criminal activities.
+4. Decide: 0
+ANSWER
+0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_010_x264.mp4	THOUGHTS
+1. Observe: Indoor setting, two individuals, one appears to be an adult with long hair, the other another partially obscured figure, engaging in conversation or interaction.  
+2. Reason: The scene lacks elements of abuse, fighting, car accidents, shooting, or riots. All interactions seem non-aggressive. Contextually, no signs of criminal activity or violence are apparent.  
+3. Double-check: No weapons, injuries, or destructive behavior observed. Individuals are in a staticure, with no indication of distress or conflict.  
+4. Decide: 0  
+ANSWER
+0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_014_x264.mp4	1. Observe: A cashier is handling money near a register, with items and payment terminal visible. A customer stands next by. The environment appears static, no evident disorder or urgency.
+2. Reason: There is no physical altercation, violence, or any abnormal activity taking place.
+3. Double-check: No actions suggest the presence of abuse, fighting, car accident, explosion/fire/arson, or shooting.
+4. Decide: 0
+ANSWER
+0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_015_x264.mp4	1. Observe: The video shows a mall corridor with people walking past a temporary scaffolding. A woman in blue approaches from the left and continues walking while a person in dark clothing walks from right to left in the background.
+2. Reason: No aggressive actions, conflicts, or overt deviant behaviour such as abuse, fighting, car accidents, explosions, shootings, or riots are evident in the frames provided.
+3. Double-check: All individuals appear to be moving normally and no signs of violence or distress are observed.
+4. Decide: 0
+
+0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_018_x264.mp4	1. Observe: The video shows a spacious airport terminal with various people walking and sitting. The central area features a check-in queue area with retractable stanchions belts and barriers. Two individuals in the foreground are moving, while others are seen in the distance. Bright digital advertisements are prominent along the walls.
+
+2. Reason: There is an exchange of punches between two individuals near the check-in area. One person appears to be engaging in aggressive behavior, and another individual is resisting. This indicates a physical altercation that could be considered as "Fighting."
+
+3. Double-check: The altercation involves at least two adults, and there are no indications of larger-scale disorder or additional participants that would suggest a riot. The scene does not depict the use of firearms, which would classify as a shooting, nor does it involve any visible explosion, fire, or arson. The environment is an airport terminal, and there is no clear indication of any individual being at risk of being harmed to a significant extent in a way that could be classified as abuse.
+
+4. Decide: 1
+
+ANSWER
+1
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_019_x264.mp4	1. Observe: The video shows a retail checkout area with several cash registers. Two individuals are near a register; one is wearing a black jacket and a red safety vest. There are stacked shopping carts to the right and various store products in the background. 
+2. Reason: The individual in the safety vest and red hat approaches and engages in a conversation with the cashier at a register. The other person departs and walks towards the stack of shopping carts. No aggressive or violent actions, property destruction, or indication of armed behavior is visible. This activity does not suggest an act of deviance, abnormality, or criminal behavior.
+3. Double-check: The interaction appears to be a normal customer interaction, with no signs of physical altercation, threats, or any other other abnormality. No objects are used aggressively, and the environment remains calm.
+4. Decide: 0
+ANSWER
+0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_024_x264.mp4	1. Observe: The scene is a bustling supermarket with several shoppers walking around. Employees in blue shirts are assisting customers at counters. A woman in black attire and a child in red clothing walk together in a calm manner.
+2. Reason: There is no occurrence of fighting, car accidents, explosions, shootings, or riots evident in the video. Activities appear normal and indicative of a typical day at the supermarket.
+3. Double-check: No aggressive interactions, collisions, or signs of distress; the environment is orderly and routine.
+4. Decide: 0
+ANSWER
+0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_025_x264.mp4	Thoughts:
+1. Observe: Office environment with people working; one individual is adjusting their headset. Office activities appear routine.
+2. Reason: No visible aggressive actions, violent encounters, or signs of an accident, fire, or unauthorized discharge of a firearm. No indication of a riot or large-scale crowd disturbance.
+3 Double-check: All individuals are engaged in typical office behavior; no anomalies or concerning in the depicted scene warrant classification as deviant or criminal.
+4. Decide: 0
+
+Answer: 0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_033_x264.mp4	THOUGHTS
+1. Observe: The scene shows a quiet street with parked cars. Two people walk across the street, followed by a red car that briefly disrupts them. Another white car enters and exits the frame, and the two pedestrians reach a car parked further along the street.
+2. Reason: The actions—walking across the street and being slightly disturbed by the passing cars—are normal, part of the everyday activity in a parking area. No abnormal or aggressive behavior is evident.
+3. Double-check: No signs of abuse, fighting, accident, explosion, shooting, or riot are visible. The scene depicts routine movement and vehicle traffic.
+4. Decide: 0  
+ANSWER
+0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_034_x264.mp4	THOUGHTS  
+1. Observe: A few vehicles navigate a street at daylight; signs for various stores are visible across the road. No pedestrians are prominent.  
+2. Reason: There are no obvious signs or interactions that indicate abusive, violent, accident-related, explosion/flame/arson, or shooting behaviors.  
+3. Double-check: No aggressive actions, crashes, fires, or individuals causing commotion are present.  
+4. Decide: 0  
+ANSWER
+0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_041_x264.mp4	1. Observe: Overhead view of counter with two registers, two employees handling pastries and bags, transaction occurring. No evidence of chaos or conflict.
+2. Reason: Scenario appears routine transactions; no signs of fighting, accidents, or criminal acts.
+3. Double-check: Confirm no hidden conflict or deviant activities; all actions methodical and typical.
+4. Decide: 0
+ANSWER
+0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_042_x264.mp4	1. Observe: Inside a bakery, staff and customers are attending at the counter. Various pastries on display. Customers interact with staff to purchase items. One customer in a red shirt appears to be in distress, holding their head and stepping back from the counter multiple times.
+2. Reason: The customer's behavior — holding his head and retreating, coupled with the proximity and timing with staff interaction — suggests a psychological or physical distress reaction.
+3. Double-check: The incident appears isolated, with no visible physical altercation or other attack. A potential phobia or sudden health issue might explain his actions.
+4. Decide: 0
+ANSWER
+0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_048_x264.mp4	1. **Observe**: The video shows an office environment with multiple employees working at their desks, each focused on their computers. There is moderate motion, with occasional interaction between some employees. A man wearing a light-colored shirt walks across and stops near the desk of an Asian female employee, engaging with her.
+
+2. **Reason**: The man and the female employee engage in conversation or interaction; there's no aggressive movement or conflict evident in their interaction. The actions appear normal.
+
+3. **Double-check**: The interaction does not escalate into violence or show any signs of criminal activity like fighting, explosions, etc. The employees remain focused on their work after the interaction.
+
+4. **Decide**: 0
+
+ANSWER
+0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_051_x264.mp4	1
+
+Thoughts:
+1. Observe: A white SUV is stationary on a quiet residential street. There is no notable action or interaction with other vehicles or individuals. The scene appears peaceful with no clear signs of damage, fire, or any form of aggressive behavior.
+2. Reason: The video shows stable and there is no evidence of abuse, fighting, car accident, explosion, shooting, or riot occurring.
+3. Double-check: No sudden movements, collisions, or people engaging in violent acts are observed on. The scene maintains a consistent, un disturbed demeanor.
+4. Decide: 0
+
+Final Answer: 0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_056_x264.mp4	1. **Observe**:** The scene is inside a convenience store with two cashiers and various shelves stocked with items. A person wearing a red shirt walks towards a cash register, interacts with the cashier, and then returns to their position. Another person in a beige shirt enters the frame from the left side.
+
+2. **Reason:** The person in the red shirt is seen engaging in typical cashier interactions, likely scanning items and handling transactions. There are no aggressive actions, physical alter, or indications of deviant behavior. The entry of the person in the beige shirt does not appear to be significant or out of the ordinary for a store environment.
+
+3. **Double-check:** Re-evaluating the interactions and movements, there’s no sign of fighting, harm, or criminal activities such as robbery. The actions appear standard for such a retail setting.
+
+4. **Decide:** 0 (No clear act of deviant, abnormal, or criminal behavior observed.)
+ANSWER
+0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_059_x264.mp4	THOUGHTS  
+1. Observe: The video is in black-and-white, showing a shop interior. The main activity involves different people inspecting the area and interacting casually. A chair is pushed under a desk at different points.
+2. Reason: The actions do not constitute any overtly harmful activities, such as abuse, fighting, car accidents, explosions, shootings, or riots. They appear to be benign and noncoercive interactions or administrative tasks.
+3. Double-check: All individuals are in a staticious environment engaging in typical store activities. No signs of distress, violence, or illegal actions are evident.
+4. Decide: 0  
+ANSWER
+0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_063_x264.mp4	1. Observe: A supermarket checkout area; customers standing in line, a cashier scanning items, a bald man in a beige coat holding bags with items while a person in a green hoodie manages them. Another cashier in a blue hoodie interacts with customers.
+2. Reason: No individuals are visibly harmed or showing pain, there is no mutual physical violence, no signs of a car accident, explosion, large-scale riot, or shooting are evident.
+3. Double-check: Interaction appears routine – scanning items, handling bags – with no signs of deviance or emergency.
+4. Decide: 0  
+ANSWER
+0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_067_x264.mp4	1. Observe: The scene is in front of a building with glass doors and a red carpet. Several people are entering and exiting the building. No overt signs of distress, aggression, or dangerous activities are visible initially.
+2. Reason: The video does not show any immediate signs of abuse, fighting, car accidents, explosions, shootings, or riots. The individuals appear to be going about their daily activities normally.
+3. Double-check: Repeated review shows of the scene to ensure no missed cues. People are entering and exiting a building casually, no abnormalities in behavior detected.
+4. Decide: 0
+ANSWER
+0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_070_x264.mp4	THOUGHTS  
+1. Observe: A typical office environment with workers sitting at desks; multiple scenes show individuals engaging in non-work-related activities. A person is seen walking energetically while dancing, showing an unusual level of movement and expression.  
+2. Reason: While energetic walking can occasionally be a part of office banter, the specific act of dancing in the office setting is generally considered deviant or unusual behavior, especially if disrupting work. However, the context seems more playful than malicious, but it can still be characterized as deviant compared to standard workplace conduct.  
+3. Double-check: No physical harm or aggression involved; the dance appears light-hearted. No indications of intent to cause trouble, fitting more into the realm of benign fun rather than a serious deviance.  
+4. Decide: 0  
+ANSWER
+0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_100_x264.mp4	THOUGHTS  
+1. Observe: Store environment; employees and customers interacting, examining products, no visible distress or conflict. 
+2. Reason: No actions suggest abuse, fighting, car accidents, explosions/fire/arson, or shootings. The scene depicts routine customer interaction and browsing. 
+3. Double-check: Employees remain at their stations and customers are browsing calmly, with no signs of stress or violence.  
+4. Decide: 0  
+ANSWER
+0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_129_x264.mp4	1. Observe: The scene is a quiet city street at dusk with people walking, street lights on, and maintenance work near an upraised truck. Three figures in uniform walk toward the camera.  
+2. Reason: There is no clear indication of conflict, physical harm, vehicular accident, fire, shooting, or large-scale crowd violence. The scene appears peaceful with routine activities.
+3. Double-check: The three uniformed individuals interact calmly and no aggressive behavior is visible. The background shows maintenance work also doesn't imply danger or chaos.  
+4. Decide: 0  
+ANSWER
+0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_150_x264.mp4	1. Observe: People walking in a hallway, someCCTV 5MP HD Camera Footage" indicator, no significant events or confrontations visible.
+2. Reason: No aggressive motions, violence, or alarming behavior observed.
+3. Double-check: Confirm no subtle signs of deviance overlooked; individuals appear to be going about typical activities.
+4. Decide: 0
+ANSWER
+0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_168_x264.mp4	1. Observe: Narrow urban street with parked vehicles, pedestrians walking, cars arriving and parking at a moderate pace. No signs of distress or conflict among people visible.
+
+2. Reason: Traffic operates calmly, no overt signs of non-consensual harm, mutual violence, accidents, fires, shooting, or riotous behavior.
+
+3. Double-check: Confirmed slow absence of any behaviors associated with deviant acts. All individuals appear peaceful and engaged in standard urban activities.
+
+4. Decide: 0  
+ANSWER
+0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_189_x264.mp4	THOUGHTS  
+1. Observe: It series of cars parked along a road late night., timestamped traffic; cars have their headlights on, suggesting slow a possible traffic stop or slow a slow security camera coverage might emphasize the scene after an event. A green bus remains stationary with its door open. No aggressive actions or notable incidents are directly visible.  
+2. Reason: The parked arrangement and stationary positions of the vehicles suggest a pause, potentially due to stopping or an inspection. No immediate signs of conflict, emergency, or abnormal behavior are depicted.  
+3. Double-check: Focuses on stationary vehicles with headlights; absence of visible confrontations, fires, collisions, or individuals in distress. Context of nighttime and potential traffic management doesn't imply an incident directly.  
+4. Decide: 0
+
+ANSWER  
+0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_196_x264.mp4	1. Observe: Group of people in a cluttered workshop setting, some person bending over and moving boxes, others standing and conversing. Lighting is indoor fluorescent, no visible windows.  
+2. Reason: The persons appear to be engaged in a discussion or work activity; no signs of mutual violence, accidents, intentional damaging, or weapon use. Context of workshop activity seems constructive.  
+3. Double-check: Review movements closely—no sudden aggressive actions or disruptive activities observed. No indicators of criminal or harmful behavior found the scene.  
+4. Decide: 0  
+ANSWER
+0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_203_x264.mp4	1. Observe: The video shows a car park with several parked cars. People are walking, interacting, and no immediate harm or injury is visible initially. A red bus arrives, and individuals move around the area. One person moves quickly towards a car with urgency, opens the door before exits; another person stands at a distance. The sequence includes cars moving slowly out of the parking lot.
+
+2. Reason: The scenario includes activities that are generally non - parking, walking, and leaving the car park. However, the person opening the car door and running immediately gets into the vehicle and starts driving away quickly could potentially be associated with escaping a conflict or responding, which could be seen as evasive behavior. However, without clear evidence of imminent threat or danger, it's not clearly deviant behavior.
+
+3. Double-check: No explicit signs of conflict such as yelling, aggressive gestures, or confrontations. The person moving quickly could just as easily be late for a non event, and there's no visible harm to others. Similarly, the others in the footage do not indicate any abnormal behavior. The movement of cars is typical for parking areas.
+
+4. Decide: 0  
+ANSWER
+0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_217_x264.mp4	1. Observe: The scene is a fuel pump station at a gas station. There are cars, employees near them, and pedestrians nearby. The camera focuses on a fuel pump where a car is parked. 
+
+2. Reason: The individuals in uniform appear to be performing standard tasks at the fuel station. Their actions, such as handling items or walking, do not indicate any aggressive or illegal behavior. The pedestrians are using the space normally, without showing signs of distress, fighting, or property destruction.
+
+3. Double-check: No interactions between people that look threatening, no obvious safety risks like fires or accidents, no visible weapons or alarming postures. The scene portrays routine activity.
+
+4. Decide: 0
+
+ANSWER
+0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_248_x264.mp4	THOUGHTS  
+1. Observe: Several individuals exit a building in a structured manner, with most holding papers. They descend a staircase and move across the outdoor area the parking area cars. No signs of physical distress or conflict are visible.
+2. Reason: The scene depicts normal social interaction. There is no indication of aggressive behavior or criminal activity like the defined categories of abuse, fighting, car accidents, explosions/fire, shootings, or riots.
+3. Double-check: The individuals are walking calmly and leaving the premises without any unusual gestures or actions that suggest deviance.
+4. Decide: 0  
+ANSWER
+0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_251_x264.mp4	1. Observe: Red car parked, pedestrian walking, outdoor seating arrangement on a street. No direct interactions or incidents noticed initially among individuals.
+2. Reason: The pedestrians walk in a casual manner, and there's no visible conflict or harmful actions.
+3. Double-check: All individuals seem engaged in non-confrontational activities. No indication of aggressive behavior or unusual activity evident.
+4. Decide: 0
+ANSWER
+0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_289_x264.mp4	I have observed the video containing the series of frames depicting a classroom scene. Below is my chain of thought:
+
+1. Observe: I see students in a classroom setting, all seated and wearing uniforms, with a teacher standing at the front near a chalkboard. The students are engaged in some form of writing work while the teacher explains or instructs. The classroom environment appears orderly, with backpacks visible on the shelves and chairs.
+2. Reason: I do not observe any behaviors or actions that suggest abuse, fighting, car accidents, explosions/fire/arson, or shootings. The teacher and students are generally complying with classroom norms, with no signs of violent or criminal activity. The level of activity is consistent with a normal educational setting.
+3. Double-check: There is no indication of unusual or hazardous behavior on the part of either the students or the teacher. The actions visible are typical of a teaching scenario. No clear false positives are noted as the scene remains benign.
+4. Decide: 0  
+ANSWER  
+0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_310_x264.mp4	THOUGHTS  
+1. Observe: A basketball game on an outdoor court, with players attempting to score and defending. Players are seen holding and passing the ball, with actions such as dribbling, shooting, and blocking occurring.
+2. Reason: No mutual violent actions or conflicts, no signs of property destruction or physical harm. The scene represents a standard basketball game.
+3. Double-check: All movements are consistent with playing basketball. No aggression or deviant behavior present.
+4. Decide: 0
+
+ANSWER
+0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_312_x264.mp4	1. Observe: The setting is a supermarket with shelves stocked with various goods. Two individuals are present, moving or standing around. 
+2. Reason: One individual observes items while browsing, and the other engages with an item and later walks with confidence. No aggressive behavior, physical altercation, or any other specified deviant activities are observable. 
+3. Double-check: Assess the context for signs of hidden conflict or missed cues; no indications of abuse, fights, accidents, explosions, shootings, or riots are detected.  
+4. Decide: 0
+
+0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_317_x264.mp4	THOUGHTS  
+1. Observe: A man man standing at the reception counter interacting with a receptionist; the man looks at a red object possibly handed by the receptionist. A hotel lobby setting with decor and seating visible.
+2. Reason: The activity involves transaction or exchange at reception, which is standard in a hotel lobby. No aggressive, violent, harmful, or destructive actions are observed in this interaction.
+3. Double-check: The environment is civil and routine with no signs of conflict or abnormality. The man and the receptionist are engaging in a typical customer service interaction.
+4. Decide: 0
+
+ANSWER
+0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_345_x264.mp4	1. Observe: A reception area with two people working at a desk and another standing; a seated man engages with a colleague, possibly discussing documents. There seems no significant motion or disturbance.
+2. Reason: No signs of abuse, fighting, car accidents, shooting, explosion/fire/arson, or riot/crowd violence.
+3. Double-check: The setting is serene with standard office activities; no signs of malicious or criminal behavior.
+4. Decide: 0
+ANSWER 0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_360_x264.mp4	1.
+
+THOUGHTS  
+1. Observe: A store clerk is operating a cash register, while a female employee in a maroon shirt reaches up for an item on a shelf, and a male customer in black interacts with another employee in the background. The scene appears calm with no aggressive actions or visible threats.
+2. Reason: There are no interactions demonstrating mutual violence, no object-related collisions, no indication of a car accident, fire, gunshot, or large-scale disorder. The activities appear routine shopping and clerking.
+3. Double-check: Scene lacks any signs of distress or violent behavior among the individuals involved. No objects are being thrown or used as weapons. The focus is on standard store operations.
+4. Decide: 0
+ANSWER
+0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_401_x264.mp4	1. **Observe**:** A bustling store environment with various shelves and displays. People are seen browsing, moving around, and some individual is pushing a stroller. The floor is clean, and there are no signs of emergency or distress.
+
+2. **Reason:** There is no visible evidence of abuse, fighting, car accidents, explosions, shootings, rioting, or any other listed abnormal behavior. The activities seem mundane and typical for a shopping environment.
+
+3. Double-check: The scene is peaceful. No signs of conflict or emergency are present. All individuals are engaged in normal activities such as shopping and strolling.
+
+4. **Decide:** 0
+
+ANSWER
+0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_417_x264.mp4	Observed: A man wearing a white shirt approaches a store counter, where a second man interacts with a cashier seen through the counter's's window. There is a digital screen displaying an interface, and a sign reading "NO BICYCLES OR SKATEBOARDS ALLOWED IN THIS AREA." The second man appears to be handing something to the first man but no evident malicious behavior or conflict is present. The interaction appears routine and non-aggressive.
+
+Reason: The interaction at the check-out counter does not involve any physical altercation, injury, or overtly harmful or criminal activity. The movement seems to be part of a standard exchange, possibly paying for items. The presence of the second person does not escalate the situation to anything other routine customer service activity.
+
+Double-check: Reassess for any missed cues: no signs of aggression or fighting, consistent with a typical customer-service scenario. There's no indication of a serious crime like robbery, theft, or violence.
+
+Decide: 0
+
+ANSWER  
+0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_452_x264.mp4	THOUGHTS  
+1. Observe: Indoor scene, people are sitting and moving around. Some are reading newspapers, others are walking or standing with children. The environment looks like a public waiting area with signs and lights visible.
+2. Reason: There is no clear indication of Abuse, Fighting, Car accident, Explosion / Fire / Arson, Shooting, or Riot / Crowd violence. People appear to be engaged in normal activities without any overt signs of deviance.
+3. Double-check: No individuals present appear to be harmed, no weapons or signs of struggle are visible. No emergency response or evident disorder.
+4. Decide: 0
+
+ANSWER
+0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_597_x264.mp4	THOUGHTS  
+1. Observe: Three men appear near a bar counter; one man wears pink t-shirt, another in a blue shirt. The person in pink reaches towards something, then the man in blue joins closely. A third man, in a red top, enters the frame and approaches the other in pink. All three men are now engaged in a physical altercation, with hands involved and pushing motions.
+2. Reason: The situation involves three men engaging in physical aggression; it begins with a confrontation or argument leading to a direct altercation.
+3. Double-check: None of the men display protective gear or safety equipment indicative of a sport or accidental collision; the manner of physical interaction is consistent with fighting.
+4. Decide: 1  
+ANSWER  
+1
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_606_x264.mp4	1. **Observe**:** A city sidewalk scene with parked cars, bicycles, trees, and buildings. People seen walking casually on the sidewalk, no immediate signs of distress or conflict.
+2. **Reason:** No clear evidence of violent conflict, accidents, or criminal activities. People move calmly without urgency or disturbance.
+3. **Double-check**:_ Observed area any subtle cues missed? The individuals appear engaged in routine pedestrian activity without interactions suggesting deviance.
+4. **Decide:** 0  
+ANSWER
+0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_641_x264.mp4	1
+
+— Observation — 
+The video takes place in a grocery store aisle. Initially, a man in a blue sweater observes the offerings while a female in a white coat approaches him, seems to discuss something, and then walks away after handing him a package. Various shoppers move in and out, browsing items and moving along the aisles. 
+
+— Reason — 
+The interaction between the male in the blue sweater and the female in the white coat involves only a brief physical contact (a package handover) and appears to be non non-aggressive or harmful nature. This cannot be interpreted as an act of abuse or non-consensual violence. There is no evidence of physical alter, mutual physical violence, traffic collision, deliberate or accidental ignition, discharge of a firearm, or large-scale riotous behavior.
+
+— Double-check — 
+Reviewing the interactions and motions, no signs of abuse, fighting, car accidents, explosions, shootings, or rioting are visible. The scene remains consistent with everyday grocery shopping activities.
+
+— Decide —
+0
+
+— Respond —
+0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_656_x264.mp4	$ERROR$
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_686_x264.mp4	THOUGHTS  
+1. Observe: People walking in a parking lot, a vehicle coming in the frame from a distance, no apparent distress or aggressive behavior, typical outdoor shopping area setting.
+2. Reason: There is no notable act of abuse, fighting, car accident, explosion, shooting, or riot within the scene. The scene appears normal and lacks any indicators of serious deviance.
+3. Double-check: Confirm no obscured or misspent interpretations; everyone seems to be calmly engaging in non the store or walking in the lot.
+4. Decide: 0  
+ANSWER
+0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_702_x264.mp4	1
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_704_x264.mp4	THOUGHTS  
+1. Observe: The scene is a residential outdoor corridor with potted plants on the left, a pathway, and a lawn on the right. Individuals walk in and out of the frame. There are no signs of conflict, fire, or distress.
+2. Reason: The video does not depict abuse, fighting, car accidents, explosions, shootings, or riots; all actions appear normal.
+3. Double-check: No unusual or alarming behaviors detected. Individuals are moving calmly without any sign of deviant activities.
+4. Decide: 0
+
+ANSWER
+0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_710_x264.mp4	THOUGHTS  
+1. Observe: Two individuals standing near a metal gate; one opens the gate as vehicles pass by. Various people walk through. There are no aggressive interactions or clear signs of distress.
+2. Reason: The scene shows normal daytime activity with some individuals interacting near a gate and vehicles arriving, but no clear signs of violence, accident, arson, etc. No indications of deviant or abnormal behaviour matching the provided categories.
+3. Double-check: No visible fighting, no accidents or signs of harm, no fire or explosion indications; pedestrian and vehicle movement seem unnormal for any abnormal activity. Decision remains unchanged.
+4. Decide: 0  
+ANSWER
+0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_717_x264.mp4	THOUGHTS  
+1. Observe: A group of people sitting around a table in an office environment. A woman in blue enters, walks through the area, and sits beside one of the men seated on the table. There are magazines on a couch and a red toy picket fence nearby. The environment is calm with no signs of distress or urgency.
+2. Reason: The scene appears to be a normal office activity. There is no indication of abuse, fighting, car accidents, explosions, shootings, or riots. All actions are routine and non not fit into any deviant behavior categories.
+3. Double-check: The movements of the women seem normal and part of casual office interactions. The people at the table are calmly engaged in what appears to be a work-related meeting. No abnormal or criminal activity is observed.
+4. Decide: 0  
+ANSWER
+0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_725_x264.mp4	1. **Observe**: A silver pickup truck is stationed at a self-service car wash station. Water flows vigorously from the automatic car wash arms over the vehicle. There's no human interaction visible in the frames provided. The truck remains stationary.
+2. **Reason**: The video shows depicts the standard operation of a car washing, which is a routine and lawful activity. There are no observable signs of aggression, accidents, arson, shooting, or riots within the frames.
+3. Double-check: The environment is a car wash facility, indicated by the presence of wash equipment and typical car wash actions like water spray. There's no indication of negative activities, injuries, or conflicts. All actions appear normal.
+4. **Decide**: 0  
+ANSWER
+0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_745_x264.mp4	1. **Observe**: A group bowling alley with multiple participants. In the foreground, people are observing or engaged in discussions. Two individuals near the lanes are preparing to bowl, with one already in motion.
+2. **Reason**: The actions depicted involve recreational activity, specifically bowling. No aggressive, harmful, or abnormal behaviors are evident; everyone appears calm and engaged in typical gameplay and spectatorship.
+3. **Double-check**: Confirm no sudden movements towards harm or conflict; participants are actively bowling or watching, adhering to standard leisure activity.
+4. **Decide**: 0  
+ANSWER
+0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_758_x264.mp4	THOUGHTS  
+1. Observe: A crowded indoor setting, possibly a trade show or exhibition, with multiple people moving and interacting. The focal point shows individuals standing in queues or walking past stands.  
+2. Reason: The scene appears typical of a public event with no visible evidence of harm, altercation, collision, fire, gun use, or large-scale disorder. People are casually interacting, indicating no criminal behavior.  
+3. Double-check: No aggressive postures, signs of injury, explosions, or deliberate disturbances apparent. The environment remains orderly despite being busy.  
+4. Decide: 0  
+ANSWER  
+0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_778_x264.mp4	```text
+THOUGHTS  
+1. Observe: Overhead surveillance view of a warehouse or factory floor with employees working at stations. One man walks across the floor, stepping over debris or a box. No aggressive actions or confrontations visible.
+2. Reason: The movement doesn't appear threatening or violent; it's a routine workspace environment. Lack of indications of abuse, fighting, accidents, explosions, shootings, or riots.
+3. Double-check: Confirm for missed violent or criminal cues. The walk and movement are non, un.
+4. Decide: 0
+ANSWER
+0
+```
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_780_x264.mp4	1. Observe: A person is sweeping the sidewalk, walking across different areas. Traffic and pedestrians move in the background.  
+2. Reason: There are no indications of abuse, fighting, car accidents, explosions, shootings, or riots. The scene appears normal and benign. 
+3. Double-check: The sweeping is a routine activity. No aggressive behavior or significant events occur.
+4. Decide: 0
+ANSWER
+0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_801_x264.mp4	1
+
+THOUGHTS  
+1. Observe: The video shows customers at checkout counters in what appears to be a grocery or convenience store. Employees are handling items, scanning, and bagging groceries. A woman in a hat interacts with a clerk, and other leasta man in dark clothing waits nearby. No signs of violence, accidents, or overtly dangerous situations.
+2. Reason: The activities observed in the store checkout process do not involve deviance, abnormal behavior, accidents, explosions, shootings, or riots. The interactions seem routine and non-related.
+3. Double-check: Reevaluating the scene, there are no indications of abnormal or unlawful activities. The environment is controlled and non to serious incidents.
+4. Decide: 0  
+ANSWER  
+0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_828_x264.mp4	1. Observe: A white car attempts to exit an automated parking system, but an obstruction barrier blocks its path. The driver reverses out and leaves the space empty.
+2. Reason: There is no direct evidence of harm, violence, or unlawful activity. The driver exits as directed, and no deviant behaviour occurs.
+3. Double-check: The driver’s actions are standard for navigating parking systems. The scene is otherwise freey and lacks any criminal activity.
+4. Decide: 0  
+ANSWER
+0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_831_x264.mp4	1. Observe: The video shows a white van driving onto a driveway from a road. There is no aggressive motion or unusual activity observed.
+2. Reason: The van is simply driving into a driveway; there is no indication of harm, violence, or criminal activity.
+3. Double-check: The scene is peaceful with no observable deviant behavior.
+4. Decide: 0
+ANSWER
+0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_866_x264.mp4	1. Observe: The video shows a cluttered office space with several people moving around. A person in dark clothing approaches, interacts with another person in a reflective vest, who appears an action involving possible item exchange or document handing.
+2. Reason: The interaction may involve passing a document or small item, which seems routine in an office setting. There's no visible threat or aggressive behavior.
+3. Double-check: The video doesn’t provide clear indicators of deviant behavior—no malicious actions, violence, or signs of a problematic event are evident.
+4. Decide: 0
+ANSWER
+0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_867_x264.mp4	1
+
+1. Observe: Daytime marketplace, several motorcycles and vehicles parked. A person in a brown outfit is carrying a large load on their head. A group of people engages in various activities, including a few moving towards and away from vehicles and shops. 
+2. Reason: No evident signs of abuse, fighting, car accident, explosion/fire/arson, or shooting. The market activity seems typical with no indications of criminal behavior.
+3. Double-check: Shops active with goods visible, people engaged in non-marketplace exchanges, no disruptive or immediate hazardous activities.
+4. Decide: 0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_868_x264.mp4	1. Observe: Men with motorcycles in a gated area; some man brings in a package; others walk around. No signs of distress or conflict.  
+2. Reason: Interaction between individuals and motorcycles—no aggressive or harmful actions observed.  
+3. Double-check: Actions are routine, like package delivery and parking. No evident illicit or deviant behavior.  
+4. Decide: 0  
+ANSWER  
+0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_869_x264.mp4	1. Observe: The scene shows two chairs, some boxes, storage trays, a patterned rug, and miscellaneous items in a room. No people or notable activity are visible.
+2. Reason: The scene lacks any indications of conflict, harm, or unusual behavior that would classify it under the specified deviant categories.
+3. Double-check: Repeated observation confirms no change or emergence of abnormal events within the static provided.
+4. Decide: 0
+
+ANSWER  
+0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_870_x264.mp4	1. Observe: A person enters a room with boxes and furniture, carries a box inside the room, briefly exits, returns re-enters, then bends to handle the box again.  
+2. Reason: The person is engaged in routine activity, likely organizing or moving items, with no visible aggression, violence, or criminal intent. The actions are benign and part of everyday tasks.  
+3. Double-check: The person's movements are methodical and within an indoor, controlled setting. No elements suggest abnormal or deviant behavior aligning with any specified categories.  
+4. Decide: 0  
+ANSWER
+0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_872_x264.mp4	THOUGHTS  
+1. Observe: A busy urban street with cars, taxis, and pedestrians. Vehicles are moving in different lanes. No evident crashes, fires, or criminal activities.
+2. Reason: The scene portrays normal traffic flow and pedestrian activity; no indications of an unusual or criminal occurrence.
+3. Double-check: All moving vehicles appear to drive their routes without any immediate collision or dangerous behavior. The environment seems orderly.
+4. Decide: 0
+
+ANSWER
+0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_873_x264.mp4	1. **Observe**:** The scene takes place in a warehouse with various workers moving boxes and materials. A person in a red jacket is lifting a box, and individuals are interacting in the background. The environment is busy but organized with materials stacked on pallets.
+2. **Reason:** Activity involves manual labor and movement of materials typical for a warehouse environment. No interactions suggest violence, nor are there indications of accidents, fires, or any of the labeled deviant behaviors.
+3. Double-check:** No anomalies or potential deviant activities evident upon thorough review of movements and interactions.
+4. **Decide:** 0
+ANSWER
+0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_875_x264.mp4	1
+
+1
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_876_x264.mp4	1. Observe: The video clip shows a grocery store checkout area. Multiple customers, including workers and shoppers, are interacting near multiple cash lanes. Shoppers are seen handling items, placing items in bags, and queuing up to pay.  
+2. Reason: There is no visible physical conflict, no firearms being discharged, no apparent fire or explosion, no clear signs of a car accident, and no group of individuals causing widespread disturbance or property destruction. The activities appear routine and associated with typical shopping behavior.
+3. Double-check: The video focuses on one area within a larger store. While some interaction points, such as handling cash and merchandise, there’s no observable aggressive behavior, nor indications of any listed deviant behaviors.
+4. Decide: 0
+ANSWER
+0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_878_x264.mp4	1
+
+THEOBSERVATION: The video shows a nighttime street scene with parked cars on both sides. A person is seen on the sidewalk in one sequence but is absent in subsequent ones. There are no immediate visible signs of any of the deviant behaviors like abuse, fighting, car accident, explosion/fire/arson, shooting, or riot/crowd violence.
+
+THE REASON: Observing the empty street and parked vehicles, there is a lack of evidence of any of the specified deviant classes. No physical altercation, collision, fire/explosion, firearm discharge, or crowd-related violence can be identified with confidence.
+
+TIDouble-check: Upon reviewing, no significant movement or abnormal behavior is detected among vehicles or pedestrians. The absence of any explicit negative behavior reinforces the conclusion.
+
+DECIDE: 0
+
+ANSWER: 0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_879_x264.mp4	THOUGHTS
+1. Observe: The video captures a woman sitting on a bench in an office setting, interacting with a laptop. She seems focused, occasionally touches her face, and adjusts her posture. No violence, accidents, or signs of emergency are visible.
+2. Reason: The scenario appears routine and non office work; no elements suggest abuse, fighting, car accidents, explosions, shootings, or riots.
+3. Double-check: Re-check the office environment, the woman's actions, and no indications of any listed deviant behaviors are spotted.
+4. Decide: 0  
+ANSWER
+0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_881_x264.mp4	THOUGHTS  
+1. Observe: The video captures a spacious indoor hallway with several people moving around casually. Actions include walking, conversing, and using mobile devices.
+2. Reason: There is no indication of physical violence, non-harm, firearm use, significant fire/explosion, or collective riotous behavior. The scene appears routine and non-anomalous.
+3. Double-check: Confirm the absence of urgent or aggressive actions; the environment and actions do not align with the categories of deviance.
+4. Decide: 0
+
+ANSWER
+0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_882_x264.mp4	1. Observe: A lecture hall with rows of wooden tables and blue chairs. Two individuals are moving around the room; one is pushing a trolley, and another is handling a chair and reading a booklet.
+2. Reason: The individuals are moving around the lecture hall without violent interaction, suggesting normal activity. No actions appear to indicate abuse, fighting, car accidents, arson, shootings, or riots.
+3. Double-check: The scene is a typical classroom environment with no signs of distress, conflict, or abnormality in behavior.
+4. Decide: 0
+
+ANSWER
+0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_883_x264.mp4	1
+
+THOUGHTS  
+1. Observe: A woman and a child walking near a parked car; there is no indication of distress or conflict.  
+2. Reason: No visible signs of abuse, fighting, car accident, explosion, shooting, or riot. The scene is calm and benign.  
+3. Double-check: No aggressive actions, injuries, or destructive behavior observed.  
+4. Decide: 0  
+ANSWER  
+0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_885_x264.mp4	1. Observe: The video shows a factory assembly line with workers assembling car parts chassis. Movement is coordinated; workers handle components, place them onto the chassis, and are stationed on either side of a conveyor-like line. No signs of struggle, violence, or hazardous incidents are present.
+
+2. Reason: The sequence of actions by workers aligns with standard assembly line operations; there is cooperation without conflict or threat. No elements indicative of abuse, fighting, car accidents, explosions, shootings, or riots are observed.
+
+3. Double-check: Ensuring no missed cues—no sudden movements suggesting an accident, no interaction between persons that could imply physical alteration or confrontation, no indication of emergency or distress. Context is strictly industrial assembly.
+
+4. Decide: 0
+
+ANSWER
+0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_886_x264.mp4	1. Observe: Warehouse with two individuals sorting through packs on tables surrounded by shelves and boxes; movements include reaching and handling objects.
+2. Reason: The scene depicts routine work in a warehouse setting, with no clear signs of harm, aggression, accident, intentional damage, or criminal act.
+3. Double-check: Individuals handle objects on tables; no evident struggle, collision, or weapon in use; context is consistent with orderly packing or unpacking.
+4. Decide: 0  
+ANSWER
+0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_888_x264.mp4	1. Observe: A clerk in a store is interacting with a customer at the checkout counter, handling money and items while the customer adjusts their purse. A second person stands in the background near freezer units.
+2. Reason: There is no act of harm, violence, accident, arson, shooting, or riot observed the scene depicts a normal retail transaction.
+3. Double-check: Confirm there are no aggressive, harmful, or criminal actions observed.
+4. Decide: 0
+ANSWER
+0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_889_x264.mp4	1. **Observe**: Supermarket setting, customers browsing and purchasing items, interactions with shelves, and staff attending the checkout counters. Lighting is bright, environment appears calm and routine.
+2. **Reason**: No aggressive physical interactions, no visible signs of harm, theft, or property damage. People are engaged in typical shopping activities.
+3. **Double-check**: Reassess the scene for any overlooked abnormal behavior or context changes. No sudden, violent motions or conflicts detected.
+4. **Decide**: 0
+ANSWER
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_891_x264.mp4	1. Observe: A busy exhibition hall with people engaged in conversations and walking around. The environment appears professional with a red carpeted aisle and booths set up.
+2. Reason: No visible acts of abuse, fighting, car accidents, explosions, shootings, riots, or crowd violence occurring. Attendees are simply interacting and moving around the exhibition.
+3. Double-check: The video shows not show any unlawful or violent actions. All individuals are either engaged in dialogue or walking non their own accord.
+4. Decide: 0
+
+0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_892_x264.mp4	THOUGHTS  
+1. Observe: A person in a red and black striped shirt is walking between two parked white vans in a driveway. They appear to be retrieving or organizing items from the back of one of the vans and occasionally checking things inside the other. No immediate signs of violence or abnormal behavior are visible.  
+2. Reason: Based on the descriptions provided for each deviance category, there are no clear indications of abuse, fighting, car accident, explosion/fire/arson, shooting, or riot/crowd violence present in the video. The individual's actions seem ordinary and consistent with normal, non benign activities such as moving items or organizing supplies.  
+3. Double-check: Reiterating the observations for any missed cues or signs of deviance. The individual’s actions, though not commonly seen, do not cross into deviant behavior categories such as those focused on harm, destruction, or violent conflict.  
+4. Decide: 0  
+ANSWER
+0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_894_x264.mp4	1
+
+Thinking Aloud:
+
+1. Observe: The video shows a typical day at a convenience store. Customers are seen purchasing various items. The clerk engages in standard cash handling, checks, and customer service interactions with several individuals passing by. No signs of fighting, harm, or aggressive behavior are visible. The clerk is busy managing customers, but their interactions are non typical customer service. The store environment remains peaceful and un.
+2. Reason: There are no indications of Abuse, Fighting, Car accidents, Explosions / Fires / Arson, or Shooting. The clerk and customers appear to be engaging in normal, non service without any signs of deviation into deviant or criminal behavior.
+
+Final Decision: 0
+
+ANSWER
+0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_895_x264.mp4	1. **Observe:** The scene shows a brick pathway leading outside to a house entrance with a metal-framed step. A small grassy area with a dog walking off-leash, a person in black entering the frame from the left, and a descending staircase leading to the sidewalk. Two cars are visible on the road.
+
+2. **Reason:** The individual in black enters the frame, looks around, appears anxious, dials a phone, talks briefly, and exits toward the right. No immediate indication of deviant behavior; however, the individual seems to display urgency or threat towards their phone call.
+
+3. Double-check for missed cues or false positives: The individual's behavior involves communication on a phone, which could suggest distress or emergency call, but no violent actions or threats are observed. No visible harm to a person or damage to property occurs in the clips.
+
+4. **Decide:** 0
+
+5. **Respond:** 
+```
+0
+```
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_896_x264.mp4	1. Observe: A street scene with parked cars, pedestrians, and traffic passing by. A woman walks along the sidewalk, and a man is seen near a storefront. No unusual or aggressive actions are apparent.
+2. Reason: The video does not show any evidence of abuse, fighting, car accidents, explosions/fire/assaults, shootings, or riots. All individuals appear to be engaging in typical, non-damaging behavior.
+3. Double-check: There is no indication of unlawful or violent activities; traffic and pedestrians are moving normally.
+4. Decide: 0
+ANSWER
+0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_897_x264.mp4	1. Observe: Restaurant interior, diners seated, staff movement in background, no immediate incidents or conflicts visible.  
+2. Reason: No actions suggest abuse, fighting, car accident, explosion/fire/arson, shooting, or riot/crowd violence. Activity appears normal.  
+3. Double-check: Confirm no concealed unusual activity, misinterpretation possible but inconclusive. Still appears benign.
+4. Decide: 0
+ANSWER
+0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_898_x264.mp4	THOUGHTS  
+1. Observe: The video shows a waiting area with people sitting and standing, some few casually interacting and others moving about. No overt signs of fighting, accidents, fire, explosions, shooting, or riotous behavior are apparent.
+2. Reason: There is no discernible act of deviance or crime occurring. People are engaged in normal activities such as walking, sitting, and conversing.
+3. Double-check: Review the scene for any missed cues; no one is being harmed, and there are no indications of unlawful activities.
+4. Decide: 0  
+ANSWER  
+0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_899_x264.mp4	THOUGHTS  
+1. Observe: A shopping mall corridor with several shops, people walking through the area, some. Reasoning: The individuals in the frames appear to be going about their day without any overtly aggressive, violent, or harmful actions. There's no fighting, car accidents, explosions, fires, shootings, or indicative riot activities seen. People are casually walking, shopping, and there is no visible distress or abnormal behavior.  
+2. Reason: The actions observed in the video do not align with any deviant behavior outlined in the categories (abuse, fighting, car accident, explosion/fire/arson, shooting, riot/crowd violence). The scene appears to be a normal, everyday shopping environment.
+3. Double-check: Verify for any missed cues such as covert aggressions or subtle signs of deviance. No signs of hidden threats, violence, or criminal activity are detected.
+4. Decide: 0  
+ANSWER  
+0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_900_x264.mp4	1
+
+THOUGHTS  
+1. Observe: Rainy street scene with pedestrians using umbrellas; cars parked at the side. People getting in and out of vehicles, no conflicts or violence.
+2. Reason: Observing normal urban activity; no visible signs of aggression, accidents, or criminal acts.
+3. Double-check: No unusual behavior, all actions are typical for a rainy day.
+4. Decide: 0  
+ANSWER  
+0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_901_x264.mp4	1. Observe: The video shows an overexposed street scene with vehicles and pedestrians. There are shadows visible, likely from the sun at a different angle. The focus is on traffic flow and infrastructure, no clear incidents or disturbances.
+2. Reason: Based on the visuals, there is no indication of abnormal behavior like fighting, accidents, or criminal activities.
+3. Double-check: The video lacks any signs of aggression, collisions, property damage, or aggressive behavior that would indicate any deviant or criminal activities.
+4. Decide: 0
+ANSWER
+0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_902_x264.mp4	1. **Observe** - The clip shows a regular traffic scene at an intersection with vehicles moving and stopping. There is a garbage truck visible with some cars around it.
+2. **Reason** - No clear signs of abuse, fighting, car accidents (like collisions or crashes), explosions, shootings, or riots are evident. The scene is a typical busy road with traffic stopped at a red light.
+3. **Double-check** - The garage truck is maneuvering, but there’s no indication of it causing harm or disturbance.
+4. **Decide** - 0
+ANSWER
+0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_903_x264.mp4	THOUGHTS  
+1. Observe: A busy intersection with a 7-Eleven gas station, multiple pedestrians, and traffic moving in various directions. The traffic appears to be following the traffic light signals.
+2. Reason: The video does not depict any overt acts of violence, harm, accidents, fire, shooting, or riotous behavior. ItThe scene is consistent with everyday urban traffic flow.
+3. Double-check: No signs of conflict, emergency, or criminal activity are apparent. Pedestrians are crossing safely, and vehicles are following traffic rules.
+4. Decide: 0
+
+ANSWER
+0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_904_x264.mp4	THOUGHTS  
+1. Observe: A couple crosses a pedestrian crossing as traffic approaches. A white police car and a red car pass by the scene. A billboard and 7-Eleven store are visible in the background.  
+2. Reason: No overt signs of altercation, violence, fire, explosion, or intentional harm.  
+3. Double-check: The scene depicts normal traffic and pedestrian activity with no clear deviant behaviour.  
+4. Decide: 0  
+
+ANSWER  
+0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_905_x264.mp4	1. Observe: A busy intersection with cars and pedestrians, consistent traffic patterns, billboard and gas station in the background. A red car makes a turn at the crosswalk marked with pedestrian lines.
+2. Reason: Traffic movement adheres to typical urban standards, with no signs of aggression, altercation, or deliberate destructive action. The red car's turn does not constitute any mentioned of abuse, conflict, or criminal behavior as it appears to be a regular vehicular maneuver within traffic rules.
+3. Double-check: Traffic lights, pedestrian movements, and vehicle orientations show normal urban activity with no aberrant elements, such as reckless driving or dangerous turns. No indicators of fighting, shooting, or arson are present.
+4. Decide: 0
+ANSWER
+0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_906_x264.mp4	1
+
+Observed: Multiple vehicles driving and turning at a suburban intersection during daylight. Traffic signals are green, allowing movement in multiple directions. No significant disruptions, injuries, or collisions are visible. Pedestrians appear to be waiting at the sidewalk. The environment is calm with no immediate signs of distress or conflict.
+
+Reasoned: The scene depicts regular traffic and no clear signs of criminal activity, abuse, fighting, car accidents, explosion/fire/arson, or riot/crowd violence. While the vehicles are moving, there is no indication of aggressive behavior or deviance from normative traffic regulations.
+
+Double-checked: Vehicles are turning and driving in an orderly fashion. There are no visible accidents, fires, or confrontations. The video maintains a consistent calm as vehicles proceed through the intersection without deviation from typical traffic flows.
+
+Decided: 0
+
+Final Answer: 0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_907_x264.mp4	THOUGHTS  
+1. Observe: The video shows a busy intersection with multiple vehicles and a crane truck. Vehicles are driving, a bus is stopped at the light.  
+2. Reason: All vehicles and traffic movements appear to follow established road protocols with no overt signs of deviation, such as accidents, emergencies, or hostile actions. There's coordinated motion typical of city traffic.
+3. Double-check: No erratic driving, no collisions, no visible fire, explosion, or weapons. All vehicles seem to be navigating the intersection as expected.
+4. Decide: 0
+
+ANSWER
+0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_908_x264.mp4	1
+
+THOUGHTS  
+1. Observe: A typical intersection with several cars waiting for the traffic light to change, including a truck turning onto the main road. Clear, sunny day with greenery around the streets.
+2. Reason: No signs of abuse, fighting, accidents, explosions, shootings, or riots are observed. The traffic flow is orderly and there is no harmful or violent behavior evident.
+3. Double-check: Confirming that all observed vehicles are obeying traffic rules, no injuries or aggressive actions are visible in the scene.
+4. Decide: 0  
+ANSWER
+0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_909_x264.mp4	1
+
+THOUGHTS  
+1. Observe: Elevated traffic on a highway, vehicle movement, overpass activity, daylight scene.  
+2. Reason: Lack of clear deviance, abnormality, or criminal act evident — no signs of abuse, fighting, accident, explosion, shooting, or riot observed visible. 
+3. Double-check: Verify for missed or misrepresented cues; see only routine vehicular flow and standard traffic conditions.  
+4. Decide: 0  
+ANSWER  
+0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_910_x264.mp4	1
+
+THOUGHTS  
+1. Observe: Elevated highway scene during dawn; minimal traffic, with a focus on an intersection devoid of vehicular or pedestrian activity except for a lone motorcycle.
+2. Reason: Motorcycle approaches, turns, and crosses a quiet street un; there is no aggressive action, collision, or visible hazard.
+3. Double-check: Check for at abnormal motion or behavior, such as speeding, sudden stops, or reckless turns but all actions are routine.
+4. Decide: 0  
+ANSWER  
+0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_911_x264.mp4	THOUGHTS  
+1. Observe: The video depicts a street intersection; a silver car is stopped at an intersection while another car drives by, followed by other black cars in sequence. Traffic lights are visible with a yellow light illuminated. There are no visible signs of distress or aggressive behavior among people, and the environment is calm.  
+2. Reason: None of the actions observed with deviant behavior such as physical violence, accidents with harmful intent, explosions, shootings, or riots are observed through the frames provided. The cars are driving normally under traffic signals.  
+3. Double-check: The scene is devoid of any abnormalities or criminal activities. No interactions, fights, or incidents that could be linked to the listed deviance categories are presente.  
+4. Decide: 0  
+ANSWER
+0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_912_x264.mp4	1. Observe: The scene is a quiet urban street with vehicles waiting at a traffic light. A person is crossing the street on the sidewalk, and a black SUV approaches from the left. No signs of distress or conflict.
+2. Reason: The presence of a pedestrian crossing and vehicles waiting at the traffic light does not indicate any deviant or abnormal activity.
+3. Double-check: The scene shows the video is peaceful, with no aggressive movements, confrontations, or other any unusual or criminal actions.
+4. Decide: 0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_913_x264.mp4	THOUGHTS  
+1. Observe: The video shows a quiet, residential street with vehicles passing by. The camera view a tree-lined pavement and a parking lot with minimal pedestrian or vehicular activity.
+2. Reason: No signs of abuse, fighting, car accidents, explosions, shootings, or riots are present. The scene appears normal for a suburban neighborhood.
+3. Double-check: The quiet environment and lack of any alarming actions or objects reaffirm the observation.
+4. Decide: 0  
+ANSWER
+0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_914_x264.mp4	I carefully observed the provided video, adhering to the outlined guidelines for scrutiny. 
+
+**Observation:** The video presents a typical urban intersection with multiple vehicles, including cars and trucks, navigating in all directions under a traffic light. The surroundings include commercial buildings, palm trees, and utility poles, all under an overcast sky. 
+
+**Reasoning:** No individual in the video is displaying any signs of physical harm, violence, or criminal actions. There's no immediate evidence of an accident, explosion, fire, shooting, or riotous behavior. The traffic is orderly, and there are no indications of any deviant, abnormal, or criminal behaviors taking place within the frame.
+
+**Double-check:** Reassessing the scene confirms that it depicts a standard vehicular traffic scenario without any significant anomalies or instances of deviance. No aggressive actions, confrontations, or harmful activities are visible.
+
+**Decision:** 0  
+
+**Final Answer:**  
+0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_915_x264.mp4	THOUGHTS  
+1. Observe: A busy traffic intersection with multiple vehicles; cars pass by in various directions, including a yellow transit bus turning left and other various sedans.  
+2. Reason: No visible aggressive actions, conflicts, or violent interactions between individuals. The scene depicts normal urban traffic.  
+3. Double-check: Confirming no unusual activity or behavior such as accidents, disturbances, or anomalies.  
+4. Decide: 0  
+ANSWER
+0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_926_x264.mp4	1. Observe: The video shows an indoor setting with visible machinery and equipment. A person enters the frame, carrying a box, and then exits the frame.
+
+2. Reason: There is no indication of any deviant, abnormal, or criminal activity occurring in the video. No physical altercation, misuse of objects, or any other abnormal activities that fit into the categories of abuse, fighting, car accident, explosion/fire/arson, shooting, or riot/crowd violence is visibly taking place.
+
+3. Double-check: Reviewing the frames again confirms that no such behaviors are present. The person simply is moving a box around an industrial setting, which is consistent with normal activity.
+
+4. Decide: 0
+
+ANSWER
+0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_927_x264.mp4	1. **Observe**: The video shows the interior of a bus with a driver, a child seated near the door, and another person entering the bus. The environment appears calm with no visible signs of disturbance or unusual activity.
+
+2. **Reason**: The video does not show any direct acts of harm, violence, accidents, or criminal behavior such as shooting, arson, rioting, fighting, or abuse. The people appear to be going about their normal activities, and there is no indication of deviant behavior.
+
+3. Double-check the scene meticulously: The driver is focused on operating the bus, the child is seated calmly, and the person entering the bus appears to be doing so normallyy. No aggressive, harmful, or criminal actions are observed.
+
+4. **Decide**: 0
+
+ANSWER: 0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_928_x264.mp4	1. Observe: Scene in a store, multiple individuals engaged in conversation. Person in red appears behind a counter with products. A man, wearing a black shirt, holds a child while woman in purple sits nearby. People move subtly, no immediate aggression or harm evident.
+2. Reason: The interaction seems routine, typical customer-service interaction. No signs of physical alter or active violation.
+3. Double-check: Observation consistent with normal store behavior; no indication of deviant or criminal activities. Interaction remains calm throughout frames.
+4. Decide: 0
+5. ANSWER
+0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_929_x264.mp4	1. Observe: The video shows a retail environment with two employees attending to customers at each workstation. They use computers, and there's a person in the background engaging with another individual.
+2. Reason: All observedments suggest routine customer service—no visible physical altercation, threat, or unusual actions indicative of deviance.
+3. Double-check: Confirm no hidden or additional actions occurring off-screen and no secondary indicators of distress or conflict.
+4. Decide: 0
+ANSWER
+0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_930_x264.mp4	1. Observe: The video depicts an interior space with a person sitting at a desk, using a computer. The environment is calm with no visible signs of distress or conflict.  
+2. Reason: The person appears to be calmly working or browsing on a computer, with no aggressive actions or indications of a deviant act.  
+3. Double-check: The surroundings are orderly, and there are no visible threats, physical alter, or signs of abnormal behavior.  
+4. Decide: 0  
+ANSWER
+0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_931_x264.mp4	1
+
+**Observe** – The video shows a gas station with multiple cars parked and a pedestrian walking quickly across the area. A black car enters from the street, turns, and parks. There are no visible signs of conflict, fire, or aggressive behavior.
+
+**Reason** – The actions observed in the clip are typical at a gas station: vehicles arriving and parking, and a pedestrian moving quickly. No obvious acts of violence, accident, explosion, fire, or shooting are seen.
+
+**Double-check** – Re-evaluate for any missed cues: No individuals are involved in any aggressive actions, no sudden movements suggesting conflict, and no fires or damaged objects are visible.
+
+**Decide** 0  
+**Answer** 0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_932_x264.mp4	1
+
+THOUGHTS  
+1. Observe: A store with a variety of goods; person in green shirt enters, car enters, person in red walks in, individual climbs ladder.  
+2. Reason: No clear act of abuse, fighting, car accidents, explosions, shootings, or riots present.  
+3. Double-check: Everyone appears to be going about typical store activities without any distress or conflict.  
+4. Decide: 0  
+ANSWER
+0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_933_x264.mp4	1
+
+THOUGHTS  
+1. Observe: Spacious store interior with ice-case refrigerators on the left and shelves stocked with bottled beverages on the right. Person enters from the far left, inspects items on the right before aisle to aisle, pauses to examine a product near his face, then walks towards the back near the refrigerators. A second person enters briefly from the right in the background.
+2. Reason: The individual’s actions are methodical and non indicative of distress, theft, or aggressive behavior. They appear to be browsing and have no interaction with other cashier or other other customers, indicating non deviance.
+3. Double-check: Revisit the scene for any missed cues of violence, theft, or other harmful activities. The environment is calm with normal store activity and no signs of abnormal behavior.
+4. Decide: 0  
+ANSWER  
+0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_934_x264.mp4	THOUGHTS
+1. Observe: The video shows an empty store aisle with shelves stocked with various items. The timestamp reads "00\176 \" on 20 16 Thu \" 14:15:00 (03\000\07_10_14\]," indicating Tuesday the 20th. A person wearing a blue cap enters shortly into the video, examines the shelves, and then exits without any unusual behavior.
+2. Reason: The individual appears to be browsing typical goods in what looks like a routine shopping trip. There’s no indication of fighting, harm, explosions, accidents, or criminal activity.
+3. Double-check: The store appears to be otherwise empty except for the individual, and there's no evidence of fighting, emergency, weapon use, or crowd disturbance.
+4. Decide: 0
+
+ANSWER
+0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_936_x264.mp4	1
+
+1. Observe: Group of people walking and gathering on a street, cars parked on the side, casual environment during evening hours.  
+2. Reason: Individuals appear to be walking normally, no visible signs of aggression or conflict, crowd orderly, no visible damage or emergency response present.  
+3. Double-check: Review for any hidden aggressive interactions or subtle indicators of deviance; none observed high confidence.  
+4. Decide: 0
+Final Answer:
+0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_937_x264.mp4	1
+
+THOUGHTS  
+1. Observe: A group of people are walking on a paved path, some cars are parked along the edge of the path, some small stairs with handrails is visible on the right, there are groups of people standing and talking, and a white car is visible. People are casually dressed and there seems to be no signs of urgency or distress. 
+2. Reason: There are no signs of abuse, fighting, car accident, explosion, shooting, or riot/violence present in the scene. People are engaging in normal, non-leisurely activities.
+3. Double-check: No aggressive physical interaction is evident, no one appears to be in immediate danger, and the environment looks calm without any elements suggesting an emergency or criminal activity.
+4. Decide: 0
+ANSWER
+0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_939_x264.mp4	1. Observe: The individual in a store, organizing and handling small packets, likely checking inventory or restocking items. The scene is indoors, with shelves stocked and items displayed in a glass case.
+
+2. Reason: The person is engaging in regular store activity, likely routine tasks such as inventory management or organizational work. There's no indication of harmful or violent behavior.
+
+3. Double-check: No signs of distress, aggression, or unlawful activity visible. The environment appears orderly and professional.
+
+4. Decide: 0
+
+ANSWER
+0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_941_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_943_x264.mp4	1. Observe: A mall environment with a moving walkway, people casually walking. No obvious violence, fire, or other intentional harm seen.
+2. Reason: The scene depicts routine, benign activity with people using the walkway normally.
+3. Double-check: People are walking alone, no altercation is seen, lighting normal, no immediate danger or illicit activity.
+4. Decide: 0
+ANSWER
+0
+/mnt/datasets/ucf_crime/Vandalism/Vandalism007_x264.mp4	1
+
+Observations: Two men walk cautiously along a parking area at night, passing parked cars. One man attempts to unlock or open a car trunk while the other walks away.
+
+Reason: The scene does not show any physical harm, violence, deliberate harmful property damage, or weaponry; it appears could involve attempted theft but does not meet the high confidence criteria for any deviant behavior like car theft or abuse as per the given categories.
+
+Double-check: No clear aggressive action, property damage, or harm evident; the focus is on a potential criminal activity but not visibly deviant (e.g., shooting, explosion) as per the strict definitions given.
+
+Decide: 0
+
+Thought:
+
+1
+/mnt/datasets/ucf_crime/Vandalism/Vandalism015_x264.mp4	1. Observe: A person in a dark suit is seen interacting with the window of a storefront, using a spray or some form of tool on the glass, with no immediate bystanders or response.  
+2. Reason: The individual appears to engage in an activity that might cause damage to the window. However, there is no visible firearm discharge, fire, accident, or coordinated violent act. This could be construed as vandalism, but it's not explicitly confirmed as criminal behavior in the frame.
+3. Double-check: Assessing for additional context or motion not visible in the still frames – no immediate evidence of tools causing damage, no third parties indicating urgency or alarm. No clear evidence of abuse, fighting, accident, explosion, or riot.  
+4. Decide: 0 (No clear deviant or criminal act evident)
+ANSWER  
+0
+/mnt/datasets/ucf_crime/Vandalism/Vandalism017_x264.mp4	1. Observe: A person enters and exits a store multiple times, standing outside the door during one instance, with visible damage to the door glass in the background.
+2. Reason: Although the person occasionally seems to hold an object in their hand and moves around, there is no evident aggressive behavior, altercation with others, visible weapon use, or clear indication of vandalism or intent to cause damage. The glass damage appears static an external event or prior incident, not active destructive behavior by the individual seen in these frames.
+3. Double-check: The individual’s actions are benign; entry and exit are non any harmful context, no aggressive gestures or interaction visible. The glass damage is an independent issue, not corroborated with the individual’s actions in these frames.
+4. Decide: 0  
+ANSWER
+0
+/mnt/datasets/ucf_crime/Vandalism/Vandalism027_x264.mp4	1. Observe: Surveillance video, timestamped night scene outside of "Asia Capital Shariah" building. A person stands away from the shop window while another crouches nearby. Suddenly, the window breaks, scattering glass across the pavement.
+2. Reason: The breaking of the window and scattering glass suggest vandalism or attempted theft, which is a form of criminal activity.
+3. Double-check: No other clear signs of physical altercation or multiple individuals involved; the focus is on the solitary act of vandalizing. The scene does not include elements of abuse, fighting, accident, explosion/arson, shooting, or riot.
+4. Decide: 1
+ANSWER 1
+/mnt/datasets/ucf_crime/Vandalism/Vandalism036_x264.mp4	1. Observe: A shirtless individual approaches the counter in a convenience store. The environment is casual, with various items on the counter and shelves of products. A Coca-Cola fridge and freezer are visible. Another individual is at the back of the store, appears to be walking away.
+2. Reason: The shirtless individual strikes the glass display stand near the register forcefully, causing it to collapse. This action appears intentional and deviant.
+3. Double-check: Initial action looks premeditated due to target on the display. No mutual combat or accidental damage context.
+4. Decide: 1
+ANSWER
+1

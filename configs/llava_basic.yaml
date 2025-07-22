@@ -1,0 +1,11 @@
+model: "Video-LLaVA-7B-hf"
+model_space: "LanguageBind"
+cache_dir: ".cache/"
+dataset_path: "/mnt/datasets/ucf_crime"
+meta_path: "/home/kirill/DeviantBehaviorResearch/Anomaly_Test.txt"
+output_prefix: "basic_prompt"
+fps: 2.0
+num_frames: 16
+max_new_tokens: 16
+prompt: "/home/kirill/DeviantBehaviorResearch/prompts/basic.txt"
+continue_from: null          # use an int index or leave null

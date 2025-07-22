@@ -1,0 +1,373 @@
+PROMPT:
+
+
+
+### Enhanced Chain-of-Thought Few-Shot Prompt  
+*(one richly described example for each deviant-behaviour class, plus one negative example; the model must think aloud and end with a single-digit verdict)*
+
+```text
+ROLE  
+You are an advanced vision–language model.  
+Your task is to inspect a short video clip and decide whether it contains any clear act of deviant, abnormal, or criminal behaviour.
+
+A clip is POSITIVE (1) if at least one of the following categories is observed with high confidence; otherwise it is NEGATIVE (0):
+
+• Abuse – non-consensual harming of a vulnerable victim  
+• Fighting – two or more people mutually exchanging violence  
+• Car accident – traffic collision or hit-and-run incident  
+• Explosion / Fire / Arson – deliberate or accidental ignition causing damage  
+• Shooting – discharge of a firearm toward a target  
+• Riot / Crowd violence – large-scale disorder with property destruction or assault  
+
+THINKING PROTOCOL  
+1. **Observe** – Describe salient visual elements (people, actions, objects, motion, context).  
+2. **Reason** – Map observations to any deviance category; note level of confidence.  
+3. **Double-check** – Rethink the scene for missed cues or false positives.  
+4. **Decide** – Output 1 if any category matches; else 0.  
+5. **Respond** – Show the full chain of thought for steps 1-4, then put the single digit **alone** on the final line.
+
+==================== FEW-SHOT EXAMPLES ====================
+
+— ABUSE —
+EXAMPLE A  
+[VIDEO]: Indoor nanny-cam, evening. A caregiver in medical scrubs lifts a frail elderly woman from a wheelchair, then abruptly drops her onto the bed. The woman winces and clutches her hip; a glass of water spills. Caregiver’s face shows irritation, mutters angrily while pointing a finger close to the woman’s face.  
+THOUGHTS  
+1. Observe: Vulnerable elder, forceful handling, pain reaction, aggressive gestures; no medical urgency.  
+2. Reason: Non-consensual harm to a dependent victim → Abuse. High confidence.  
+3. Double-check: No medical equipment in use, caregiver’s tone hostile, victim distressed. Decision stands.  
+4. Decide: 1  
+ANSWER  
+1
+
+----------------------------------------------------------
+— FIGHTING —
+EXAMPLE F  
+[VIDEO]: Nighttime street, two smartphone angles. Two men shove each other outside a club; one removes his jacket, adopts a boxing stance. Punches exchanged; a bystander tries to separate them but is kicked by a third participant. Flashing neon lights, crowd circles, some film with phones. Blood visible on one combatant’s nose.  
+THOUGHTS  
+1. Observe: Reciprocal punches, multiple aggressors, injuries evident, chaotic environment.  
+2. Reason: Mutual physical violence between adults → Fighting.  
+3. Double-check: No referee or sporting gear; nightclub exit context implies non-sport scenario. Confirm deviance.  
+4. Decide: 1  
+ANSWER  
+1
+
+----------------------------------------------------------
+— CAR ACCIDENT —
+EXAMPLE C  
+[VIDEO]: Daytime dash-cam. Car travels at 60 km/h on wet highway. A truck ahead swerves; its unsecured ladder slides off, striking a motorcyclist in the adjacent lane. Motorcyclist loses balance, skids across asphalt, sparks fly from bike. Nearby cars brake hard; one rear-ends another. Airbags deploy in the second car.  
+THOUGHTS  
+1. Observe: Roadway mishap, object falling, collision sequence, injuries likely.  
+2. Reason: Traffic collision causing harm → Car accident.  
+3. Double-check: Weather wet, but primary trigger is ladder impact; definite accident.  
+4. Decide: 1  
+ANSWER  
+1
+
+----------------------------------------------------------
+— EXPLOSION / FIRE / ARSON —
+EXAMPLE E  
+[VIDEO]: CCTV of gas-station forecourt at dawn. A hooded individual places a small device under the fuel-pump housing, retreats behind a parked van, presses a remote. Device flashes, pump erupts in fireball; security glass shatters, flames spread beneath canopy. Attacker flees vehicle at high speed. Smoke alarms trigger; sprinklers activate.  
+THOUGHTS  
+1. Observe: Intentional placement of device, timed detonation, rapid fire spread.  
+2. Reason: Deliberate ignition causing property damage → Arson / Explosion.  
+3. Double-check: No accidental spark visible; attacker’s deliberate retreat confirms intent.  
+4. Decide: 1  
+ANSWER  
+1
+
+----------------------------------------------------------
+— SHOOTING —
+EXAMPLE S  
+[VIDEO]: Body-cam from police officer at dusk. Officer takes cover behind squad car; an armed suspect across parking lot fires three handgun rounds toward officer. Muzzle flashes, bullet impacts on cruiser door. Officer issues commands, radios for backup. Shattered glass litters ground. Civilians crouch behind parked cars.  
+THOUGHTS  
+1. Observe: Firearm discharged toward human target, immediate danger.  
+2. Reason: Use of gun in assault → Shooting.  
+3. Double-check: Target is law-enforcement; hostile intent clear.  
+4. Decide: 1  
+ANSWER  
+1
+
+----------------------------------------------------------
+— RIOT / CROWD VIOLENCE —
+EXAMPLE R  
+[VIDEO]: Aerial drone footage over city square during protest. Hundreds push against police barricade; several overturn a patrol motorcycle and ignite it with a flare. Others hurl cobblestones pulled from pavement; storefront windows crack. Tear-gas plumes drift; officers advance in phalanx formation; some protesters wield metal poles as improvised weapons.  
+THOUGHTS  
+1. Observe: Large crowd, coordinated property destruction, assaults on police, fire ignition.  
+2. Reason: Collective violent disorder → Riot / Crowd violence.  
+3. Double-check: Scale large, multiple simultaneous violent acts. Confirm deviance.  
+4. Decide: 1  
+ANSWER  
+1
+
+----------------------------------------------------------
+— NEGATIVE BENIGN CASE —
+EXAMPLE N  
+[VIDEO]: Afternoon picnic by a lake. Friends set up blankets, toss frisbee, grill food. A child helps an elder adjust a sunhat; a dog naps beside them. Calm water, laughter, no aggressive motions, no hazardous objects.  
+THOUGHTS  
+1. Observe: Leisure activity, cooperative gestures, relaxed environment.  
+2. Reason: No harm, threat, or unlawful act visible.  
+3. Double-check: Scan for hidden conflict, weapons, or dangerous behaviour; none found.  
+4. Decide: 0  
+ANSWER  
+0
+
+==========================================================
+
+
+NOW FOLLOW THE THINKING PROTOCOL AND RETURN THE SINGLE-DIGIT ANSWER ON THE FINAL LINE.
+```
+
+
+
+/mnt/datasets/ucf_crime/Abuse/Abuse028_x264.mp4	0
+/mnt/datasets/ucf_crime/Abuse/Abuse030_x264.mp4	0
+/mnt/datasets/ucf_crime/Arrest/Arrest001_x264.mp4	0
+/mnt/datasets/ucf_crime/Arrest/Arrest007_x264.mp4	1
+/mnt/datasets/ucf_crime/Arrest/Arrest024_x264.mp4	1
+/mnt/datasets/ucf_crime/Arrest/Arrest031_x264.mp4	0
+/mnt/datasets/ucf_crime/Arrest/Arrest040_x264.mp4	0
+/mnt/datasets/ucf_crime/Arson/Arson008_x264.mp4	0
+/mnt/datasets/ucf_crime/Arson/Arson009_x264.mp4	1
+/mnt/datasets/ucf_crime/Arson/Arson010_x264.mp4	0
+/mnt/datasets/ucf_crime/Arson/Arson011_x264.mp4	1
+/mnt/datasets/ucf_crime/Arson/Arson016_x264.mp4	1
+/mnt/datasets/ucf_crime/Arson/Arson018_x264.mp4	0
+/mnt/datasets/ucf_crime/Arson/Arson023_x264.mp4	1
+/mnt/datasets/ucf_crime/Arson/Arson035_x264.mp4	1
+/mnt/datasets/ucf_crime/Arson/Arson041_x264.mp4	1
+/mnt/datasets/ucf_crime/Assault/Assault007_x264.mp4	1
+/mnt/datasets/ucf_crime/Assault/Assault012_x264.mp4	0
+/mnt/datasets/ucf_crime/Assault/Assault011_x264.mp4	0
+/mnt/datasets/ucf_crime/Burglary/Burglary004_x264.mp4	1
+/mnt/datasets/ucf_crime/Burglary/Burglary017_x264.mp4	0
+/mnt/datasets/ucf_crime/Burglary/Burglary018_x264.mp4	0
+/mnt/datasets/ucf_crime/Burglary/Burglary021_x264.mp4	0
+/mnt/datasets/ucf_crime/Burglary/Burglary026_x264.mp4	0
+/mnt/datasets/ucf_crime/Burglary/Burglary034_x264.mp4	0
+/mnt/datasets/ucf_crime/Burglary/Burglary033_x264.mp4	0
+/mnt/datasets/ucf_crime/Burglary/Burglary035_x264.mp4	0
+/mnt/datasets/ucf_crime/Burglary/Burglary037_x264.mp4	0
+/mnt/datasets/ucf_crime/Burglary/Burglary063_x264.mp4	0
+/mnt/datasets/ucf_crime/Burglary/Burglary077_x264.mp4	0
+/mnt/datasets/ucf_crime/Burglary/Burglary078_x264.mp4	0
+/mnt/datasets/ucf_crime/Burglary/Burglary092_x264.mp4	0
+/mnt/datasets/ucf_crime/Explosion/Explosion002_x264.mp4	1
+/mnt/datasets/ucf_crime/Explosion/Explosion004_x264.mp4	1
+/mnt/datasets/ucf_crime/Explosion/Explosion006_x264.mp4	1
+/mnt/datasets/ucf_crime/Explosion/Explosion008_x264.mp4	1
+/mnt/datasets/ucf_crime/Explosion/Explosion010_x264.mp4	1
+/mnt/datasets/ucf_crime/Explosion/Explosion011_x264.mp4	0
+/mnt/datasets/ucf_crime/Explosion/Explosion013_x264.mp4	0
+/mnt/datasets/ucf_crime/Explosion/Explosion016_x264.mp4	1
+/mnt/datasets/ucf_crime/Explosion/Explosion017_x264.mp4	1
+/mnt/datasets/ucf_crime/Explosion/Explosion020_x264.mp4	0
+/mnt/datasets/ucf_crime/Explosion/Explosion021_x264.mp4	1
+/mnt/datasets/ucf_crime/Explosion/Explosion022_x264.mp4	1
+/mnt/datasets/ucf_crime/Explosion/Explosion025_x264.mp4	0
+/mnt/datasets/ucf_crime/Explosion/Explosion027_x264.mp4	0
+/mnt/datasets/ucf_crime/Explosion/Explosion028_x264.mp4 0
+/mnt/datasets/ucf_crime/Explosion/Explosion029_x264.mp4	0
+/mnt/datasets/ucf_crime/Explosion/Explosion032_x264.mp4	1
+/mnt/datasets/ucf_crime/Explosion/Explosion035_x264.mp4 0
+/mnt/datasets/ucf_crime/Explosion/Explosion036_x264.mp4	1
+/mnt/datasets/ucf_crime/Explosion/Explosion039_x264.mp4 0
+/mnt/datasets/ucf_crime/Explosion/Explosion042_x264.mp4	1
+/mnt/datasets/ucf_crime/Fighting/Fighting002_x264.mp4	0
+/mnt/datasets/ucf_crime/Fighting/Fighting018_x264.mp4	0
+/mnt/datasets/ucf_crime/Fighting/Fighting033_x264.mp4	1
+/mnt/datasets/ucf_crime/Fighting/Fighting042_x264.mp4	0
+/mnt/datasets/ucf_crime/Fighting/Fighting049_x264.mp4	0
+/mnt/datasets/ucf_crime/RoadAccidents/RoadAccidents001_x264.mp4	1
+/mnt/datasets/ucf_crime/RoadAccidents/RoadAccidents002_x264.mp4	0
+/mnt/datasets/ucf_crime/RoadAccidents/RoadAccidents004_x264.mp4	0
+/mnt/datasets/ucf_crime/RoadAccidents/RoadAccidents009_x264.mp4	0
+/mnt/datasets/ucf_crime/RoadAccidents/RoadAccidents010_x264.mp4	0
+/mnt/datasets/ucf_crime/RoadAccidents/RoadAccidents011_x264.mp4	0
+/mnt/datasets/ucf_crime/RoadAccidents/RoadAccidents012_x264.mp4	1
+/mnt/datasets/ucf_crime/RoadAccidents/RoadAccidents016_x264.mp4	0
+/mnt/datasets/ucf_crime/RoadAccidents/RoadAccidents017_x264.mp4	0
+/mnt/datasets/ucf_crime/RoadAccidents/RoadAccidents019_x264.mp4	1
+/mnt/datasets/ucf_crime/RoadAccidents/RoadAccidents020_x264.mp4	0
+/mnt/datasets/ucf_crime/RoadAccidents/RoadAccidents021_x264.mp4	0
+/mnt/datasets/ucf_crime/RoadAccidents/RoadAccidents022_x264.mp4	1
+/mnt/datasets/ucf_crime/RoadAccidents/RoadAccidents121_x264.mp4	1
+/mnt/datasets/ucf_crime/RoadAccidents/RoadAccidents122_x264.mp4	0
+/mnt/datasets/ucf_crime/RoadAccidents/RoadAccidents123_x264.mp4	0
+/mnt/datasets/ucf_crime/RoadAccidents/RoadAccidents124_x264.mp4	1
+/mnt/datasets/ucf_crime/RoadAccidents/RoadAccidents125_x264.mp4	0
+/mnt/datasets/ucf_crime/RoadAccidents/RoadAccidents127_x264.mp4	0
+/mnt/datasets/ucf_crime/RoadAccidents/RoadAccidents128_x264.mp4	0
+/mnt/datasets/ucf_crime/RoadAccidents/RoadAccidents131_x264.mp4	0
+/mnt/datasets/ucf_crime/RoadAccidents/RoadAccidents132_x264.mp4	0
+/mnt/datasets/ucf_crime/RoadAccidents/RoadAccidents133_x264.mp4	1
+/mnt/datasets/ucf_crime/Robbery/Robbery048_x264.mp4	1
+/mnt/datasets/ucf_crime/Robbery/Robbery050_x264.mp4	0
+/mnt/datasets/ucf_crime/Robbery/Robbery102_x264.mp4	0
+/mnt/datasets/ucf_crime/Robbery/Robbery106_x264.mp4	0
+/mnt/datasets/ucf_crime/Robbery/Robbery137_x264.mp4	1
+/mnt/datasets/ucf_crime/Shooting/Shooting002_x264.mp4	1
+/mnt/datasets/ucf_crime/Shooting/Shooting004_x264.mp4	0
+/mnt/datasets/ucf_crime/Shooting/Shooting007_x264.mp4	0
+/mnt/datasets/ucf_crime/Shooting/Shooting008_x264.mp4	0
+/mnt/datasets/ucf_crime/Shooting/Shooting010_x264.mp4	0
+/mnt/datasets/ucf_crime/Shooting/Shooting011_x264.mp4	1
+/mnt/datasets/ucf_crime/Shooting/Shooting013_x264.mp4	0
+/mnt/datasets/ucf_crime/Shooting/Shooting015_x264.mp4	1
+/mnt/datasets/ucf_crime/Shooting/Shooting018_x264.mp4	0
+/mnt/datasets/ucf_crime/Shooting/Shooting017_x264.mp4	0
+/mnt/datasets/ucf_crime/Shooting/Shooting021_x264.mp4	0
+/mnt/datasets/ucf_crime/Shooting/Shooting023_x264.mp4	1
+/mnt/datasets/ucf_crime/Shooting/Shooting024_x264.mp4	0
+/mnt/datasets/ucf_crime/Shooting/Shooting026_x264.mp4	0
+/mnt/datasets/ucf_crime/Shooting/Shooting028_x264.mp4	1
+/mnt/datasets/ucf_crime/Shooting/Shooting031_x264.mp4	0
+/mnt/datasets/ucf_crime/Shooting/Shooting033_x264.mp4	0
+/mnt/datasets/ucf_crime/Shooting/Shooting034_x264.mp4	0
+/mnt/datasets/ucf_crime/Shooting/Shooting037_x264.mp4	0
+/mnt/datasets/ucf_crime/Shooting/Shooting043_x264.mp4	0
+/mnt/datasets/ucf_crime/Shooting/Shooting044_x264.mp4	0
+/mnt/datasets/ucf_crime/Shooting/Shooting050_x264.mp4	1
+/mnt/datasets/ucf_crime/Shooting/Shooting048_x264.mp4	0
+/mnt/datasets/ucf_crime/Shoplifting/Shoplifting013_x264.mp4	0
+/mnt/datasets/ucf_crime/Shoplifting/Shoplifting018_x264.mp4	1
+/mnt/datasets/ucf_crime/Shoplifting/Shoplifting005_x264.mp4	0
+/mnt/datasets/ucf_crime/Shoplifting/Shoplifting019_x264.mp4	0
+/mnt/datasets/ucf_crime/Shoplifting/Shoplifting010_x264.mp4	0
+/mnt/datasets/ucf_crime/Shoplifting/Shoplifting015_x264.mp4	0
+/mnt/datasets/ucf_crime/Shoplifting/Shoplifting016_x264.mp4	0
+/mnt/datasets/ucf_crime/Shoplifting/Shoplifting017_x264.mp4	0
+/mnt/datasets/ucf_crime/Shoplifting/Shoplifting024_x264.mp4	0
+/mnt/datasets/ucf_crime/Shoplifting/Shoplifting021_x264.mp4	1
+/mnt/datasets/ucf_crime/Shoplifting/Shoplifting022_x264.mp4	0
+/mnt/datasets/ucf_crime/Shoplifting/Shoplifting027_x264.mp4	0
+/mnt/datasets/ucf_crime/Shoplifting/Shoplifting028_x264.mp4 0
+/mnt/datasets/ucf_crime/Shoplifting/Shoplifting029_x264.mp4	0
+/mnt/datasets/ucf_crime/Shoplifting/Shoplifting031_x264.mp4	0
+/mnt/datasets/ucf_crime/Shoplifting/Shoplifting033_x264.mp4	0
+/mnt/datasets/ucf_crime/Shoplifting/Shoplifting038_x264.mp4	0
+/mnt/datasets/ucf_crime/Shoplifting/Shoplifting037_x264.mp4	0
+/mnt/datasets/ucf_crime/Shoplifting/Shoplifting039_x264.mp4	0
+/mnt/datasets/ucf_crime/Shoplifting/Shoplifting045_x264.mp4	0
+/mnt/datasets/ucf_crime/Shoplifting/Shoplifting049_x264.mp4	0
+/mnt/datasets/ucf_crime/Stealing/Stealing018_x264.mp4	0
+/mnt/datasets/ucf_crime/Stealing/Stealing036_x264.mp4	0
+/mnt/datasets/ucf_crime/Stealing/Stealing057_x264.mp4	0
+/mnt/datasets/ucf_crime/Stealing/Stealing062_x264.mp4	0
+/mnt/datasets/ucf_crime/Stealing/Stealing078_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_003_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_006_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_010_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_014_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_015_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_018_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_019_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_024_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_025_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_033_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_034_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_041_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_042_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_048_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_051_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_056_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_059_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_063_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_067_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_070_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_100_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_129_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_150_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_168_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_189_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_196_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_203_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_217_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_248_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_251_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_289_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_310_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_312_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_317_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_345_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_360_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_401_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_417_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_452_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_597_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_606_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_641_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_656_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_686_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_702_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_704_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_710_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_717_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_725_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_745_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_758_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_778_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_780_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_801_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_828_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_831_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_866_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_867_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_868_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_869_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_870_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_872_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_873_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_875_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_876_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_878_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_879_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_881_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_882_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_883_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_885_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_886_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_888_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_889_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_891_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_892_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_894_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_895_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_896_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_897_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_898_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_899_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_900_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_901_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_902_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_903_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_904_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_905_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_906_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_907_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_908_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_909_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_910_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_911_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_912_x264.mp4    0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_913_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_914_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_915_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_926_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_927_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_928_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_929_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_930_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_931_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_932_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_933_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_934_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_936_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_937_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_939_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_941_x264.mp4	0
+/mnt/datasets/ucf_crime/Testing_Normal_Videos_Anomaly/Normal_Videos_943_x264.mp4	0
+/mnt/datasets/ucf_crime/Vandalism/Vandalism007_x264.mp4	0
+/mnt/datasets/ucf_crime/Vandalism/Vandalism015_x264.mp4	0
+/mnt/datasets/ucf_crime/Vandalism/Vandalism017_x264.mp4	1
+/mnt/datasets/ucf_crime/Vandalism/Vandalism027_x264.mp4	0
+/mnt/datasets/ucf_crime/Vandalism/Vandalism036_x264.mp4	1

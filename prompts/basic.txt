@@ -1,0 +1,1 @@
+Return `1` if the video shows any deviant, abnormal or criminal behaviour; return `0` if it does not. Respond with only that single digit and nothing else.
