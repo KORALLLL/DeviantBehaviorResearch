@@ -12,7 +12,7 @@ from sklearn.metrics import (accuracy_score, precision_score, recall_score,
 def parse_lines(raw_lines: Sequence[str]) -> Tuple[List[int], List[int]]:
     """Extract ground truth and predictions from tab-separated lines."""
     true, pred = [], []
-    pat = re.compile(r"(.+)\t(\d)\s*$")
+    pat = re.compile(r"(.+)\s+(\d)\s*$")
     for ln in raw_lines:
         m = pat.match(ln)
         if not m:
@@ -72,34 +72,38 @@ def main() -> None:
     prec = precision_score(y_true, y_pred, zero_division=0)
     rec  = recall_score(y_true, y_pred,  zero_division=0)
     f1   = f1_score(y_true, y_pred,      zero_division=0)
-    auc_roc = roc_auc_score(y_true, y_pred)
-    pr_auc  = average_precision_score(y_true, y_pred)
+    try:
+        auc_roc = roc_auc_score(y_true, y_pred)
+        pr_auc  = average_precision_score(y_true, y_pred)
+    except: 
+        auc_roc, pr_auc = -1, -1
+    
 
-    ci_acc  = bootstrap_ci(y_true, y_pred, accuracy_score, args.bootstraps)
-    ci_prec = bootstrap_ci(y_true, y_pred,
-                           lambda yt, yp: precision_score(yt, yp, zero_division=0),
-                           args.bootstraps)
-    ci_rec  = bootstrap_ci(y_true, y_pred,
-                           lambda yt, yp: recall_score(yt, yp, zero_division=0),
-                           args.bootstraps)
-    ci_f1   = bootstrap_ci(y_true, y_pred,
-                           lambda yt, yp: f1_score(yt, yp, zero_division=0),
-                           args.bootstraps)
-    ci_auc  = bootstrap_ci(y_true, y_pred, roc_auc_score, args.bootstraps)
-    ci_pr   = bootstrap_ci(y_true, y_pred, average_precision_score,
-                           args.bootstraps)
+    # ci_acc  = bootstrap_ci(y_true, y_pred, accuracy_score, args.bootstraps)
+    # ci_prec = bootstrap_ci(y_true, y_pred,
+    #                        lambda yt, yp: precision_score(yt, yp, zero_division=0),
+    #                        args.bootstraps)
+    # ci_rec  = bootstrap_ci(y_true, y_pred,
+    #                        lambda yt, yp: recall_score(yt, yp, zero_division=0),
+    #                        args.bootstraps)
+    # ci_f1   = bootstrap_ci(y_true, y_pred,
+    #                        lambda yt, yp: f1_score(yt, yp, zero_division=0),
+    #                        args.bootstraps)
+    # ci_auc  = bootstrap_ci(y_true, y_pred, roc_auc_score, args.bootstraps)
+    # ci_pr   = bootstrap_ci(y_true, y_pred, average_precision_score,
+    #                        args.bootstraps)
 
     def hw(ci):          # half-width helper
-        return (ci[1] - ci[0]) / 2 if None not in ci else float("nan")
+        return 0
 
     print(f"Samples         : {len(y_true)}")
-    print(f"Accuracy        : {acc:.4f}  ±{hw(ci_acc):.4f}")
-    print(f"Precision       : {prec:.4f}  ±{hw(ci_prec):.4f}")
-    print(f"Recall          : {rec:.4f}  ±{hw(ci_rec):.4f}")
-    print(f"F1-score        : {f1:.4f}  ±{hw(ci_f1):.4f}")
-    print(f"AUC-ROC         : {auc_roc:.4f}  ±{hw(ci_auc):.4f}")
-    print(f"PR-AUC          : {pr_auc:.4f}  ±{hw(ci_pr):.4f}")
-    print(f"{acc:.4f}  $\pm${hw(ci_acc):.4f}&{prec:.4f}  $\pm${hw(ci_prec):.4f}&{rec:.4f}  $\pm${hw(ci_rec):.4f}&{f1:.4f}  $\pm${hw(ci_f1):.4f}&{auc_roc:.4f}  $\pm${hw(ci_auc):.4f}")
+    print(f"Accuracy        : {acc:.4f} ")
+    print(f"Precision       : {prec:.4f}  ")
+    print(f"Recall          : {rec:.4f} ")
+    print(f"F1-score        : {f1:.4f}  ")
+    print(f"AUC-ROC         : {auc_roc:.4f} ")
+    print(f"PR-AUC          : {pr_auc:.4f}  ")
+    print(f"{acc:.4f}  &{prec:.4f}  &{rec:.4f} &{f1:.4f} &{auc_roc:.4f} ")
 
 
 if __name__ == "__main__":

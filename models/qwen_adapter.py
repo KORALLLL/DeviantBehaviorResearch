@@ -1,8 +1,9 @@
 from .base import VLMBackend
 
 from loguru import logger
+from peft import PeftModel
 
-class Qwen25Adapter(VLMBackend):
+class Qwen25AdapterLoRA(VLMBackend):
     def __init__(self, model_id: str, cache_dir: str, **kwargs):
         from transformers import Qwen2_5_VLForConditionalGeneration, AutoProcessor
         from qwen_vl_utils import process_vision_info
@@ -15,6 +16,7 @@ class Qwen25Adapter(VLMBackend):
             trust_remote_code=True,
         ).eval()
         logger.success("model loaded")
+        self.model = PeftModel.from_pretrained(self.model, kwargs["adapter_id"])
 
         self.processor = AutoProcessor.from_pretrained(model_id, cache_dir=cache_dir)
         self.process_vision_info = process_vision_info

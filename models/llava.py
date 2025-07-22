@@ -32,7 +32,7 @@ def read_video_pyav(container, indices):
     return np.stack([x.to_ndarray(format="rgb24") for x in frames])
 
 class VideoLlavaAdapter(VLMBackend):
-    def __init__(self, model_id: str, cache_dir: str):
+    def __init__(self, model_id: str, cache_dir: str, **kwargs):
         self.model = VideoLlavaForConditionalGeneration.from_pretrained(model_id, device_map="auto",torch_dtype=torch.bfloat16, cache_dir=cache_dir).eval()
         logger.success("model loaded")
 

@@ -145,14 +145,21 @@ class InternVL3Adapter(VLMBackend):
     """
 
     def __init__(self, model_id: str, cache_dir: str, torch_dtype="auto",
-                 device_map="auto"):
+                 device_map="auto", **kwargs):
         from transformers import AutoTokenizer, AutoModel
 
-        self.tokenizer = AutoTokenizer.from_pretrained(model_id, trust_remote_code=True, use_fast=False, cache_dir=cache_dir)
+        self.tokenizer = AutoTokenizer.from_pretrained(
+            model_id,
+            # "/home/kirill/DeviantBehaviorResearch/.cache/lora_intern",
+            trust_remote_code=True,
+            use_fast=False,
+           cache_dir=cache_dir
+        )
 
         device_map = split_model(model_id, cache_dir)
         self.model = AutoModel.from_pretrained(
             model_id,
+            # "/home/kirill/DeviantBehaviorResearch/.cache/lora_intern",
             cache_dir=cache_dir,
             torch_dtype=torch.bfloat16,
             device_map=device_map,

@@ -58,15 +58,21 @@ if __name__ == "__main__":
         from models import GemmaAdapter as Model
         logger.info("gemma imported")
     elif cfg['model_space']=="Qwen":
-        from models import Qwen25Adapter as Model
-        logger.info("qwen imported")
+        if cfg.get("adapter_id", None):
+            from models import Qwen25AdapterLoRA as Model
+            logger.info("lora qwen imported")
+        else:
+            from models import Qwen25Adapter as Model
+            logger.info("qwen imported")
     elif cfg["model_space"]=="OpenGVLab":
         from models import InternVL3Adapter as Model
         logger.info("intervl imported")
     else: raise NotImplementedError
 
-
-    backend = Model(model_id=MODEL_ID, cache_dir=CACHE_DIR)
+    if cfg.get("adapter_id"):
+        backend = Model(model_id=MODEL_ID, cache_dir=CACHE_DIR, adapter_id=cfg['adapter_id'])
+    else:
+        backend = Model(model_id=MODEL_ID, cache_dir=CACHE_DIR)
     ds = VideoDS(pathlib.Path(DATASET_PATH), META_PATH)
     logger.success("dataset initialised")
 
@@ -98,5 +104,5 @@ if __name__ == "__main__":
 
     m, hw = mean_ci_halfwidth(results)
     logger.info(f"{m:.4f} ±{hw:.4f}")
-    with open(OUTPUT_RESULTS, "w") as f_out:
+    with open(OUTPUT_RESULTS, "a") as f_out:
         f_out.write(f"time:\n\n\n\n{m:.4f} ±{hw:.4f}\n\n\n\n")

@@ -6,7 +6,7 @@ class VLMBackend(ABC):
     """
 
     @abstractmethod
-    def __init__(self, model_id: str, cache_dir: str): raise NotImplementedError
+    def __init__(self, model_id: str, cache_dir: str, **kwargs): raise NotImplementedError
     
     @abstractmethod
     def encode_query(self, video_path: str, prompt: str): raise NotImplementedError

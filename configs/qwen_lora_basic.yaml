@@ -1,12 +1,12 @@
-model: "InternVL3-2B"
-model_space: "OpenGVLab"
+model: "Qwen2.5-VL-3B-Instruct"
+model_space: "Qwen"
+adapter_id: "i-larina/qwen25-3b-instruct-trl-sft-ChartQA"
 cache_dir: ".cache/"
 dataset_path: "/mnt/datasets/ucf_crime"
 meta_path: "/home/kirill/DeviantBehaviorResearch/Anomaly_Test.txt"
-output_prefix: "zero_shot_2b"
+output_prefix: "basic_prompt"
 fps: 0.5
 num_frames: 16
 max_new_tokens: 16
-prompt: "/home/kirill/DeviantBehaviorResearch/prompts/zero_shot.txt"
+prompt: "/home/kirill/DeviantBehaviorResearch/prompts/basic.txt"
 continue_from: null          # use an int index or leave null
-

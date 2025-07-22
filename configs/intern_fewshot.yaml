@@ -1,9 +1,9 @@
-model: "InternVL3-8B"
+model: "InternVL3-2B"
 model_space: "OpenGVLab"
 cache_dir: ".cache/"
 dataset_path: "/mnt/datasets/ucf_crime"
 meta_path: "/home/kirill/DeviantBehaviorResearch/Anomaly_Test.txt"
-output_prefix: "fewshot"
+output_prefix: "fewshot_2B"
 fps: 0.5
 num_frames: 12
 max_new_tokens: 16
