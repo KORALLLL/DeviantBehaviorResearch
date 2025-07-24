@@ -1,3 +1,6 @@
+# Detection of deviant behavior in video sequence using multimodal and reasoning models
+This project is conducted during [Smiles Summer School 2025](https://smiles.skoltech.ru/rus)
+
 ```bash
 conda create -n smiles python=3.10 --no-default-packages -y
 conda activate smiles
