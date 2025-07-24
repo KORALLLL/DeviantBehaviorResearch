@@ -1,7 +1,7 @@
 from .base import VLMBackend
 
 from loguru import logger
-from transformers import Qwen2_5_VLForConditionalGeneration, AutoProcessor, BitsAndBytesConfig
+from transformers import Qwen2_5_VLForConditionalGeneration, AutoProcessor, BitsAndBytesConfig, Qwen2_5_VLProcessor, AutoTokenizer
 from qwen_vl_utils import process_vision_info
 
 class Qwen25Adapter(VLMBackend):
@@ -16,21 +16,47 @@ class Qwen25Adapter(VLMBackend):
         ).eval()
         logger.success("model loaded")
 
+        model_id = "Qwen/Qwen2.5-VL-3B-Instruct"
         self.processor = AutoProcessor.from_pretrained(model_id, cache_dir=cache_dir)
         self.process_vision_info = process_vision_info
+        self.tokenizer = AutoTokenizer.from_pretrained(
+            model_id,
+            cache_dir=cache_dir,
+            model_max_length=512,
+            padding_side="right",
+            use_fast=False,
+        )
         logger.success("processor inititalised")
 
-    def format_data(self, video_path, prompt, fps):
+    @staticmethod
+    def format_inference_data(video_path, prompt, fps, nframes):
         return [{
                 "role": "user",
                 "content": [
-                    {"type": "video", "video": video_path, "fps": fps},
+                    {"type": "video", "video": video_path, "nframes": nframes},
                     {"type": "text",  "text": prompt.strip()}
                 ]
         }]
 
-    def encode_query(self, video_path: str, prompt: str, fps=1.0, **kwargs):
-        messages = self.format_data(video_path, prompt, fps)
+    @staticmethod
+    def format_finetune_data(video_path, prompt, fps, nframes, label):
+        return [{
+                "role": "user",
+                "content": [
+                    {"type": "video", "video": video_path, "nframes": nframes},
+                    {"type": "text",  "text": prompt.strip()}
+                ]
+            },
+            {
+                "role": "assistant",
+                "content": [
+                    {"type": "text",  "text": str(label)}
+                ]
+            }
+        ]
+
+    def encode_query(self, video_path: str, prompt: str, fps=1.0, nframes=16, **kwargs):
+        messages = self.format_inference_data(video_path, prompt, fps, nframes)
         chat = self.processor.apply_chat_template(messages,
                                                   tokenize=False,
                                                   add_generation_prompt=True)
@@ -53,34 +79,6 @@ class Qwen25Adapter(VLMBackend):
             out[:, inputs.input_ids.shape[-1]:],
             skip_special_tokens=True
         )[0]
-
-    # Create a data collator to encode text and image pairs
-    # def collate_fn_2(self, examples):
-    #     # Get the texts and images, and apply the chat template
-    #     texts = [
-    #         self.processor.apply_chat_template(example, tokenize=False) for example in examples
-    #     ]  # Prepare texts for processing
-    #     image_inputs = [self.process_vision_info(example)[0] for example in examples]  # Process the images to extract inputs
-
-    #     # Tokenize the texts and process the images
-    #     batch = self.processor(
-    #         text=texts, images=image_inputs, return_tensors="pt", padding=True
-    #     )  # Encode texts and images into tensors
-
-    #     # The labels are the input_ids, and we mask the padding tokens in the loss computation
-    #     labels = batch["input_ids"].clone()  # Clone input IDs for labels
-    #     labels[labels == self.processor.tokenizer.pad_token_id] = -100  # Mask padding tokens in labels
-
-    #     # Ignore the image token index in the loss computation (model specific)
-    #     image_tokens = [self.processor.tokenizer.convert_tokens_to_ids(self.processor.image_token)]  # Convert image token to ID
-
-    #     # Mask image token IDs in the labels
-    #     for image_token_id in image_tokens:
-    #         labels[labels == image_token_id] = -100  # Mask image token IDs in labels
-
-    #     batch["labels"] = labels  # Add labels to the batch
-
-    #     return batch  # Return the prepared batch
 
 
     # test function on batch size=1
@@ -113,7 +111,10 @@ class Qwen25Adapter(VLMBackend):
         labels[labels == self.processor.tokenizer.pad_token_id] = -100  # Mask padding tokens in labels
 
         # Ignore the image token index in the loss computation (model specific)
-        image_tokens = [self.processor.tokenizer.convert_tokens_to_ids(self.processor.image_token)]  # Convert image token to ID
+        if isinstance(self.processor, Qwen2_5_VLProcessor):  # Check if the processor is Qwen25VLProcessor
+            image_tokens = [151652, 151653, 151656]  # Specific image token IDs for Qwen25VLProcessor
+        else:
+            image_tokens = [self.processor.tokenizer.convert_tokens_to_ids(self.processor.video_token)]  # Convert image token to ID
 
         # Mask image token IDs in the labels
         for image_token_id in image_tokens:

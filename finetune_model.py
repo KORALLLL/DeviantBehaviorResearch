@@ -1,15 +1,19 @@
 import argparse
 import yaml
+from dataset.base import VideoJsonDS
 from loguru import logger
 import torch
 import pathlib
 import wandb
+import mlflow
+from torch.utils.tensorboard import SummaryWriter
+from datetime import datetime
+import numpy as np
 
 from transformers import BitsAndBytesConfig
 from peft import LoraConfig, get_peft_model
 from trl import SFTConfig, SFTTrainer
 
-from dataset import UCF_Crime
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -29,6 +33,7 @@ if __name__ == "__main__":
     FPS = cfg['fps']
     NUM_FRAMES = cfg['num_frames']
     MAX_NEW_TOKENS = cfg['max_new_tokens']
+    TRAINVAL_SPLIT = 0.9
 
     with open(cfg['prompt'], 'r') as file: PROMPT = file.read().strip()
     logger.info(str(cfg))
@@ -51,14 +56,13 @@ if __name__ == "__main__":
     else: raise NotImplementedError
 
     # Load dataset
-    train_ds = UCF_Crime(
+    dataset = VideoJsonDS(
         pathlib.Path(DATASET_PATH), 
         META_PATH,
     )
-    eval_ds = UCF_Crime(
-        pathlib.Path(DATASET_PATH), 
-        EVAL_META_PATH,
-    )
+    n = len(dataset)
+    lengths = [int(n * 0.9), n - int(n * 0.9)]
+    train_ds, eval_ds = torch.utils.data.random_split(dataset, lengths)
     logger.success("dataset initialised")
 
     # Load quantized model
@@ -86,7 +90,7 @@ if __name__ == "__main__":
 
     # Setup LORA
     peft_config = LoraConfig(
-        lora_alpha=16,
+        lora_alpha=32,
         lora_dropout=0.05,
         r=8,
         bias="none",
@@ -105,10 +109,10 @@ if __name__ == "__main__":
 
     # Setup training arguments
     training_args = SFTConfig(
-        output_dir="qwen25-3b-instruct-trl-sft-ChartQA",  # Directory to save the model
+        output_dir=f"{MODEL.lower()}-trl-sft-ChartQA-{datetime.now().strftime('%Y-%m-%d-%H-%M-%S')}",  # Directory to save the model
         num_train_epochs=3,  # Number of training epochs
-        per_device_train_batch_size=4,  # Batch size for training
-        per_device_eval_batch_size=4,  # Batch size for evaluation
+        per_device_train_batch_size=1,  # Batch size for training
+        per_device_eval_batch_size=1,  # Batch size for evaluation
         gradient_accumulation_steps=8,  # Steps to accumulate gradients
         gradient_checkpointing=True,  # Enable gradient checkpointing for memory efficiency
         # Optimizer and scheduler settings
@@ -130,8 +134,9 @@ if __name__ == "__main__":
         max_grad_norm=0.3,  # Maximum norm for gradient clipping
         warmup_ratio=0.03,  # Ratio of total steps for warmup
         # Hub and reporting
-        push_to_hub=False,  # Whether to push model to Hugging Face Hub
-        report_to="wandb",  # Reporting tool for tracking metrics
+        push_to_hub=False,  # Whether to push model to Hugging Face Hub,
+        # resume_from_checkpoint="/app/DeviantBehaviorResearch/models/qwen25-3b-instruct-trl-sft-ChartQA-2025-07-22-14-50-59",
+        report_to=cfg['logger'],  # Reporting tool for tracking metrics
         # Gradient checkpointing settings
         gradient_checkpointing_kwargs={"use_reentrant": False},  # Options for gradient checkpointing
         # Dataset configuration
@@ -144,16 +149,27 @@ if __name__ == "__main__":
 
     logger.success("Training arguments initialised")
 
-    # Initialize wandb
-    wandb.init(
-        project="VLM-deviant-behavior-research",  # change this
-        name=f"{MODEL.lower()}-trl-sft-ChartQA",  # change this
-        config=training_args,
-    )
+    # Initialize logger
+    project = f"Qwen25VL-QLora-finetune"
+    run_name = f"{MODEL.lower()}-trl-sft-ChartQA-{datetime.now().strftime('%Y-%m-%d-%H-%M-%S')}"
+    if cfg['logger'] == "wandb":
+        wandb.init(
+            project=project,
+            name=run_name,
+            config=training_args,
+        )
+    elif cfg['logger'] == "mlflow":
+        # exp_id = mlflow.create_experiment(name=project)
+        exp_id = 34
+        mlflow.set_experiment(experiment_id=exp_id)
+    elif cfg['logger'] == "tensorboard":
+        writer = SummaryWriter(log_dir=f"runs/{run_name}")
+    else:
+        raise NotImplementedError(f"Logger {cfg['logger']} not implemented")
 
     # Format data
-    train_set = [backend.format_data(train_ds[idx]['path'], cfg['prompt'], cfg['fps']) for idx in range(len(train_ds))]
-    eval_set = [backend.format_data(eval_ds[idx]['path'], cfg['prompt'], cfg['fps']) for idx in range(10)]
+    train_set = [backend.format_finetune_data(train_ds[idx]['path'], train_ds[idx]['prompt'], cfg['fps'], cfg["num_frames"], train_ds[idx]['label']) for idx in range(len(train_ds))]
+    eval_set = [backend.format_finetune_data(eval_ds[idx]['path'], eval_ds[idx]['prompt'], cfg['fps'], cfg["num_frames"], eval_ds[idx]['label']) for idx in range(len(eval_ds))]
 
     # Initialize SFT trainer
     trainer = SFTTrainer(
@@ -163,14 +179,17 @@ if __name__ == "__main__":
         eval_dataset=eval_set,
         data_collator=backend.collate_fn,
         peft_config=peft_config,
-        processing_class=backend.processor.tokenizer,
+        processing_class=backend.tokenizer
     )
     logger.success("SFT trainer initialized")
 
     # Train model
     logger.info(f"Training model {MODEL}")
-    trainer.train()
+    with mlflow.start_run(run_name=run_name, experiment_id=exp_id):
+        mlflow.log_params(training_args.__dict__)
+        trainer.train()
 
+    # writer.close()
     # # Save model
     # print(f"Saving model {MODEL}")
     # trainer.save_model(f"finetuned_{MODEL_ID}") 

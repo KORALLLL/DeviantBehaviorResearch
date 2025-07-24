@@ -1,4 +1,4 @@
-ROOT_DIR=/mnt/datasets/ucf_crime
+ROOT_DIR=/home/i.larina/datasets/ucf_crime
 
 wget -P $ROOT_DIR https://huggingface.co/datasets/jinmang2/ucf_crime/resolve/main/Anomaly-Videos-Part-1.zip
 wget -P $ROOT_DIR https://huggingface.co/datasets/jinmang2/ucf_crime/resolve/main/Anomaly-Videos-Part-2.zip

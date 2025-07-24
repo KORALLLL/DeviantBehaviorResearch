@@ -4,6 +4,7 @@ from loguru import logger
 import time
 import numpy as np
 from scipy.stats import t
+from dataset import UCF_Crime
 
 def mean_ci_halfwidth(values, alpha=0.05):
 
@@ -36,7 +37,8 @@ if __name__ == "__main__":
     with open(args.config, 'r') as f: cfg = yaml.safe_load(f)
 
     MODEL = cfg['model']
-    MODEL_ID = f"{cfg['model_space']}/{MODEL}"
+    MODEL_ID = MODEL
+    # MODEL_ID = f"{cfg['model_space']}/{MODEL}"
     CACHE_DIR = cfg['cache_dir']
     DATASET_PATH = cfg['dataset_path']
     META_PATH = cfg['meta_path']
@@ -57,7 +59,7 @@ if __name__ == "__main__":
     elif cfg['model_space']=="google":
         from models import GemmaAdapter as Model
         logger.info("gemma imported")
-    elif cfg['model_space']=="Qwen":
+    elif cfg['model_space']=="Qwen" or cfg['model_space']=="i-larina" or cfg['model_space']=="":
         from models import Qwen25Adapter as Model
         logger.info("qwen imported")
     elif cfg["model_space"]=="OpenGVLab":
@@ -76,27 +78,27 @@ if __name__ == "__main__":
     results = []
     with torch.inference_mode():
         for idx in tqdm(range(len(ds)), total=len(ds)):
-            try:
-                start = time.time()
-                sample = ds[idx]
-                if CONTINUE_FROM:
-                    if idx<CONTINUE_FROM: continue
-                inputs = backend.encode_query(sample["path"], PROMPT, fps=FPS, num_frames=NUM_FRAMES)
-                reply  = backend.generate(inputs, max_new_tokens=MAX_NEW_TOKENS)
-                end = time.time()
+            # try:
+            start = time.time()
+            sample = ds[idx]
+            if CONTINUE_FROM:
+                if idx<CONTINUE_FROM: continue
+            inputs = backend.encode_query(sample["path"], PROMPT, fps=FPS, num_frames=NUM_FRAMES)
+            reply  = backend.generate(inputs, max_new_tokens=MAX_NEW_TOKENS)
+            end = time.time()
 
-                line = f"{sample['path']}\t{reply}\n"
-                with open(OUTPUT_RESULTS, "a") as f_out:
-                    f_out.write(line)
-                logger.info(line.strip())
-                logger.info(str(end-start))
-                results.append(end-start)
+            line = f"{sample['path']}\t{reply}\n"
+            with open(OUTPUT_RESULTS, "a") as f_out:
+                f_out.write(line)
+            logger.info(line.strip())
+            logger.info(str(end-start))
+            results.append(end-start)
 
-            except:
-                logger.error(sample['path'])
+            # except:
+            #     logger.error(sample['path'])
 
 
     m, hw = mean_ci_halfwidth(results)
     logger.info(f"{m:.4f} ±{hw:.4f}")
-    with open(OUTPUT_RESULTS, "w") as f_out:
-        f_out.write(f"time:\n\n\n\n{m:.4f} ±{hw:.4f}\n\n\n\n")
+    # with open(OUTPUT_RESULTS, "w") as f_out:
+    #     f_out.write(f"time:\n\n\n\n{m:.4f} ±{hw:.4f}\n\n\n\n")
