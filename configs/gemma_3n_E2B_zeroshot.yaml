@@ -1,9 +1,9 @@
-model: "Qwen2.5-VL-3B-Instruct"
-model_space: "Qwen"
+model: "gemma-3n-E2B-it"
+model_space: "google"
 cache_dir: ".cache/"
-# dataset_path: "/mnt/datasets/ucf_crime"
-# meta_path: "/home/kirill/DeviantBehaviorResearch/Anomaly_Test.txt"
-# output_prefix: "zero_shot_3b"
+# dataset_path: "datasets/ucf_crime"
+# meta_path: "/home/user/ksy-research/DeviantBehaviorResearch/Anomaly_Test.txt"
+# output_prefix: "zero_shot_ufc"
 dataset_path: "datasets/xd-violence"
 meta_path: "/home/user/ksy-research/DeviantBehaviorResearch/XDV_Test.txt"
 output_prefix: "zero_shot_xd-violence"
@@ -12,4 +12,3 @@ num_frames: 16
 max_new_tokens: 16
 prompt: "/home/user/ksy-research/DeviantBehaviorResearch/prompts/zero_shot.txt"
 continue_from: null          # use an int index or leave null
-   # use an int index or leave null

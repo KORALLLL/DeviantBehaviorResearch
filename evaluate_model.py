@@ -4,6 +4,10 @@ from loguru import logger
 import time
 import numpy as np
 from scipy.stats import t
+import os
+os.environ['PYTORCH_CUDA_ALLOC_CONF'] = 'expandable_segments:True'
+
+logger.add("errors.log", level="ERROR")
 
 def mean_ci_halfwidth(values, alpha=0.05):
 
@@ -40,7 +44,7 @@ if __name__ == "__main__":
     CACHE_DIR = cfg['cache_dir']
     DATASET_PATH = cfg['dataset_path']
     META_PATH = cfg['meta_path']
-    OUTPUT_RESULTS = f"{MODEL}_{cfg['output_prefix']}.txt"
+    OUTPUT_RESULTS = f"results/{MODEL}_{cfg['output_prefix']}.txt"
     FPS = cfg['fps']
     NUM_FRAMES = cfg['num_frames']
     MAX_NEW_TOKENS = cfg['max_new_tokens']
@@ -55,7 +59,7 @@ if __name__ == "__main__":
         from models import VideoLlavaAdapter as Model
         logger.info("llava imported")
     elif cfg['model_space']=="google":
-        from models import GemmaAdapter as Model
+        from models import Gemma3nAdapter as Model
         logger.info("gemma imported")
     elif cfg['model_space']=="Qwen":
         if cfg.get("adapter_id", None):
@@ -98,8 +102,10 @@ if __name__ == "__main__":
                 logger.info(str(end-start))
                 results.append(end-start)
 
-            except:
+            except Exception as e:
                 logger.error(sample['path'])
+                logger.error(e)
+                exit()
 
 
     m, hw = mean_ci_halfwidth(results)

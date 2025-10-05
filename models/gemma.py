@@ -2,7 +2,7 @@ from .base import VLMBackend
 
 from loguru import logger
 
-from transformers import AutoProcessor, Gemma3ForConditionalGeneration
+from transformers import AutoProcessor, Gemma3ForConditionalGeneration, Gemma3nForConditionalGeneration
 from PIL import Image
 import cv2
 import torch, os, tempfile
@@ -10,15 +10,17 @@ from pathlib import Path
 
 token = os.getenv("HF_TOKEN=")
 
-def extract_frames(video_path, num_frames):
+def extract_frames(video_path: str, num_frames: int):
     """
     The function is adapted from:
     https://github.com/merveenoyan/smol-vision/blob/main/Gemma_3_for_Video_Understanding.ipynb
     """
+    video_path = video_path if video_path.endswith("mp4") else f"{video_path}.mp4"
     cap = cv2.VideoCapture(video_path)
 
     if not cap.isOpened():
         print("Error: Could not open video file.")
+        assert False
         return []
 
     total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
@@ -87,3 +89,16 @@ class GemmaAdapter(VLMBackend):
         response = self.processor.decode(output, skip_special_tokens=True)
 
         return response
+
+
+
+class Gemma3nAdapter(GemmaAdapter):
+    def __init__(self, model_id: str, cache_dir: str, **kwargs):
+        self.model = Gemma3nForConditionalGeneration.from_pretrained(
+            model_id, device_map="auto", torch_dtype=torch.bfloat16, cache_dir=cache_dir, token=token
+        ).eval()
+
+        logger.success("model loaded")
+
+        self.processor = AutoProcessor.from_pretrained(model_id, cache_dir=cache_dir)
+        logger.success("processor inititalised")

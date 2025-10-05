@@ -1,2 +1,10 @@
 .cache/
 __pycache__/
+.venv/
+.vscode/
+
+datasets/
+local*
+res*
+
+*.zip
