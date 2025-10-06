@@ -22,7 +22,7 @@ class VideoDS(torch.utils.data.Dataset):
 
     def __getitem__(self, idx):
         path = str(self.video_paths[idx])
-        label = 0 if "Normal" in path else 1
+        label = 0 if ("Normal" in path or "label_A" in path) else 1
         return {"path": path, "label": label}
 
 
@@ -98,8 +98,10 @@ if __name__ == "__main__":
                 logger.info(str(end-start))
                 results.append(end-start)
 
-            except:
-                logger.error(sample['path'])
+            except KeyboardInterrupt:
+                exit(0)
+            except BaseException as e:
+                logger.error(f"{sample['path']}: {e}")
 
 
     m, hw = mean_ci_halfwidth(results)
