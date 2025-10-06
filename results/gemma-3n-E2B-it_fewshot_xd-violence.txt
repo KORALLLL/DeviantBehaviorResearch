@@ -259,7 +259,7 @@ datasets/xd-violence/test_videos/Kill.Bill.Vol.1.2003__#01-08-15_01-09-15_label_
 datasets/xd-violence/test_videos/Kill.Bill.Vol.1.2003__#01-17-20_01-20-20_label_B1-0-0	1
 datasets/xd-violence/test_videos/Kill.Bill.Vol.1.2003__#01-21-39_01-26-55_label_B1-0-0	0
 datasets/xd-violence/test_videos/Kill.Bill.Vol.1.2003__#01-26-56_01-28-18_label_B1-0-0	1
-datasets/xd-violence/test_videos/Kill.Bill.Vol.2.2004__#0-25-20_0-26-20_label_B2-0-0	1
+datasets/xd-violence/test_videos/Kill.Bill.Vol.2.2004__#0-25-20_0-26-20_label_B2-0-0	0
 datasets/xd-violence/test_videos/Kill.Bill.Vol.2.2004__#01-03-13_01-04-13_label_A	0
 datasets/xd-violence/test_videos/Kingsman.The.Golden.Circle.2017__#00-35-55_00-36-35_label_B1-0-0	1
 datasets/xd-violence/test_videos/Kingsman.The.Golden.Circle.2017__#00-41-22_00-41-32_label_B2-0-0	1
@@ -906,7 +906,7 @@ time:
 
 
 
-2.1356 ±0.0209
+2.1383 ±0.0208
 
 
 

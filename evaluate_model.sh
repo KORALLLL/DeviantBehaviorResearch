@@ -20,12 +20,22 @@
 # python evaluate_model.py configs/llava_cot.yaml
 # python evaluate_model.py configs/qwen_cot.yaml
 
-# python evaluate_model.py configs/gemma_3n_E2B_basic.yaml
-# python evaluate_model.py configs/gemma_3n_E2B_zeroshot.yaml
-# python evaluate_model.py configs/gemma_3n_E2B_fewshot.yaml
-# python evaluate_model.py configs/gemma_3n_E2B_cot.yaml
+python evaluate_model.py configs/gemma_3n_E2B_basic_ufc.yaml
+python evaluate_model.py configs/gemma_3n_E2B_zeroshot_ufc.yaml
+python evaluate_model.py configs/gemma_3n_E2B_fewshot_ufc.yaml
+python evaluate_model.py configs/gemma_3n_E2B_cot_ufc.yaml
+
+python evaluate_model.py configs/gemma_3n_E2B_basic.yaml
+python evaluate_model.py configs/gemma_3n_E2B_zeroshot.yaml
+python evaluate_model.py configs/gemma_3n_E2B_fewshot.yaml
+python evaluate_model.py configs/gemma_3n_E2B_cot.yaml
 
 python evaluate_model.py configs/qwen_basic.yaml
 python evaluate_model.py configs/qwen_zeroshot.yaml
 python evaluate_model.py configs/qwen_fewshot.yaml
 python evaluate_model.py configs/qwen_cot.yaml
+
+python evaluate_model.py configs/qwen_7b_basic.yaml
+python evaluate_model.py configs/qwen_7b_zeroshot.yaml
+python evaluate_model.py configs/qwen_7b_fewshot.yaml
+python evaluate_model.py configs/qwen_7b_cot.yaml
