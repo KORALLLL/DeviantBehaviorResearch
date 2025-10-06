@@ -1,2 +1,9 @@
 .cache/
 __pycache__/
+.venv/
+.vscode/
+
+datasets/
+local*
+
+*.zip

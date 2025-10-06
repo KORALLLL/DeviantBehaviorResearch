@@ -1,11 +1,11 @@
-model: "Qwen2.5-VL-3B-Instruct"
-model_space: "Qwen"
+model: "gemma-3n-E2B-it"
+model_space: "google"
 cache_dir: ".cache/"
 dataset_path: "datasets/xd-violence"
 meta_path: "/home/user/ksy-research/DeviantBehaviorResearch/XDV_Test.txt"
-output_prefix: "zero_shot_xd-violence"
+output_prefix: "fewshot_xd-violence"
 fps: 0.5
 num_frames: 16
 max_new_tokens: 16
-prompt: "/home/user/ksy-research/DeviantBehaviorResearch/prompts/zero_shot.txt"
+prompt: "/home/user/ksy-research/DeviantBehaviorResearch/prompts/fewshot.txt"
 continue_from: null          # use an int index or leave null
