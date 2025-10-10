@@ -1,0 +1,11 @@
+model: "Video-LLaVA-7B-hf"
+model_space: "LanguageBind"
+cache_dir: ".cache/"
+dataset_path: "/mnt/drive-2/users/kondrashov/mipt/DeviantBehaviorResearch/data/XDViolence"
+meta_path: "/mnt/drive-2/users/kondrashov/mipt/DeviantBehaviorResearch/data/XDViolence_test.txt"
+output_prefix: "cot_XDViolence"
+fps: 2.0
+num_frames: 16
+max_new_tokens: 320
+prompt: "/mnt/drive-2/users/kondrashov/mipt/DeviantBehaviorResearch/prompts/cot.txt"
+continue_from: null          # use an int index or leave null

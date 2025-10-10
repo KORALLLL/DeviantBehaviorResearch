@@ -1,0 +1,11 @@
+model: "InternVL3-2B"
+model_space: "OpenGVLab"
+cache_dir: ".cache/"
+dataset_path: "/mnt/drive-2/users/kondrashov/mipt/DeviantBehaviorResearch/data/XDViolence"
+meta_path: "/mnt/drive-2/users/kondrashov/mipt/DeviantBehaviorResearch/data/XDViolence_test.txt"
+output_prefix: "zero_shot_2b_XDViolence"
+fps: 0.5
+num_frames: 16
+max_new_tokens: 16
+prompt: "/mnt/drive-2/users/kondrashov/mipt/DeviantBehaviorResearch/prompts/zero_shot.txt"
+continue_from: null          # use an int index or leave null

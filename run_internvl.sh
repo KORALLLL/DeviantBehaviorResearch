@@ -1,0 +1,4 @@
+python3 evaluate_model.py configs_xdviolence/intern_8b_basic.yaml
+python3 evaluate_model.py configs_xdviolence/intern_8b_cot.yaml
+python3 evaluate_model.py configs_xdviolence/intern_8b_fewshot.yaml
+python3 evaluate_model.py configs_xdviolence/intern_8b_zeroshot.yaml

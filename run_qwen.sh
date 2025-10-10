@@ -1,0 +1,9 @@
+#python3 evaluate_model.py configs_xdviolence/qwen_basic.yaml
+python3 evaluate_model.py configs_xdviolence/qwen_cot.yaml
+python3 evaluate_model.py configs_xdviolence/qwen_fewshot.yaml
+python3 evaluate_model.py configs_xdviolence/qwen_zeroshot.yaml
+
+python3 evaluate_model.py configs_xdviolence/qwen_7b_basic.yaml
+python3 evaluate_model.py configs_xdviolence/qwen_7b_cot.yaml
+python3 evaluate_model.py configs_xdviolence/qwen_7b_fewshot.yaml
+python3 evaluate_model.py configs_xdviolence/qwen_7b_zeroshot.yaml
